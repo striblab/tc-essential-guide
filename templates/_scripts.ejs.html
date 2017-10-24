@@ -1,0 +1,8 @@
+
+<!-- Global/external scripts -->
+<% if (config.js && config.js.globals) { config.js.globals.forEach(function(s) { %>
+  <script src="<%= s %>"></script>
+<% }); } %>
+
+<!-- Scripts -->
+<script src="<%= data.basePath || '.' %>/app.bundle.js"></script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @@include('./_head.ejs.html')
+  </head>
+
+  <body>
+    <!-- Screen reader announcements -->
+    <div aria-live="polite" id="announcer" class="sr-only"></div>
+
+    <!-- Skip to main content -->
+    <a href="#main-content" class="to-main-content sr-only">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="project-header" role="banner">
+      <h1><%= data.name || content.title %></h1>
+    </header>
+
+    <!-- Main content here -->
+    <main id="main-content" class="content" role="main">
+      <%- component %>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+      @@include('./_footer.ejs.html')
+    </footer>
+
+    @@include('./_scripts.ejs.html')
+  </body>
+</html>

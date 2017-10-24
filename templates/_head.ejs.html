@@ -1,0 +1,78 @@
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<title><%= data.pageTitle || content.title %> | <%= content.organization || 'Star Tribune' %></title>
+
+<meta name="author" content="<%= htmlEscape(data.pageAuthor || content.author || 'Star Tribune Visuals') %>">
+<meta name="description" content="<%= htmlEscape(data.pageDescription || content.socialDescription) %>">
+<meta name="robots" content="index, follow">
+
+<!-- Shortcut and related icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="<%= data.basePath || '.' %>/assets/images/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<%= data.basePath || '.' %>/assets/images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<%= data.basePath || '.' %>/assets/images/favicons/favicon-16x16.png">
+<link rel="manifest" href="<%= data.basePath || '.' %>/assets/images/favicons/manifest.json">
+<link rel="mask-icon" href="<%= data.basePath || '.' %>/assets/images/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="<%= data.basePath || '.' %>/assets/images/favicons/favicon.ico">
+<meta name="msapplication-config" content="<%= data.basePath || '.' %>/assets/images/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- For proper phone zoom -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Global/external styles -->
+<% if (config.styles && config.styles.globals) { config.styles.globals.forEach(function(s) { %>
+  <link href="<%= s %>" rel="stylesheet" type="text/css">
+<% }); } %>
+
+<!-- Project-specific styles-->
+<link rel="stylesheet" href="<%= data.basePath || '.' %>/styles.bundle.css" type="text/css">
+
+<!-- Social Media Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
+<meta property="og:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
+<meta property="og:description" content="<%= htmlEscape(data.pageDescription || content.socialDescription) %>">
+<% if (config.social && config.social.image) { %>
+  <meta property="og:image" content="<%= config.publish.production.url %><%= config.social.image %>">
+<% } %>
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="<%= content.twitterAccount || '@StarTribune' %>">
+<meta name="twitter:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
+<meta name="twitter:description" content="<%= htmlEscape(data.pageDescription || content.socialDescription) %>">
+<% if (config.social && config.social.image) { %>
+  <meta name="twitter:image" content="<%= config.publish.production.url %><%= config.social.image %>">
+<% } %>
+
+<!-- Google structured data -->
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>"
+    },
+    "headline": "<%= escapeQuotes(data.pageDescription || content.socialDescription) %>",
+    "image": {
+      "@type": "ImageObject",
+      "url": "<%= config.publish.production.url %><%= config.social.image %>"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "<%= escapeQuotes(data.pageAuthor || content.author || 'Star Tribune Visuals') %>"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "<%= escapeQuotes(content.organization || 'Star Tribune') %>",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "<%= config.publish.production.url %>assets/images/strib/strib-logo-transparent-307.png",
+        "width": 307,
+        "height": 292
+      }
+    },
+    "description": "<%= escapeQuotes(data.pageDescription || content.socialDescription) %>"
+  }
+</script>
