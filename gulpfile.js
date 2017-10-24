@@ -26,7 +26,6 @@ const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
 const del = require('del');
-const run = require('run-sequence');
 const gulpContent = require('./lib/gulp-content.js');
 const gulpPublish = require('./lib/gulp-publish.js');
 const jest = require('./lib/gulp-jest.js');
@@ -83,7 +82,7 @@ gulp.task('html:lint:details', ['html'], () => {
 
 // Wrapper for dat and html
 gulp.task('html:full', done => {
-  run('source:data', 'html:lint:details', done);
+  runSequence('source:data', 'html:lint:details', done);
 });
 
 // Content tasks

@@ -2,10 +2,6 @@
 
 All the best places to go to when you are in the Twin Cities for the Super Bowl
 
-
-
-
-
 ## Embed
 
 This project is best used as a full, standalone page, or an embed.  The best way to embed the piece is with the following code:
@@ -25,6 +21,8 @@ The following are global prerequisites and may already be installed.
 1. Install [Node.js](https://nodejs.org/en/).
     * (on Mac) `brew install node`
 1. Install [Gulp](http://gulpjs.com/): `npm install gulp -g`
+1. Set the following environment variables:
+    * `AIRTABLE_API_KEY`: The [Airtable](https://airtable.com/api) API key used to get data from the spreadsheets.
 
 The following should be performed for initial and each code update:
 
@@ -40,19 +38,20 @@ To run a local web server that will auto-reload with [Browsersync](https://brows
     * Use this to add non-local JS or CSS assets, such as from a CDN.
     * This can be overridden with a `config.custom.json` if there is a need to add configuration that should not be put into revision history.
 * `content.json`: See *Content and copy*.  This file is used to hold content values.  If the project is hooked up to a Google Spreadsheet, you should not manually edit this file.
-* `templates/`: Holds HTML-like templates.  Any files in here will get run through [EJS](http://www.embeddedjs.com/) templating and passed values from `config.json`, `content.json`, and `package.json`.
-    * `templates/index.ejs.html`: The default page for the application.
+* `templates/`: Holds HTML templates.  Any files in here will get run through [EJS](http://www.embeddedjs.com/) templating and passed values from `config.json`, `content.json`,  `package.json`, and data from the Airtable data source.
+    * `templates/layout.*.ejs.html`: These are the files that get rendered with the data described above and correlate to a file or set of files rendered in the build.
+    * `templates/_*.ejs.html`: These are includes used to help separate out and reuse parts.
 * `styles/`: Styles in [SASS](http://sass-lang.com/) syntax.
     * `styles/index.scss`: Main point of entry for styles.
     * `styles/_*.scss`: Any includes should be prefixed with an underscore.
 * `app/`: Where JS logic goes.  This supports ES6+ JS syntax with [Babel](https://babeljs.io/) and gets compiled with [Webpack](https://webpack.js.org/).
     * `app/index.js`: Main entry point of application.
+    * `app/svelte-components/*`: [Svelte](https://svelte.technology/guide) components.  These get rendered in the template/layout process as well as brought in on the client side.
 * `assets/`: Various media files.  This gets copied directly to build.
 * `sources/`: Directory is for all non-data source material, such as wireframes or original images.  Note that if there are materials that should not be made public, consider using Dropbox and make a note in this file about how to access.
 * `lib/`: Modules used in building or other non-data tasks.
 * `tests/`: Tests for app; see Testing section below.
 * The rest of the files are for building or meta-information about the project.
-
 
 ### Content and copy
 
