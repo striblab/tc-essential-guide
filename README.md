@@ -37,7 +37,7 @@ To run a local web server that will auto-reload with [Browsersync](https://brows
 * `config.json`: Non-content config for application.
     * Use this to add non-local JS or CSS assets, such as from a CDN.
     * This can be overridden with a `config.custom.json` if there is a need to add configuration that should not be put into revision history.
-* `content.json`: See *Content and copy*.  This file is used to hold content values.  If the project is hooked up to a Google Spreadsheet, you should not manually edit this file.
+* `content.json`: See *Content and copy*.  This file is used to hold content values, such as a site-wide title or description.
 * `templates/`: Holds HTML templates.  Any files in here will get run through [EJS](http://www.embeddedjs.com/) templating and passed values from `config.json`, `content.json`,  `package.json`, and data from the Airtable data source.
     * `templates/layout.*.ejs.html`: These are the files that get rendered with the data described above and correlate to a file or set of files rendered in the build.
     * `templates/_*.ejs.html`: These are includes used to help separate out and reuse parts.
@@ -55,36 +55,11 @@ To run a local web server that will auto-reload with [Browsersync](https://brows
 
 ### Content and copy
 
-By default, content items can be managed in `content.json`.  The values put in here will be available in the templates in the `templates/` directory as the `content` object.  This can be a helpful way to separate out content from code.
+The majority of content is managed in this Airtable.  Use the following command to get new data from the Airtable, saved as `sources/guide-data.json`:
 
-#### Google Spreadsheets
+    gulp source:data
 
-If `config.json` has a `content.spreadsheetId` value specified, `content.json` can be updated with information from a Google Spreadsheet.
-
-Since getting this content may not be very speedy, this is not done during `gulp develop`, so it requires a manual call: `gulp content`
-
-##### Setting up
-
-If you went through the [Striblab Generator](), then this is probably already set up for you, but in case it is not.
-
-Getting content from a Google Spreadsheet depends on a few configurations.  You need need a Google Account (such as a Gmail account) and a Google Developer API Service Account that has read and write access to Google Sheets and Google Drive.  You should then set the following environment variables.  You can store these values in a [`.env`](https://www.npmjs.com/package/dotenv) file.
-
-* `GOOGLE_AUTH_CLIENT_EMAIL`: This will be something like *XXXXXX@XXXXXX.iam.gserviceaccount.com*.
-* `GOOGLE_AUTH_PRIVATE_KEY`: This will be something pretty long, like *--BEGIN PRIVATE--XXXXX--END PRIVATE KEY--*
-
-*TODO* (Find some good instructions for using the Google Developer Console; unfortunately its complex and changes often.)
-
-You can then set up a new spreadsheet with the following command, updating the email to use your Google Email.  The Google Email you use will become the owner of the document.  Note that a Google Email is not always a `@gmail.com` account.
-
-    gulp content:create --email XXXXX@gmail.com
-
-You can then add collaborators to the spreadsheet with the following command.  Note that you can do this in the Google Spreadsheet as well.
-
-    gulp content:share --email XXXXX@gmail.com
-
-##### Spreadsheet format
-
-If you are using Google Spreadsheets for content, the headers should be `Key`, `Value`, `Type`, and `Notes`.  It is important that these are there in that exact way.  It is suggested to freeze the header row in case someone changes the order of the spreadsheet.
+Note that the `gulp develop` process does not automatically download new data as it would be slow to run every time, which means you will have to manually run the above command.
 
 ### Dependencies and modules
 

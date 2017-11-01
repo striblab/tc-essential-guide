@@ -193,6 +193,7 @@ gulp.task('watch', () => {
   gulp.watch(
     [
       'templates/**/*',
+      'sources/**/*.json',
       'config.*json',
       'package.json',
       'content.json',
