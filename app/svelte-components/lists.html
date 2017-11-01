@@ -1,0 +1,14 @@
+<div class="component component-list">
+  <h1>{{ data.title }}</h1>
+
+  <p><strong>{{{ data.byline }}}</strong></p>
+
+  <p>{{{ data.description }}}</p>
+
+  <h3>Places</h3>
+  <ul>
+    {{#each data.places as p}}
+      <li><a href="/{{ p.filename }}">{{ p.name }}</a></li>
+    {{/each}}
+  </ul>
+</div>

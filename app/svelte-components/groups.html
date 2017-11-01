@@ -1,0 +1,9 @@
+<div class="component component-group">
+  <h1>{{ data.title }}</h1>
+
+  <ul>
+    {{#each data.lists as l}}
+      <a href="/{{ l.filename }}">{{ l.title }}</a>
+    {{/each}}
+  </ul>
+</div>

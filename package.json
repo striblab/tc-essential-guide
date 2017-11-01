@@ -60,6 +60,7 @@
     "moment": "^2.19.1",
     "openurl": "^1.1.1",
     "run-sequence": "^1.2.2",
+    "strib-styles": "0.0.2",
     "stylelint-config-standard": "^17.0.0",
     "svelte": "^1.41.1",
     "svelte-loader": "^2.1.0",

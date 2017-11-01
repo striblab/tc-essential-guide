@@ -191,7 +191,13 @@ gulp.task('server', ['build:full'], () => {
 gulp.task('watch', () => {
   gulp.watch(['styles/**/*.scss'], ['styles']);
   gulp.watch(
-    ['templates/**/*', 'config.*json', 'package.json', 'content.json'],
+    [
+      'templates/**/*',
+      'config.*json',
+      'package.json',
+      'content.json',
+      'app/svelte-components/**/*'
+    ],
     ['html']
   );
   gulp.watch(['app/**/*', 'config.json'], ['js']);

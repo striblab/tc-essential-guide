@@ -4,7 +4,7 @@
     @@include('./_head.ejs.html')
   </head>
 
-  <body>
+  <body class="strib layout-places">
     <!-- Screen reader announcements -->
     <div aria-live="polite" id="announcer" class="sr-only"></div>
 
@@ -12,12 +12,12 @@
     <a href="#main-content" class="to-main-content sr-only">Skip to main content</a>
 
     <!-- Header -->
-    <header class="project-header" role="banner">
-      <h1><%= data.name || content.title %></h1>
+    <header class="project-header container-lg" role="banner">
+      <h1><%= content.title %></h1>
     </header>
 
     <!-- Main content here -->
-    <main id="main-content" class="content" role="main">
+    <main id="main-content" class="content container-lg" role="main">
       <%- component %>
     </main>
 

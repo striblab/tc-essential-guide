@@ -1,0 +1,11 @@
+<div class="component component-index">
+  <h1>Home page</h1>
+
+  <div class="groups">
+    {{#each data.groups as g}}
+      <div class="group">
+        <a href="/{{ g.filename }}">{{ g.title }}</a>
+      </div>
+    {{/each}}
+  </div>
+</div>

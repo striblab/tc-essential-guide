@@ -4,12 +4,8 @@
  * http://sass-lang.com/
  */
 
-@import 'fonts';
-@import 'variables';
-@import 'reset';
-@import 'helpers';
-@import 'base';
-@import 'site-view';
+// Strib styles
+@import '../node_modules/strib-styles/source/styles/root.scss';
 
 // The project style is the main one to edit
 @import 'project';
