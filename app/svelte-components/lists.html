@@ -5,10 +5,20 @@
 
   <p>{{{ data.description }}}</p>
 
-  <h3>Places</h3>
-  <ul>
-    {{#each data.places as p}}
-      <li><a href="/{{ p.filename }}">{{ p.name }}</a></li>
+  <h3>Items</h3>
+  <div class="item-list">
+    {{#each data.items as p}}
+      <Item data="{{ p }}" inList="true" />
     {{/each}}
-  </ul>
+  </div>
 </div>
+
+<script>
+import Item from './items.html';
+
+export default {
+  components: {
+    Item
+  }
+};
+</script>

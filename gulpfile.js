@@ -55,8 +55,8 @@ gulp.task(
   airtable(gulp, {
     base: 'appdVGBfh1z13BSwv',
     apiKey: process.env.AIRTABLE_API_KEY,
-    tables: ['Groups', 'Lists', 'Places'],
-    markdown: ['lists.byline', 'lists.description', 'places.description'],
+    tables: ['Groups', 'Lists', 'Items'],
+    markdown: ['lists.byline', 'lists.description', 'items.description'],
     outputPath: 'sources/guide-data.json'
   })
 );
