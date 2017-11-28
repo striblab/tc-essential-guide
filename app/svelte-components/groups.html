@@ -10,7 +10,7 @@
   <ul class="groups-items">
     {{#each data.lists as l}}
       <li>
-        <a href="/{{ l.filename }}">
+        <a href="{{ data.basePath }}/{{ l.filename }}">
           <img src="{{ l.mainImage[0].url }}" alt="Main image for '{{ l.title }}'">
           <span>{{ l.title }}</span>
         </a>

@@ -2,7 +2,7 @@
   <div class="groups cf">
     {{#each data.groups as g}}
       <div class="group">
-        <a href="/{{ g.filename }}"><span>{{ g.title }}</span></a>
+        <a href="{{ data.basePath }}/{{ g.filename }}"><span>{{ g.title }}</span></a>
       </div>
     {{/each}}
   </div>

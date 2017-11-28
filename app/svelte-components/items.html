@@ -1,7 +1,7 @@
 <div class="component component-item">
   <article class="item">
     <h1 class="heading-alternate">
-      <a href="/{{ data.filename }}">{{ data.name }}</a>
+      <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
     </h1>
 
     <address>{{ data.address }}</address>
@@ -24,7 +24,7 @@
       <h3>Appears in</h3>
       <ul>
         {{#each data.lists as l}}
-          <li><a href="/{{ l.filename }}">{{ l.title }}</a></li>
+          <li><a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a></li>
         {{/each}}
       </ul>
     {{/if}}
