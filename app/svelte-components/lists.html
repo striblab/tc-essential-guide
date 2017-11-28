@@ -1,16 +1,26 @@
 <div class="component component-list">
-  <h1>{{ data.title }}</h1>
+  <article class="lists">
+    <h1 class="heading-alternate">{{ data.title }}</h1>
 
-  <p><strong>{{{ data.byline }}}</strong></p>
+    <div class="byline">
+      {{{ data.byline }}}
+    </div>
 
-  <p>{{{ data.description }}}</p>
+    <p class="article-description">{{{ data.description }}}</p>
 
-  <h3>Items</h3>
-  <div class="item-list">
-    {{#each data.items as p}}
-      <Item data="{{ p }}" inList="true" />
-    {{/each}}
-  </div>
+    <nav class="minor-navigation items-2 minor-nav-lists">
+      <ul class="cf">
+        <li><a href="#" class="alphabetical active">Alphabetical</a></li>
+        <li><a href="#" class="distance">Distance</a></li>
+      </ul>
+    </nav>
+
+    <div class="item-list">
+      {{#each data.items as p}}
+        <Item data="{{ p }}" inList="true" />
+      {{/each}}
+    </div>
+  </article>
 </div>
 
 <script>

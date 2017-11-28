@@ -1,0 +1,33 @@
+/**
+ * Header styles
+ */
+
+header[role="banner"] {
+  text-align: center;
+  color: map-get($grays, 'dark');
+  background-color: $color-white;
+  padding-bottom: 0;
+
+  .middle-logo {
+    vertical-align: middle;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    background-image: url('./assets/images/strib/strib-logo-gray-transparent-307.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  h1 {
+    vertical-align: bottom;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    margin-left: 0.5em;
+    border-left: 1px solid map-get($grays, 'dark');
+  }
+}

@@ -4,8 +4,18 @@
  * http://sass-lang.com/
  */
 
-// Strib styles
-@import '../node_modules/strib-styles/source/styles/root.scss';
+// Variables for project
+@import 'variables';
 
-// The project style is the main one to edit
+// Strib styles
+@import '../node_modules/strib-styles/source/styles/default.scss';
+
+// Project specific styles.  Split styles into files per component
 @import 'project';
+@import 'header';
+@import 'footer';
+@import 'sub-nav';
+@import '_index';
+@import 'groups';
+@import 'lists';
+@import 'item';

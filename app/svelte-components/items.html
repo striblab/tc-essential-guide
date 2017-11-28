@@ -1,23 +1,32 @@
 <div class="component component-item">
-  <h1>{{ data.name }}</h1>
+  <article class="item">
+    <h1 class="heading-alternate">
+      <a href="/{{ data.filename }}">{{ data.name }}</a>
+    </h1>
 
-  <div class="item-image">
-    <img src="{{ data.mainImage[0].url }}" />
-  </div>
+    <address>{{ data.address }}</address>
 
-  <p>{{{ data.description }}}</p>
+    <div class="item-image">
+      <figure>
+        <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
+        <cite>{{ data.imageCredit}}</cite>
+      </figure>
+    </div>
 
-  <ul>
-    <li>Address: {{ data.address }}</li>
-    <li>Website: <a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></li>
-  </ul>
+    <p>{{{ data.description }}}</p>
 
-  {{#if !inList}}
-    <h3>Appears in</h3>
-    <ul>
-      {{#each data.lists as l}}
-        <li><a href="/{{ l.filename }}">{{ l.title }}</a></li>
-      {{/each}}
-    </ul>
-  {{/if}}
+    <dl>
+      <dt>Phone</dt> <dd>{{ data.phone }}</dd>
+      <dt>Website</dt> <dd><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></dd>
+    </dl>
+
+    {{#if !inList}}
+      <h3>Appears in</h3>
+      <ul>
+        {{#each data.lists as l}}
+          <li><a href="/{{ l.filename }}">{{ l.title }}</a></li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </article>
 </div>

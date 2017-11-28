@@ -1,0 +1,61 @@
+/**
+ * Sub navigations
+ */
+
+// Have to override the general nav style (should be fixed upstream)
+nav.minor-navigation {
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  padding-top: 1em;
+  margin-bottom: 1em;
+  box-shadow: none;
+  text-align: center;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 33.3332%;
+    float: left;
+
+    a {
+      // For some reason strib styles has an !important
+      color: $color-white !important;
+      display: block;
+      width: 100%;
+      padding-bottom: 0.5em;
+      border-bottom: 0.5em solid $color-white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: bold;
+
+      &.active {
+        color: $color-highlight-blue !important;
+        border-bottom-color: $color-highlight-blue;
+      }
+    }
+  }
+
+  &.items-2 li {
+    width: 50%;
+  }
+
+  &.minor-nav-lists ul li a {
+    color: $color-muted-blue !important;
+    border-bottom: 0.5em solid $color-muted-blue;
+
+    &.active {
+      color: $color-highlight-blue !important;
+      border-bottom-color: $color-highlight-blue;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+/**
+ * Styling for lists
+ */
+
+article.lists {
+  background-color: $color-white;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 1.5em;
+  border-radius: $default-border-radius;
+  // For border radius to work over children elements
+  overflow: hidden;
+
+  h1 {
+    font-size: 3em;
+    text-align: center;
+  }
+
+  .byline {
+    text-align: center;
+  }
+
+  .minor-navigation {
+    margin-left: -1.5em;
+    margin-right: -1.5em;
+  }
+
+  .article-description {
+    margin-bottom: 2em;
+  }
+
+  article.item {
+    margin-bottom: 3em;
+
+    &:last-child {
+      margin-bottom: inherit;
+    }
+  }
+}

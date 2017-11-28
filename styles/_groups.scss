@@ -1,0 +1,82 @@
+/**
+ * Styles for groups
+ */
+
+// Have to override the general nav style (should be fixed upstream)
+nav.groups-nav {
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  padding-top: 1em;
+  margin-bottom: 1em;
+  box-shadow: none;
+  text-align: center;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 33.3332%;
+    float: left;
+
+    a {
+      // For some reason strib styles has an !important
+      color: $color-white !important;
+      display: block;
+      width: 100%;
+      padding-bottom: 0.5em;
+      border-bottom: 0.5em solid $color-white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: bold;
+
+      &.active {
+        color: $color-highlight-blue !important;
+        border-bottom-color: $color-highlight-blue;
+      }
+    }
+  }
+}
+
+ul.groups-items {
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: block;
+  }
+
+  a {
+    display: block;
+    margin: 0 0 1em;
+    border-left: 5px solid $color-highlight-blue;
+    border-radius: $default-border-radius;
+    text-decoration: none;
+    // For border radius to work over children elements
+    overflow: hidden;
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    span {
+      display: block;
+      font-size: 2em;
+      background-color: $color-white;
+      padding: 0.5em;
+      color: $color-text;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+/**
+ * Styles for the site footer.
+ */
+
+footer[role="contentinfo"] {
+  background-color: $color-muted-blue;
+
+  .layout-index & {
+    margin-top: 0;
+  }
+}

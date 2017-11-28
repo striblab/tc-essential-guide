@@ -1,9 +1,20 @@
 <div class="component component-group">
-  <h1>{{ data.title }}</h1>
+  <nav class="minor-navigation items-3">
+    <ul class="cf">
+      <li><a href="#" class="featured active">Featured</a></li>
+      <li><a href="#" class="distance">Distance</a></li>
+      <li><a href="#" class="map">Map</a></li>
+    </ul>
+  </nav>
 
-  <ul>
+  <ul class="groups-items">
     {{#each data.lists as l}}
-      <a href="/{{ l.filename }}">{{ l.title }}</a>
+      <li>
+        <a href="/{{ l.filename }}">
+          <img src="{{ l.mainImage[0].url }}" alt="Main image for '{{ l.title }}'">
+          <span>{{ l.title }}</span>
+        </a>
+      </li>
     {{/each}}
   </ul>
 </div>

@@ -1,0 +1,55 @@
+/**
+ * Style for each item.
+ */
+
+article.item {
+  h1 {
+    text-align: left;
+    margin-top: 0;
+    font-size: 2em;
+    margin-bottom: 0.15em;
+
+    a {
+      text-decoration: none;
+      color: $color-text;
+    }
+  }
+
+  address {
+    font-style: normal;
+    margin-bottom: 1em;
+  }
+
+  figure cite {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .item-image {
+    margin-left: -1.5em;
+    margin-right: -1.5em;
+  }
+
+  dt::before {
+    content: "";
+    display: block;
+  }
+
+  dt,
+  dd {
+    display: inline;
+  }
+
+  // For linkable page only
+  .layout-items & {
+    background-color: $color-white;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-bottom: 1.5em;
+    border-radius: $default-border-radius;
+    // For border radius to work over children elements
+    overflow: hidden;
+  }
+}
