@@ -11,7 +11,9 @@
     {{#each data.lists as l}}
       <li>
         <a href="{{ data.basePath }}/{{ l.filename }}">
-          <img src="{{ l.mainImage[0].url }}" alt="Main image for '{{ l.title }}'">
+          {{#if l.mainImage && l.mainImage[0] }}
+            <img src="{{ l.mainImage[0].url }}" alt="Main image for '{{ l.title }}'">
+          {{/if}}
           <span>{{ l.title }}</span>
         </a>
       </li>

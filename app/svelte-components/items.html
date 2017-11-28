@@ -6,12 +6,14 @@
 
     <address>{{ data.address }}</address>
 
-    <div class="item-image">
-      <figure>
-        <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
-        <cite>{{ data.imageCredit}}</cite>
-      </figure>
-    </div>
+    {{#if data.mainImage && data.mainImage[0]}}
+      <div class="item-image">
+        <figure>
+          <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
+          <cite>{{ data.imageCredit}}</cite>
+        </figure>
+      </div>
+    {{/if}}
 
     <p>{{{ data.description }}}</p>
 
