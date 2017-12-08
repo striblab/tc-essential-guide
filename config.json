@@ -1,5 +1,6 @@
 {
-  "about this file": "This document defines configuration for this project that is not content or copy.",
+  "about this file":
+    "This document defines configuration for this project that is not content or copy.",
   "projectIdentifier": "super-bowl-guide",
   "social": {
     "image": "assets/images/strib/strib-logo-name-social-card.png"
@@ -20,20 +21,23 @@
   "publish": {
     "default": {
       "bucket": "static.startribune.com",
-      "path": "news/projects-staging/all/super-bowl-guide/",
-      "url": "http://static.startribune.com/news/projects-staging/all/super-bowl-guide/",
+      "path": "news/projects-staging/all/super-bowl-guide",
+      "url":
+        "http://static.startribune.com/news/projects-staging/all/super-bowl-guide/",
       "cacheSeconds": 30
     },
     "testing": {
       "bucket": "stribtest-bucket",
-      "path": "news/projects/super-bowl-guide/",
-      "url": "https://s3.amazonaws.com/stribtest-bucket/news/projects/super-bowl-guide/",
+      "path": "news/projects/super-bowl-guide",
+      "url":
+        "https://s3.amazonaws.com/stribtest-bucket/news/projects/super-bowl-guide/",
       "cacheSeconds": 30
     },
     "production": {
       "bucket": "static.startribune.com",
-      "path": "news/projects/all/super-bowl-guide/",
-      "url": "http://static.startribune.com/news/projects/all/super-bowl-guide/",
+      "path": "news/projects/all/super-bowl-guide",
+      "url":
+        "http://static.startribune.com/news/projects/all/super-bowl-guide/",
       "cacheSeconds": 600
     }
   },
