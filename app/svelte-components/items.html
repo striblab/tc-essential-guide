@@ -22,7 +22,7 @@
       <dt>Website</dt> <dd><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></dd>
     </dl>
 
-    {{#if !inList}}
+    {{#if !inList && data.lists}}
       <h3>Appears in</h3>
       <ul>
         {{#each data.lists as l}}

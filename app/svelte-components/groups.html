@@ -8,15 +8,33 @@
   </nav>
 
   <ul class="groups-items">
-    {{#each data.lists as l}}
+    {{#each allItems as i @airtableId}}
       <li>
-        <a href="{{ data.basePath }}/{{ l.filename }}">
-          {{#if l.mainImage && l.mainImage[0] }}
-            <img src="{{ l.mainImage[0].url }}" alt="Main image for '{{ l.title }}'">
+        <a href="{{ data.basePath }}/{{ i.filename }}">
+          {{#if i.mainImage && i.mainImage[0] }}
+            <img src="{{ i.mainImage[0].url }}" alt="Main image for '{{ i.title }}'">
           {{/if}}
-          <span>{{ l.title }}</span>
+          <span>{{ i.title || i.name }}</span>
         </a>
       </li>
     {{/each}}
   </ul>
 </div>
+
+<script>
+export default {
+  computed: {
+    allItems: data => {
+      let output = [];
+      if (data.lists) {
+        output = output.concat(data.lists);
+      }
+      if (data.items) {
+        output = output.concat(data.items);
+      }
+
+      return output;
+    }
+  }
+};
+</script>
