@@ -1,3 +1,10 @@
+<nav class="minor-navigation items-2 minor-nav-lists">
+  <ul class="cf">
+    <li><a href="#" class="alphabetical active">Alphabetical</a></li>
+    <li><a href="#" class="distance">Near Me</a></li>
+  </ul>
+</nav>
+
 <div class="component component-list">
   <article class="lists">
     <h1 class="heading-alternate">{{ data.title }}</h1>
@@ -8,12 +15,7 @@
 
     <p class="article-description">{{{ data.description }}}</p>
 
-    <nav class="minor-navigation items-2 minor-nav-lists">
-      <ul class="cf">
-        <li><a href="#" class="alphabetical active">Alphabetical</a></li>
-        <li><a href="#" class="distance">Distance</a></li>
-      </ul>
-    </nav>
+    
 
     <div class="item-list">
       {{#each data.items as p}}

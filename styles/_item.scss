@@ -3,31 +3,118 @@
  */
 
 article.item {
-  h1 {
-    text-align: left;
-    margin-top: 0;
-    font-size: 2em;
-    margin-bottom: 0.15em;
+  margin-top: 60px;
 
+  h1 {
+    margin-bottom: 0.35em;
+    display: inline-block;
+    vertical-align: bottom;
+      &.heading-alternate { 
+        text-align: left;
+        margin-top: 0;
+        font-size: 1.7em;
+    }
     a {
       text-decoration: none;
       color: $color-text;
+      width: 75%;
+      display: block;
+      line-height: 1.2;
+    }
+
+    &.near-me {
+      text-align: right;
+    }
+  }
+
+  .social-buttons {
+    margin-top: 30px;
+    .facebook-button {
+      display: inline-block;
+      width: 2.4em;
+      height: 2.4em;
+      margin-right: 2px;
+      background-image: url('http://static.startribune.com/images/icons/facebook.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+
+        &:hover {
+          opacity: 0.85;
+        }
+    }
+    .twitter-button {
+      display: inline-block;
+      width: 2.4em;
+      height: 2.4em;
+      margin-right: 2px;
+      background-image: url('http://static.startribune.com/images/icons/twitter.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+
+        &:hover {
+          opacity: 0.85;
+        }
+    }
+    .email-button {
+      display: inline-block;
+      width: 2.4em;
+      height: 2.4em;
+      background-image: url('http://static.startribune.com/images/icons/link.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+
+        &:hover {
+          opacity: 0.85;
+        }
     }
   }
 
   address {
     font-style: normal;
-    margin-bottom: 1em;
+    font-weight: bold;
+    margin-bottom: 1.3em;
+  }
+
+  .intro-text {
+    position: relative;
+  }
+
+  .directions, address {
+    display: inline-block;
+  }
+
+  .directions {
+    position: absolute;
+    right: 8.5%;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 9px;
+    letter-spacing: 0.2px;
+    line-height: 0.1;
+    border: 1px solid $color-emerald-green;
+    padding: 11px 7px 10px 7px;
+    text-decoration: none;
+    color: $color-emerald-green;
+    border-radius: 7px;
+
   }
 
   figure cite {
     padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-right: 1em;
+    font-family: "Benton Sans";
+    letter-spacing: 1px;
+    margin-bottom: -20px;
+    font-size: 0.65em;
   }
 
   .item-image {
-    margin-left: -1.5em;
-    margin-right: -1.5em;
+    width: 125%;
+    margin-left: -12.5%;
+    margin-top: 85px;
   }
 
   dt::before {
@@ -38,6 +125,13 @@ article.item {
   dt,
   dd {
     display: inline;
+  }
+
+  dd a {
+    text-decoration: none;
+    color: $color-default-black;
+    border-bottom: 1px solid $color-emerald-green;
+    padding-bottom: 2px;
   }
 
   // For linkable page only

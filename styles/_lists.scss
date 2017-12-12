@@ -3,32 +3,37 @@
  */
 
 article.lists {
-  background-color: $color-white;
-  margin-top: 1em;
+  margin: 0 auto;
+  margin-top: 9em;
   margin-bottom: 1em;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  padding-bottom: 1.5em;
+  width: 80%;
   border-radius: $default-border-radius;
-  // For border radius to work over children elements
-  overflow: hidden;
 
   h1 {
-    font-size: 3em;
+    font-size: 2em;
     text-align: center;
+    font-weight: bold;
+    letter-spacing: -0.3px;
   }
 
   .byline {
     text-align: center;
+    font-family: "Benton Sans";
   }
 
-  .minor-navigation {
+/*  .minor-navigation {
     margin-left: -1.5em;
     margin-right: -1.5em;
-  }
+  }*/
 
   .article-description {
     margin-bottom: 2em;
+  }
+
+  p {
+    font-family: Benton Sans;
+    line-height: 1.4;
+    letter-spacing: 0.1px;
   }
 
   article.item {

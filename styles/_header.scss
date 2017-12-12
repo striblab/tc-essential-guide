@@ -4,16 +4,55 @@
 
 header[role="banner"] {
   text-align: center;
-  color: map-get($grays, 'dark');
-  background-color: $color-white;
-  padding-bottom: 0;
+  color: $color-white;
+  background-color: $color-forest-green;
+  padding-bottom: .5em;
+  width: 100%;
+  z-index: 100;
+  position: fixed;
+  top: 0;
 
   .middle-logo {
     vertical-align: middle;
     display: inline-block;
-    width: 2em;
-    height: 2em;
-    background-image: url('./assets/images/strib/strib-logo-gray-transparent-307.png');
+    width: 9em;
+    height: 1.25em;
+    background-image: url('http://static.startribune.com/images/icons/reverse-startribune-logo-white.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .back-logo {
+    vertical-align: middle;
+    display: inline-block;
+    position: absolute;
+    left: 10%;
+    top: 1.2em;
+    width: 1.25em;
+    height: 1.25em;
+    background-image: url('http://static.startribune.com/images/icons/back.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .menu-logo {
+    position: absolute;
+    right: 8.5%;
+    top: 1.2em;
+    vertical-align: middle;
+    display: inline-block;
+    width: 1.25em;
+    height: 1.15em;
+    background-image: url('http://static.startribune.com/images/icons/hamburger.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -24,10 +63,18 @@ header[role="banner"] {
   }
 
   h1 {
+    font-family: Benton Sans;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-transform: uppercase;
     vertical-align: bottom;
-    padding-top: 0.5em;
-    padding-left: 0.5em;
-    margin-left: 0.5em;
-    border-left: 1px solid map-get($grays, 'dark');
+    padding-top: 0.6em;
+    position: absolute;
+    top: 3.1em;
+    left: 10%;
   }
+}
+
+nav {
+  box-shadow: none;
 }

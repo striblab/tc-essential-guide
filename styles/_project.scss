@@ -4,5 +4,11 @@
  */
 
 body {
-  background-color: $color-bg-blue;
+  background-color: $color-bg-gray;
+}
+
+#main-content {
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
 }

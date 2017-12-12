@@ -1,10 +1,6 @@
 <div class="component component-item">
-  <article class="item">
-    <h1 class="heading-alternate">
-      <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
-    </h1>
 
-    <address>{{ data.address }}</address>
+  <article class="item">
 
     {{#if data.mainImage && data.mainImage[0]}}
       <div class="item-image">
@@ -15,12 +11,29 @@
       </div>
     {{/if}}
 
+    <div class="intro-text">
+      <h1 class="heading-alternate">
+        <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
+      </h1>
+      <h1 class="near-me">0.2 mi</h1>
+
+      <address>{{ data.address }}</address>
+      <a href="#" class="directions">Directions</a>
+    </div>
+   
+
     <p>{{{ data.description }}}</p>
 
     <dl>
       <dt>Phone</dt> <dd>{{ data.phone }}</dd>
       <dt>Website</dt> <dd><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></dd>
     </dl>
+
+    <div class="social-buttons">
+      <a href="#" class="facebook-button"></a>
+      <a href="#" class="twitter-button"></a>
+      <a href="#" class="email-button"></a>
+    </div>
 
     {{#if !inList && data.lists}}
       <h3>Appears in</h3>

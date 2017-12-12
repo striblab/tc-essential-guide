@@ -49,34 +49,40 @@ nav.groups-nav {
 ul.groups-items {
   margin: 0;
   padding: 0;
+  margin-top: 6em;
 
   li {
     padding: 0;
     margin: 0;
     list-style: none;
     display: block;
-  }
+    position: relative;
 
   a {
     display: block;
     margin: 0 0 1em;
-    border-left: 5px solid $color-highlight-blue;
-    border-radius: $default-border-radius;
     text-decoration: none;
     // For border radius to work over children elements
     overflow: hidden;
 
     img {
       display: block;
-      max-width: 100%;
+      min-width: 100%;
+      height: auto;
     }
 
     span {
       display: block;
       font-size: 2em;
-      background-color: $color-white;
-      padding: 0.5em;
-      color: $color-text;
+      background-color: rgba(40, 40, 40, 0.8); 
+      padding: 1em;
+      color: $color-white;
+      position: absolute;
+      bottom: 0;
+      width: 89%;
+      font-weight: bold;
+      font-size: 20px;
     }
   }
+}
 }

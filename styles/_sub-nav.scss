@@ -9,53 +9,62 @@ nav.minor-navigation {
   letter-spacing: inherit;
   font-weight: inherit;
   padding-top: 1em;
-  margin-bottom: 1em;
   box-shadow: none;
   text-align: center;
+  background-color: $color-emerald-green;
+  height: 20px;
+  -webkit-box-shadow: 0px 6px 22px 0px rgba(143,143,143,1);
+  -moz-box-shadow: 0px 6px 22px 0px rgba(143,143,143,1);
+  box-shadow: 0px 6px 22px 0px rgba(143,143,143,1);
+  width: 100%;
+  z-index: 99;
+  position: fixed;
+  top: 3em;
 
   ul {
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: auto;
     display: block;
+    text-align: right;
+    position: absolute;
+    right: 10%;
+    top: 1em;
   }
 
   li {
     margin: 0;
     padding: 0;
-    display: block;
-    width: 33.3332%;
-    float: left;
+    width: auto;
+    &:first-child {
+      margin-right: 10px;
+    }
 
     a {
       // For some reason strib styles has an !important
       color: $color-white !important;
       display: block;
-      width: 100%;
-      padding-bottom: 0.5em;
-      border-bottom: 0.5em solid $color-white;
+      padding-bottom: 0.1em;
+      border-bottom: 0.15em solid $color-emerald-green;
       text-decoration: none;
       text-transform: uppercase;
       font-weight: bold;
+      font-size: 0.9em;
 
       &.active {
-        color: $color-highlight-blue !important;
-        border-bottom-color: $color-highlight-blue;
+        color: $color-white !important;
+        border-bottom-color: $color-white;
       }
     }
   }
 
-  &.items-2 li {
-    width: 50%;
-  }
-
   &.minor-nav-lists ul li a {
-    color: $color-muted-blue !important;
-    border-bottom: 0.5em solid $color-muted-blue;
+    color: $color-white !important;
+    border-bottom: 0.15em solid $color-emerald-green;
 
     &.active {
-      color: $color-highlight-blue !important;
-      border-bottom-color: $color-highlight-blue;
+      color: $color-white !important;
+      border-bottom-color: $color-white;
     }
   }
 }
