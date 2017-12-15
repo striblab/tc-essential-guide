@@ -4,11 +4,18 @@
  */
 
 body {
-  background-color: $color-bg-gray;
-}
+  background-color: $color-emerald-green;
 
-#main-content {
-	width: 100%;
-	padding-left: 0;
-	padding-right: 0;
+  // Since the headers are fixed, we add some space at the top
+  &.has-header {
+    padding-top: 3.5em;
+  }
+
+  &.has-sub-header {
+    padding-top: 3.5em;
+  }
+
+  &.has-header.has-sub-header {
+    padding-top: 3.5em;
+  }
 }
