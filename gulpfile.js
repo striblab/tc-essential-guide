@@ -43,6 +43,7 @@ gulp.task(
   'html',
   layouts(gulp, {
     data: 'sources/guide-data.json',
+    settings: 'sources/guide-settings.json',
     content: 'content.json',
     config: 'config.json',
     package: 'package.json'
@@ -51,7 +52,7 @@ gulp.task(
 
 // Get guide data from Airtable
 gulp.task(
-  'source:data',
+  'source:content',
   airtable(gulp, {
     base: 'appdVGBfh1z13BSwv',
     apiKey: process.env.AIRTABLE_API_KEY,
@@ -60,6 +61,16 @@ gulp.task(
     outputPath: 'sources/guide-data.json'
   })
 );
+gulp.task(
+  'source:settings',
+  airtable(gulp, {
+    base: 'appdVGBfh1z13BSwv',
+    apiKey: process.env.AIRTABLE_API_KEY,
+    tables: ['Settings'],
+    outputPath: 'sources/guide-settings.json'
+  })
+);
+gulp.task('source:data', ['source:content', 'source:settings']);
 
 // Lint HTML (happens after HTML build process).  The "stylish" version
 // is more succinct but its less helpful to find issues.

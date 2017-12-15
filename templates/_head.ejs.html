@@ -3,8 +3,8 @@
 
 <title><%= data.pageTitle || content.title %> | <%= content.organization || 'Star Tribune' %></title>
 
-<meta name="author" content="<%= htmlEscape(data.pageAuthor || content.author || 'Star Tribune Visuals') %>">
-<meta name="description" content="<%= htmlEscape(data.pageDescription || content.socialDescription) %>">
+<meta name="author" content="<%= htmlEscape(data.pageAuthor || content.metaAuthor || 'Star Tribune Visuals') %>">
+<meta name="description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <meta name="robots" content="index, follow">
 
 <!-- Shortcut and related icons -->
@@ -32,7 +32,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
 <meta property="og:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
-<meta property="og:description" content="<%= htmlEscape(data.pageDescription || content.socialDescription) %>">
+<meta property="og:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <% if (config.social && config.social.image) { %>
   <meta property="og:image" content="<%= config.publish.production.url %><%= config.social.image %>">
 <% } %>
@@ -40,7 +40,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="<%= content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
-<meta name="twitter:description" content="<%= htmlEscape(data.pageDescription || content.socialDescription) %>">
+<meta name="twitter:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <% if (config.social && config.social.image) { %>
   <meta name="twitter:image" content="<%= config.publish.production.url %><%= config.social.image %>">
 <% } %>
@@ -54,7 +54,7 @@
       "@type": "WebPage",
       "@id": "<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>"
     },
-    "headline": "<%= escapeQuotes(data.pageDescription || content.socialDescription) %>",
+    "headline": "<%= escapeQuotes(data.pageDescription || content.metaDescription) %>",
     "image": {
       "@type": "ImageObject",
       "url": "<%= config.publish.production.url %><%= config.social.image %>"
