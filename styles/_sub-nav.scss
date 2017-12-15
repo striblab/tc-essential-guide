@@ -17,23 +17,23 @@ nav.minor-navigation {
   padding-top: 1em;
   box-shadow: none;
   text-align: center;
-  background-color: $color-emerald-green;
+  background-color: $color-bg-gray;
   box-shadow: 0px 6px 22px 0px rgba(143, 143, 143, 1);
   width: 100%;
   z-index: 99;
   position: fixed;
-  top: 3.4em;
+  top: 3.3em;
   height: 3em;
 
   ul {
     margin: 0;
     padding: 0;
-    width: auto;
+    width: 100%;
     display: block;
     text-align: right;
     position: absolute;
-    right: 10%;
-    top: 1em;
+    right: 9%;
+    top: 25%;
   }
 
   li {
@@ -53,13 +53,24 @@ nav.minor-navigation {
       text-decoration: none;
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 0.9em;
+      font-size: 0.75em;
 
       &.active {
         color: $color-forest-green !important;
         border-bottom-color: $color-forest-green;
       }
     }
+  }
+
+  h1 {
+    font-family: "Benton Sans";
+    font-weight: bold;
+    font-size: 1.15em;
+    text-align: left;
+    color: $color-forest-green;
+    position: absolute;
+    margin-left: 10%;
+    margin-top: -2%;
   }
 
   &.minor-nav-lists ul li a {
