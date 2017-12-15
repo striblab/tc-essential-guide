@@ -20,7 +20,7 @@
         </figure>
       </div>
     {{/if}}
-   
+
 
     <p>{{{ data.description }}}</p>
 
@@ -45,3 +45,13 @@
     </div>
   </article>
 </div>
+
+<script>
+export default {
+  data() {
+    return {
+      isBrowser: typeof window !== undefined
+    };
+  }
+};
+</script>

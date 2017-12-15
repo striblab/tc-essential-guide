@@ -35,6 +35,12 @@ import Item from './items.html';
 export default {
   components: {
     Item
+  },
+
+  data() {
+    return {
+      isBrowser: typeof window !== undefined
+    };
   }
 };
 </script>

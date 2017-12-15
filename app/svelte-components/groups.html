@@ -34,6 +34,12 @@ export default {
 
       return output;
     }
+  },
+
+  data() {
+    return {
+      isBrowser: typeof window !== undefined
+    };
   }
 };
 </script>
