@@ -1,28 +1,30 @@
-<nav class="minor-navigation items-2 minor-nav-lists">
-  <ul class="cf">
-    <li><a href="#" class="alphabetical active">Alphabetical</a></li>
-    <li><a href="#" class="distance">Near Me</a></li>
-  </ul>
-</nav>
+<div class="has-minor-navigation">
+  <nav class="minor-navigation items-2 minor-nav-lists">
+    <ul class="cf">
+      <li><a href="#" class="alphabetical active">Alphabetical</a></li>
+      <li><a href="#" class="distance">Near Me</a></li>
+    </ul>
+  </nav>
 
-<div class="component component-list">
-  <article class="lists">
-    <h1 class="heading-alternate">{{ data.title }}</h1>
+  <div class="component component-list">
+    <article class="lists">
+      <h1 class="heading-alternate">{{ data.title }}</h1>
 
-    <div class="byline">
-      {{{ data.byline }}}
-    </div>
+      <div class="byline">
+        {{{ data.byline }}}
+      </div>
 
-    <p class="article-description">{{{ data.description }}}</p>
+      <p class="article-description">{{{ data.description }}}</p>
 
-    
 
-    <div class="item-list">
-      {{#each data.items as p}}
-        <Item data="{{ p }}" inList="true" />
-      {{/each}}
-    </div>
-  </article>
+
+      <div class="item-list">
+        {{#each data.items as p}}
+          <Item data="{{ p }}" inList="true" />
+        {{/each}}
+      </div>
+    </article>
+  </div>
 </div>
 
 <script>

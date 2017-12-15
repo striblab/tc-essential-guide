@@ -6,16 +6,13 @@
 body {
   background-color: $color-white;
 
-  // Since the headers are fixed, we add some space at the top
+  // Since the header is fixed, we add some space at the top
   &.has-header {
     padding-top: 3.5em;
   }
+}
 
-  &.has-sub-header {
-    padding-top: 3em;
-  }
-
-  &.has-header.has-sub-header {
-    padding-top: 7em;
-  }
+.horizontal-flush {
+  padding-left: 0;
+  padding-right: 0;
 }
