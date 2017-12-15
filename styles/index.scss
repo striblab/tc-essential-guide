@@ -11,6 +11,7 @@
 @import '../node_modules/strib-styles/source/styles/default.scss';
 
 // Project specific styles.  Split styles into files per component
+@import 'mixins';
 @import 'project';
 @import 'header';
 @import 'footer';

@@ -1,0 +1,21 @@
+/**
+ * Mixins for project
+ */
+
+// For reference, variables from the styles guide:
+// https://github.com/striblab/strib-styles/blob/master/source/styles/_variables.scss
+
+// Main breakpoint.  This is mobile first style, so means it only applies
+// when the view is this large
+@mixin full-view {
+  @media only screen and (min-width: map-get($breakpoints, 'md')) {
+    @content;
+  }
+}
+
+// Reverse, default breakpoint.  Ideally, you do not use this.
+@mixin default-view {
+  @media only screen and (max-width: map-get($breakpoints, 'md')) {
+    @content;
+  }
+}

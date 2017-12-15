@@ -10,6 +10,11 @@ body {
   &.has-header {
     padding-top: 3.5em;
   }
+
+  // Example for main breakpoint
+  @include full-view {
+    background-color: red;
+  }
 }
 
 .horizontal-flush {
