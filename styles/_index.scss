@@ -2,9 +2,11 @@
  * Styles for title page.
  */
 
+ body.layout-index {
+   background-color: $color-emerald-green;
+}
+
 .groups {
-
-
   .group a {
     font-size: 1.3em;
     display: block;

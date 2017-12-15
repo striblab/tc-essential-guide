@@ -12,14 +12,12 @@ nav.minor-navigation {
   box-shadow: none;
   text-align: center;
   background-color: $color-emerald-green;
-  height: 20px;
-  -webkit-box-shadow: 0px 6px 22px 0px rgba(143,143,143,1);
-  -moz-box-shadow: 0px 6px 22px 0px rgba(143,143,143,1);
-  box-shadow: 0px 6px 22px 0px rgba(143,143,143,1);
+  box-shadow: 0px 6px 22px 0px rgba(143, 143, 143, 1);
   width: 100%;
   z-index: 99;
   position: fixed;
-  top: 3em;
+  top: 3.4em;
+  height: 3em;
 
   ul {
     margin: 0;
