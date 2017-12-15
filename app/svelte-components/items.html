@@ -2,15 +2,6 @@
 
   <article class="item">
 
-    {{#if data.mainImage && data.mainImage[0]}}
-      <div class="item-image">
-        <figure>
-          <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
-          <cite>{{ data.imageCredit}}</cite>
-        </figure>
-      </div>
-    {{/if}}
-
     <div class="intro-text">
       <h1 class="heading-alternate">
         <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
@@ -20,6 +11,15 @@
       <address>{{ data.address }}</address>
       <a href="#" class="directions">Directions</a>
     </div>
+
+    {{#if data.mainImage && data.mainImage[0]}}
+      <div class="item-image">
+        <figure>
+          <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
+          <cite>{{ data.imageCredit}}</cite>
+        </figure>
+      </div>
+    {{/if}}
    
 
     <p>{{{ data.description }}}</p>
@@ -35,13 +35,13 @@
       <a href="#" class="email-button"></a>
     </div>
 
+    <div class="related">
     {{#if !inList && data.lists}}
-      <h3>Appears in</h3>
-      <ul>
-        {{#each data.lists as l}}
-          <li><a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a></li>
-        {{/each}}
-      </ul>
+      <h3>Related</h3>
+      {{#each data.lists as l}}
+        <a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a>
+      {{/each}}
     {{/if}}
+    </div>
   </article>
 </div>
