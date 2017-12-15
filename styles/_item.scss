@@ -3,27 +3,33 @@
  */
 
 article.item {
-  margin-top: 60px;
-
+  margin-top: 3em;
+  border-bottom: 1px solid #BDBDBD;
+  padding-bottom: 3em;
   h1 {
-    margin-bottom: 0.35em;
     display: inline-block;
     vertical-align: bottom;
+    margin-bottom: 0.1em;
       &.heading-alternate { 
         text-align: left;
         margin-top: 0;
-        font-size: 1.7em;
+        font-size: 1.6em;
+        line-height: 1;
+        width: 75%;
     }
     a {
       text-decoration: none;
       color: $color-text;
-      width: 75%;
       display: block;
-      line-height: 1.2;
+      line-height: 1.1;
     }
 
     &.near-me {
       text-align: right;
+      font-family: "Benton Sans";
+      font-weight: normal;
+      font-size: 1.5em;
+      width: 23%;
     }
   }
 
@@ -38,7 +44,6 @@ article.item {
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-
         &:hover {
           opacity: 0.85;
         }
@@ -75,7 +80,10 @@ article.item {
   address {
     font-style: normal;
     font-weight: bold;
+    font-size: 0.85em;
     margin-bottom: 1.3em;
+    margin-top: 0.5em;
+    width: 70%;
   }
 
   .intro-text {
@@ -88,18 +96,18 @@ article.item {
 
   .directions {
     position: absolute;
-    right: 8.5%;
+    right: 0;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 9px;
+    font-size: 0.55em;
     letter-spacing: 0.2px;
-    line-height: 0.1;
     border: 1px solid $color-emerald-green;
-    padding: 11px 7px 10px 7px;
+    padding: 5px 5px 3px 5px;
     text-decoration: none;
     color: $color-emerald-green;
-    border-radius: 7px;
-
+    border-radius: 5px;
+    width: auto;
+    bottom: 15%;
   }
 
   figure cite {
@@ -114,7 +122,8 @@ article.item {
   .item-image {
     width: 125%;
     margin-left: -12.5%;
-    margin-top: 85px;
+    margin-top: 0.5em;
+    margin-bottom: 3em;
   }
 
   dt::before {
@@ -127,23 +136,60 @@ article.item {
     display: inline;
   }
 
-  dd a {
-    text-decoration: none;
-    color: $color-default-black;
+  dd {
     border-bottom: 1px solid $color-emerald-green;
-    padding-bottom: 2px;
+    padding-bottom: 1px;
+    a {
+      text-decoration: none;
+      color: $color-default-black;
+    }
   }
 
   // For linkable page only
   .layout-items & {
-    background-color: $color-white;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    padding-bottom: 1.5em;
-    border-radius: $default-border-radius;
-    // For border radius to work over children elements
-    overflow: hidden;
+    margin: 0 auto;
+    background-color: $color-bg-gray;
+    margin-top: 6em;
+    width: 85%;
+    margin-bottom: 4em;
+    h1 {
+      font-weight: bold;
+      &.near-me {
+        font-weight: normal;
+      }
+    }
+    p {
+      font-family: Benton Sans;
+      line-height: 1.4;
+      letter-spacing: 0.1px;
+    }
+    .related  {
+      margin-top: 2em;
+      h3, a {
+        display: inline;
+      }
+      h3 {
+        font-family: "Benton Sans";
+        font-weight: bold;
+        font-size: 1em;
+      }
+      a {
+        border-bottom: 1px solid $color-emerald-green;
+        padding-bottom: 1px;
+        text-decoration: none;
+        color: $color-default-black;
+      }
+    }
   }
+}
+
+.layout-items {
+  header[role="banner"] {
+      -webkit-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
+      -moz-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
+      box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
+      h1 {
+        display: none;
+      }
+    }
 }

@@ -2,31 +2,110 @@
  * Styles for title page.
  */
 
- body.layout-index {
-   background-color: $color-emerald-green;
-}
+.layout-index {
+    height: 83vh;
+    background: rgba(0,99,65,1);
+    background: -moz-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,99,65,1)), color-stop(100%, rgba(0,130,74,1)));
+    background: -webkit-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
+    background: -o-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
+    background: -ms-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006341', endColorstr='#00824a', GradientType=0 );
+    overflow: hidden;
+    padding-bottom: 40px;
 
-.groups {
-  .group a {
-    font-size: 1.3em;
-    display: block;
-    width: 101%;
-    height: 9vh;
-    line-height: 4em;
-    text-align: center;
-    font-weight: bold;
-    color: $color-white;
-    text-transform: uppercase;
-    text-decoration: none;
-
-    span {
-      display: inline-block;
-      vertical-align: middle;
-      line-height: normal;
+  header[role="banner"] {
+    a.back-logo {
+      display: none;
     }
-
-    &:hover {
-      opacity: 0.5;
+    a.menu-logo {
+      display: none;
+    }
+    h1 {
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      border-top: 1px solid white;
+      width: 64%;
+      color: $color-white;
     }
   }
+
+  .groups {
+    margin-top: 8.5em;
+
+    .group a {
+      font-size: 1.1em;
+      display: block;
+      width: 101%;
+      height: 7vh;
+      line-height: 4em;
+      text-align: center;
+      font-weight: normal;
+      color: $color-white;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+      }
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .social-buttons {
+      margin-top: 30px;
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      bottom: 3%;
+      .facebook-button {
+        display: inline-block;
+        width: 2.2em;
+        height: 2.2em;
+        margin-right: 2px;
+        background-image: url('http://static.startribune.com/images/icons/facebook-white.svg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+
+          &:hover {
+            opacity: 0.85;
+          }
+      }
+      .twitter-button {
+        display: inline-block;
+        width: 2.2em;
+        height: 2.2em;
+        margin-right: 2px;
+        background-image: url('http://static.startribune.com/images/icons/twitter-white.svg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+
+          &:hover {
+            opacity: 0.85;
+          }
+      }
+      .email-button {
+        display: inline-block;
+        width: 2.2em;
+        height: 2.2em;
+        background-image: url('http://static.startribune.com/images/icons/link-white.svg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+
+          &:hover {
+            opacity: 0.85;
+          }
+      }
+    }
 }
