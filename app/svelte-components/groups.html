@@ -23,16 +23,16 @@
 <script>
 export default {
   computed: {
-    allItems: data => {
-      let output = [];
+    allItems: function(data) {
+      let o = [];
       if (data.lists) {
-        output = output.concat(data.lists);
+        o = o.concat(data.lists);
       }
       if (data.items) {
-        output = output.concat(data.items);
+        o = o.concat(data.items);
       }
 
-      return output;
+      return o;
     }
   },
 

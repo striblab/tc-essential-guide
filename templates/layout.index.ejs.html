@@ -4,7 +4,7 @@
     @@include('./_head.ejs.html')
   </head>
 
-  <body class="layout-index has-header">
+  <body class="layout-index has-header" data-page-data="<%= data.basePath + '/' + data.filename.replace('.html', '.json') %>">
     <!-- Screen reader announcements -->
     <div aria-live="polite" id="announcer" class="sr-only"></div>
 
@@ -12,13 +12,13 @@
     <a href="#main-content" class="to-main-content sr-only">Skip to main content</a>
 
     <!-- Header -->
-    <header class="project-header" role="banner">
-      @@include('./_header.ejs.html')
+    <header class="project-header" role="banner" data-component="Header">
+      <%- commonComponents.header %>
     </header>
 
     <!-- Main content here -->
-    <main id="main-content" class="content container-lg horizontal-flush" role="main">
-      <%- component %>
+    <main id="main-content" class="content container-lg horizontal-flush" role="main" data-component="Index">
+      <%- contentComponent %>
     </main>
 
     <!-- Footer -->

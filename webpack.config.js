@@ -16,16 +16,21 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /app\/.*\.(js|svelte\.html)$/,
+        test: /app\/(.*\.js|svelte-components\/.*\.html)$/,
         loader: 'babel-loader',
         options: {
           cacheDirectory: true
         }
       },
       {
-        test: /app\/.*\.svelte\.html$/,
+        test: /app\/svelte-components\/.*\.html$/,
         exclude: /node_modules/,
-        use: 'svelte-loader'
+        use: {
+          loader: 'svelte-loader',
+          options: {
+            hydratable: true
+          }
+        }
       }
     ]
   },
