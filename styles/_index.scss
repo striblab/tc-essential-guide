@@ -2,7 +2,7 @@
  * Styles for title page.
  */
 
-.layout-index { 
+.layout-index {
     height: 83vh;
     background: rgba(0,99,65,1);
     background: -moz-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
@@ -14,10 +14,6 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006341', endColorstr='#00824a', GradientType=0 );
     overflow: hidden;
     padding-bottom: 40px;
-
-  footer {
-    display: none;
-  }
 
   header[role="banner"] {
     a.back-logo {
@@ -69,7 +65,7 @@
       left: 50%;
       -webkit-transform: translateX(-50%);
       transform: translateX(-50%);
-      bottom: 3%; 
+      bottom: 3%;
       .facebook-button {
         display: inline-block;
         width: 2.2em;

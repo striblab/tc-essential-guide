@@ -2,6 +2,12 @@
  * Sub navigations
  */
 
+// Since the nav is fixed, use this around the parent dom to
+// create the necessary space
+.has-minor-navigation {
+  padding-top: 3em;
+}
+
 // Have to override the general nav style (should be fixed upstream)
 nav.minor-navigation {
   font-family: inherit;
@@ -11,15 +17,13 @@ nav.minor-navigation {
   padding-top: 1em;
   box-shadow: none;
   text-align: center;
-  background-color: $color-bg-gray;
-  height: 20px;
-  -webkit-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
-  -moz-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
-  box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
+  background-color: $color-emerald-green;
+  box-shadow: 0px 6px 22px 0px rgba(143, 143, 143, 1);
   width: 100%;
   z-index: 99;
   position: fixed;
-  top: 3em;
+  top: 3.4em;
+  height: 3em;
 
   ul {
     margin: 0;

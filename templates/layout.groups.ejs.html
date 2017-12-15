@@ -4,7 +4,7 @@
     @@include('./_head.ejs.html')
   </head>
 
-  <body class="layout-groups">
+  <body class="layout-groups has-header">
     <!-- Screen reader announcements -->
     <div aria-live="polite" id="announcer" class="sr-only"></div>
 
@@ -17,7 +17,7 @@
     </header>
 
     <!-- Main content here -->
-    <main id="main-content" class="content container-lg" role="main">
+    <main id="main-content" class="content container-lg horizontal-flush" role="main">
       <%- component %>
     </main>
 

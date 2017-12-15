@@ -50,7 +50,6 @@ nav.groups-nav {
 ul.groups-items {
   margin: 0;
   padding: 0;
-  margin-top: 6em;
 
   li {
     padding: 0;
@@ -59,31 +58,31 @@ ul.groups-items {
     display: block;
     position: relative;
 
-  a {
-    display: block;
-    margin: 0 0 1em;
-    text-decoration: none;
-    // For border radius to work over children elements
-    overflow: hidden;
-
-    img {
+    a {
       display: block;
-      min-width: 100%;
-      height: auto;
-    }
+      margin: 0 0 1em;
+      text-decoration: none;
+      // For border radius to work over children elements
+      overflow: hidden;
 
-    span {
-      display: block;
-      font-size: 2em;
-      background-color: rgba(40, 40, 40, 0.8); 
-      padding: 1em;
-      color: $color-white;
-      position: absolute;
-      bottom: 0;
-      width: 89%;
-      font-weight: bold;
-      font-size: 20px;
+      img {
+        display: block;
+        min-width: 100%;
+        height: auto;
+      }
+
+      span {
+        display: block;
+        font-size: 2em;
+        background-color: rgba(40, 40, 40, 0.8);
+        padding: 1em;
+        color: $color-white;
+        position: absolute;
+        bottom: 0;
+        width:100%;
+        font-weight: bold;
+        font-size: 20px;
+      }
     }
   }
-}
 }
