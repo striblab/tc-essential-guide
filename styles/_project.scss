@@ -4,7 +4,7 @@
  */
 
 body {
-  background-color: $color-white;
+  background-color: $color-bg-gray;
 
   // Since the header is fixed, we add some space at the top
   &.has-header {

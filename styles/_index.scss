@@ -3,7 +3,7 @@
  */
 
 .layout-index {
-    height: 83vh;
+    height: 100vh;
     background: rgba(0,99,65,1);
     background: -moz-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
     background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,99,65,1)), color-stop(100%, rgba(0,130,74,1)));
@@ -33,7 +33,7 @@
   }
 
   .groups {
-    margin-top: 8.5em;
+    margin-top: 4em;
 
     .group a {
       font-size: 1.1em;
