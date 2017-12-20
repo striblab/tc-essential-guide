@@ -3,7 +3,7 @@
  */
 
 article.item {
-  margin-top: 1em;
+  margin-top: 1.5em;
   border-bottom: 1px solid black;
   padding-bottom: 3em;
   h1 {
@@ -37,10 +37,10 @@ article.item {
     margin-top: 30px;
     .facebook-button {
       display: inline-block;
-      width: 2.4em;
-      height: 2.4em;
+      width: 2.2em;
+      height: 2.2em;
       margin-right: 2px;
-      background-image: url('http://static.startribune.com/images/icons/facebook.svg');
+      background-image: url('http://static.startribune.com/images/icons/facebook.svg?cache=trash1');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -50,10 +50,10 @@ article.item {
     }
     .twitter-button {
       display: inline-block;
-      width: 2.4em;
-      height: 2.4em;
+      width: 2.2em;
+      height: 2.2em;
       margin-right: 2px;
-      background-image: url('http://static.startribune.com/images/icons/twitter.svg');
+      background-image: url('http://static.startribune.com/images/icons/twitter.svg?cache=trash');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -64,9 +64,9 @@ article.item {
     }
     .email-button {
       display: inline-block;
-      width: 2.4em;
-      height: 2.4em;
-      background-image: url('http://static.startribune.com/images/icons/link.svg');
+      width: 2.2em;
+      height: 2.2em;
+      background-image: url('http://static.startribune.com/images/icons/link.svg?cache=trash');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -120,8 +120,8 @@ article.item {
   }
 
   .item-image {
-    width: 125%;
-    margin-left: -12.5%;
+    width: 120%;
+    margin-left: -10%;
     margin-top: 0.5em;
     margin-bottom: 3em;
   }
@@ -129,6 +129,10 @@ article.item {
   dt::before {
     content: "";
     display: block;
+  }
+
+  .phone {
+    margin-bottom: 0.3em;
   }
 
   dt,
@@ -139,6 +143,7 @@ article.item {
   dd {
     border-bottom: 1px solid $color-emerald-green;
     padding-bottom: 1px;
+    margin-left: 0.3em;
     a {
       text-decoration: none;
       color: $color-default-black;
@@ -160,8 +165,8 @@ article.item {
     }
     p {
       font-family: Benton Sans;
-      line-height: 1.4;
-      letter-spacing: 0.1px;
+      line-height: 1.5;
+      letter-spacing: 0.15px;
     }
     .related  {
       margin-top: 2em;
