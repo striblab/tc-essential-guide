@@ -47,7 +47,8 @@
     {{#if data.items}}
       <div class="item-list">
         {{#each data.items as p @id}}
-          <Item data="{{ p }}" inList="true" view="{{ view }}" />
+          <Item data="{{ p }}" utils="{{ utils }}" store="{{ store }}"
+            inList="true" view="{{ view }}" />
         {{/each}}
       </div>
     {{else}}

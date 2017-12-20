@@ -6,7 +6,10 @@
       <h1 class="heading-alternate">
         <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
       </h1>
-      <h1 class="near-me">0.2 mi</h1>
+
+      {{#if data.distance}}
+        <h1 class="near-me">{{ utils.round(data.distance, 1) }} mi</h1>
+      {{/if}}
 
       <address>{{ data.address }}</address>
       <a href="#" class="directions">Directions</a>
