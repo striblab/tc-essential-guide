@@ -12,6 +12,10 @@ header[role="banner"] {
   position: fixed;
   top: 0;
 
+  nav {
+    -webkit-box-shadow: none;
+  }
+
   .middle-logo {
     vertical-align: middle;
     display: inline-block;
