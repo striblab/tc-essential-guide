@@ -7,7 +7,7 @@
         <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
       </h1>
 
-      {{#if data.distance}}
+      {{#if data.distance && (!inList || (inList && view === 'distance'))}}
         <h1 class="near-me">{{ utils.round(data.distance, 1) }} mi</h1>
       {{/if}}
 
