@@ -43,8 +43,8 @@ gulp.task(
   'html',
   layouts(gulp, {
     data: 'sources/guide-data.json',
-    settings: 'sources/guide-settings.json',
-    content: 'content.json',
+    airtableContent: 'sources/guide-settings.json',
+    //content: 'content.json',
     config: 'config.json',
     package: 'package.json'
   })
