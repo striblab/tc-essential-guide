@@ -24,7 +24,17 @@ let components = {
 };
 
 // Setup utils function
-utilsFn({});
+let utils = utilsFn({
+  useView: false
+});
+
+// Object for global store across components.  In theory, the svelte
+// store shoudl work, but was unable to get this to work
+let store = {
+  error: false,
+  errorMessage: null,
+  location: null
+};
 
 // Create components.  Get page data.
 let dataFile = $('body').attr('data-page-data');
@@ -39,7 +49,7 @@ if (dataFile) {
         new components[c]({
           hydrated: true,
           target: el,
-          data: { data: data }
+          data: { data: data, utils: utils, store: store }
         });
       });
     })

@@ -38,7 +38,7 @@
     <div class="related">
     {{#if !inList && data.lists}}
       <h3>Related</h3>
-      {{#each data.lists as l}}
+      {{#each data.lists as l @id}}
         <a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a>
       {{/each}}
     {{/if}}

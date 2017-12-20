@@ -27,7 +27,10 @@ class Util {
 
     // Defaults
     this.options.pym = this.options.pym === undefined ? true : this.options.pym;
-    this.options.useView = this.options.useView === undefined ? true : this.options.useView;
+    this.options.runChecks =
+      this.options.runChecks === undefined ? true : this.options.runChecks;
+    this.options.useView =
+      this.options.useView === undefined ? true : this.options.useView;
     this.options.views = this.options.views || {
       develop: /localhost.*|127\.0\.0\.1.*/i,
       staging: /staging/i
@@ -44,14 +47,22 @@ class Util {
 
     // Enable pym
     if (this.options.pym) {
-      this.pym = !_.isUndefined(window.pym) ? new pym.Child({ polling: 500 }) : undefined;
+      this.pym = !_.isUndefined(window.pym)
+        ? new pym.Child({ polling: 500 })
+        : undefined;
+    }
+
+    // Run checks
+    if (this.options.runChecks) {
+      this.checkGeolocate();
+      this.checkLocalStorage();
     }
   }
 
   // Set view (make note)
   setView() {
     if (this.options.useView) {
-      let view ;
+      let view;
       _.find(this.options.views, (match, v) => {
         view = v;
         return window.location.href.match(match) ? v : undefined;
@@ -90,7 +101,7 @@ class Util {
     try {
       this.embedded = window.self !== window.top;
     }
-    catch(e) {
+    catch (e) {
       this.embedded = true;
     }
 
@@ -98,47 +109,66 @@ class Util {
   }
 
   // Check for local storage
-  hasLocalStorage() {
-    if (!_.isUndefined(this.localStorage)) {
-      return this.localStorage;
+  checkLocalStorage() {
+    if (!_.isUndefined(this.hasLocalStorage)) {
+      return this.hasLocalStorage;
     }
 
     try {
       window.localStorage.setItem('test', 'test');
       window.localStorage.removeItem('test');
-      this.localStorage = true;
+      this.hasLocalStorage = true;
     }
-    catch(e) {
-      this.localStorage = false;
+    catch (e) {
+      this.hasLocalStorage = false;
     }
 
-    return this.localStorage;
+    return this.hasLocalStorage;
   }
 
   // Check for geolocation
-  hasGeolocate() {
-    return (window.navigator && 'geolocation' in window.navigator);
+  checkGeolocate() {
+    if (_.isUndefined(this.localStorage)) {
+      this.hasGeolocate = window.navigator && 'geolocation' in window.navigator;
+    }
+
+    return this.hasGeolocate;
   }
 
   // Basic geolocation function
-  geolocate(done) {
-    if (this.hasGeolocate()) {
-      window.navigator.geolocation.getCurrentPosition((position) => {
-        done(null, { lat: position.coords.latitude, lng: position.coords.longitude });
-      }, () => {
-        done('Unable to find your position.');
-      });
+  geolocate(done, watch = false) {
+    if (this.checkGeolocate()) {
+      this.geolocateWatchID = window.navigator.geolocation[
+        watch ? 'watchPosition' : 'getCurrentPosition'
+      ](
+        position => {
+          done(null, {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+        },
+        () => {
+          done('Unable to find your position.');
+        }
+      );
     }
     else {
       done('Geolocation not available');
     }
   }
 
+  // Stop geolocation
+  stopGeolocate() {
+    if (this.geolocateWatchID && this.checkGeolocate()) {
+      window.navigator.geolocation.clearWatch(this.geolocateWatchID);
+    }
+  }
+
   // Scroll to id
   goTo(id) {
-    const el = _.isElement(id) ? id :
-      id[0] && _.isElement(id[0]) ? id[0] :
-        document.getElementById(id);
+    const el = _.isElement(id)
+      ? id
+      : id[0] && _.isElement(id[0]) ? id[0] : document.getElementById(id);
 
     if (!el) {
       return;
@@ -147,25 +177,20 @@ class Util {
     if (this.isEmbedded() && this.pym) {
       this.pym.scrollParentToChildEl(el);
     }
-    else {
+    else if (el.scrollIntoView) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
-  // Google analytics page update
-  // https://developers.google.com/analytics/devguides/collection/analyticsjs/single-page-applications
-  gaPageUpdate(path) {
-    path = path ? path : document.location.pathname +
-      document.location.search + document.location.hash;
-
-    if (window.ga) {
-      window.ga('set', 'page', path);
-      window.ga('send', 'pageview');
-    }
+  // Round number
+  round(value, decimals = 2) {
+    return _.isNumber(value)
+      ? Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
+      : value;
   }
 }
 
 // Export a generator for the class.
-export default (options) => {
+export default options => {
   return new Util(options);
 };

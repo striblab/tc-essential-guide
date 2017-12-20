@@ -1,12 +1,20 @@
 <div class="component component-list has-minor-navigation">
-
   <nav class="minor-navigation items-2 minor-nav-lists">
     <h1>TO DO</h1>
-    <ul class="cf">
-      <li><a href="#" class="alphabetical active">Alphabetical</a></li>
-      <li><a href="#" class="distance">Near Me</a></li>
-    </ul>
+
+    {{#if utils && utils.hasGeolocate }}
+      <ul class="cf">
+        <li><a href="#/alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
+        <li>
+          <a href="#/distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">Near Me</a>
+          {{#if isGeolocating}}
+            <i class="fa fa-spinner fa-spin"></i>
+          {{/if}}
+        </li>
+      </ul>
+    {{/if}}
   </nav>
+
   <article class="lists">
     <h1 class="heading-alternate">{{ data.title }}</h1>
 
@@ -23,17 +31,28 @@
     <p class="article-description">{{{ data.description }}}</p>
 
     <nav class="toggle-nav">
-      <ul class="cf">
-        <li><a href="#" class="alphabetical active">Alphabetical</a></li>
-        <li><a href="#" class="distance">Near Me</a></li>
-      </ul>
+      {{#if utils && utils.hasGeolocate }}
+        <ul class="cf">
+          <li><a href="#/alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
+          <li>
+            <a href="#/distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">Near Me</a>
+            {{#if isGeolocating}}
+              <i class="fa fa-spinner fa-spin"></i>
+            {{/if}}
+          </li>
+        </ul>
+      {{/if}}
     </nav>
 
-    <div class="item-list">
-      {{#each data.items as p}}
-        <Item data="{{ p }}" inList="true" />
-      {{/each}}
-    </div>
+    {{#if data.items}}
+      <div class="item-list">
+        {{#each data.items as p @id}}
+          <Item data="{{ p }}" inList="true" view="{{ view }}" />
+        {{/each}}
+      </div>
+    {{else}}
+      <div><em>This list should have items.</em></div>
+    {{/if}}
   </article>
 </div>
 
@@ -45,9 +64,121 @@ export default {
     Item
   },
 
+  oncreate() {
+    console.log(this);
+  },
+
+  ondestroy() {
+    let u = this.get('utils');
+    if (u) {
+      u.stopGeolocate();
+    }
+  },
+
+  methods: {
+    sortAlpha: function(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      this.set({ view: 'alpha' });
+      let d = this.get('data');
+      d.items = _.sortBy(d.items, i => {
+        return i.title || i.name;
+      });
+      this.set({ data: d });
+    },
+
+    sortDistance: function(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      this.set({ view: 'distance' });
+      this.geolocate((error, position) => {
+        // TODO: Handle error
+        console.log(error, position);
+
+        let d = this.get('data');
+        d.items = _.sortBy(d.items, i => {
+          // Set distance
+          if (i.latitude && i.longitude) {
+            i.distance = this.distance(
+              i.latitude,
+              i.longitude,
+              position.lat,
+              position.lng
+            );
+          }
+
+          return i.distance || 999999;
+        });
+        this.set({ data: d });
+      });
+    },
+
+    geolocate: function(done) {
+      let u = this.get('utils');
+      if (u && u.hasGeolocate) {
+        this.set({ isGeolocating: true });
+
+        // Check if we have a location, use that, but still update
+        let store = this.get('store');
+        if (
+          store &&
+          store.location &&
+          store.location.lat &&
+          _.isFunction(done)
+        ) {
+          done(null, store.location);
+        }
+
+        // Geolocate
+        u.geolocate((error, position) => {
+          this.set({ isGeolocating: false });
+
+          if (error) {
+            if (_.isFunction(done)) {
+              return done(error);
+            }
+          }
+          else if (position) {
+            this.set({ store: { location: position } });
+
+            if (_.isFunction(done)) {
+              return done(null, position);
+            }
+          }
+        });
+      }
+    },
+
+    // http://www.geodatasource.com/developers/javascript
+    distance: function(lat1, lng1, lat2, lng2, unit = 'miles') {
+      let radlat1 = Math.PI * lat1 / 180;
+      let radlat2 = Math.PI * lat2 / 180;
+      let theta = lng1 - lng2;
+      let radtheta = Math.PI * theta / 180;
+      let dist =
+        Math.sin(radlat1) * Math.sin(radlat2) +
+        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      dist = Math.acos(dist);
+      dist = dist * 180 / Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit === 'kilometers') {
+        dist = dist * 1.609344;
+      }
+      if (unit === 'nautical') {
+        dist = dist * 0.8684;
+      }
+      return dist;
+    }
+  },
+
   data() {
     return {
-      isBrowser: typeof window !== undefined
+      isBrowser: typeof window !== undefined,
+      view: 'alpha'
     };
   }
 };
