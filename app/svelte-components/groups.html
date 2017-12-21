@@ -10,6 +10,20 @@
     </ul>
   </nav>
 
+<<<<<<< HEAD
+  <ul class="groups-items">
+    {{#each allItems as i @airtableId}}
+      <li>
+        <a href="{{ data.basePath }}/{{ i.filename }}">
+          {{#if i.mainImage && i.mainImage[0] }}
+            <img src="{{ i.mainImage[0].url }}" alt="Main image for '{{ i.title }}'">
+          {{/if}}
+          <span class="glass">{{ i.title || i.name }}</span>
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+=======
   {{#if view === 'featured'}}
     <ul class="groups-items">
       {{#each allListsItems as i @airtableId}}
@@ -37,6 +51,7 @@
       {{/each}}
     </div>
   {{/if}}
+>>>>>>> 588c484677d35ec1156d062eecc3125108bdc26a
 </div>
 
 <script>
