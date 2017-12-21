@@ -41,6 +41,7 @@
 
 <script>
 import Item from './items.html';
+import mapStyles from '../map-styles';
 
 export default {
   components: {
@@ -56,8 +57,7 @@ export default {
         if (n && n !== o) {
           if (n === 'featured') {
             this.showFeatured();
-          }
-          else if (n === 'map') {
+          } else if (n === 'map') {
             this.showMap();
           }
         }
@@ -85,9 +85,19 @@ export default {
 
       if (this.get('isBrowser') && window.google) {
         this.drawMap();
+        this.observeItems();
       }
     },
 
+    // Observe the items as the scroll
+    observeItems() {
+      let i = this.get('allItems');
+      if (i && i.length) {
+        // TODO
+      }
+    },
+
+    // Draw google map
     drawMap: function() {
       // Twin cities
       let defaultCenter = {
@@ -106,7 +116,8 @@ export default {
           scaleControl: false,
           streetViewControl: false,
           rotateControl: false,
-          fullscreenControl: false
+          fullscreenControl: false,
+          styles: mapStyles
         });
 
         // Create markers if needed
@@ -147,8 +158,7 @@ export default {
 
         // Show all markers
         this.__map.fitBounds(this.__markersBound);
-      }
-      else {
+      } else {
         window.google.maps.event.trigger(this.__map, 'resize');
       }
     }
