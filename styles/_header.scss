@@ -6,7 +6,7 @@ header[role="banner"] {
   text-align: center;
   color: $color-white;
   background-color: $color-forest-green;
-  padding-bottom: .5em;
+  padding-bottom: .4em;
   width: 100%;
   z-index: 100;
   position: fixed;
@@ -19,8 +19,8 @@ header[role="banner"] {
   .middle-logo {
     vertical-align: middle;
     display: inline-block;
-    width: 9em;
-    height: 1.25em;
+    width: 11em;
+    height: 1.5em;
     background-image: url('http://static.startribune.com/images/icons/reverse-startribune-logo-white.svg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -35,10 +35,10 @@ header[role="banner"] {
     vertical-align: middle;
     display: inline-block;
     position: absolute;
-    left: 10%;
-    top: 1.2em;
-    width: 1.25em;
-    height: 1.25em;
+    left: 4%;
+    top: 1em;
+    width: 1.5em;
+    height: 1.5em;
     background-image: url('http://static.startribune.com/images/icons/back.svg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -50,12 +50,12 @@ header[role="banner"] {
 
   .menu-logo {
     position: absolute;
-    right: 8.5%;
-    top: 1.2em;
+    right: 4%;
+    top: 1em;
     vertical-align: middle;
     display: inline-block;
-    width: 1.25em;
-    height: 1.15em;
+    width: 1.5em;
+    height: 1.5em;
     background-image: url('http://static.startribune.com/images/icons/hamburger.svg');
     background-repeat: no-repeat;
     background-position: center center;
