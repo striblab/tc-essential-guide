@@ -1,13 +1,11 @@
 <div class="component component-item">
-
-  <article class="item">
-
+  <article class="item item-{{ display }}">
     <div class="intro-text">
       <h1 class="heading-alternate">
         <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
       </h1>
 
-      {{#if data.distance && (!inList || (inList && view === 'distance'))}}
+      {{#if data.distance && view === 'distance'}}
         <h1 class="near-me">{{ utils.round(data.distance, 1) }} mi</h1>
       {{/if}}
 
@@ -15,7 +13,7 @@
       <a href="#" class="directions">Directions</a>
     </div>
 
-    {{#if data.mainImage && data.mainImage[0]}}
+    {{#if data.mainImage && data.mainImage[0] && display !== 'map' }}
       <div class="item-image">
         <figure>
           <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
@@ -27,25 +25,27 @@
 
     <p>{{{ data.description }}}</p>
 
-    <dl>
-      <div class="phone"><dt>Phone </dt> <dd>{{ data.phone }}</dd></div>
-      <dt>Website </dt> <dd><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></dd>
-    </dl>
+    {{#if display !== 'map'}}
+      <dl>
+        <div class="phone"><dt>Phone </dt> <dd>{{ data.phone }}</dd></div>
+        <dt>Website </dt> <dd><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></dd>
+      </dl>
 
-    <div class="social-buttons">
-      <a href="#" class="facebook-button"></a>
-      <a href="#" class="twitter-button"></a>
-      <a href="#" class="email-button"></a>
-    </div>
+      <div class="social-buttons">
+        <a href="#" class="facebook-button"></a>
+        <a href="#" class="twitter-button"></a>
+        <a href="#" class="email-button"></a>
+      </div>
 
-    <div class="related">
-    {{#if !inList && data.lists}}
-      <h3>Related</h3>
-      {{#each data.lists as l @id}}
-        <a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a>
-      {{/each}}
+      <div class="related">
+        {{#if display === 'list' && data.lists}}
+          <h3>Related</h3>
+          {{#each data.lists as l @id}}
+            <a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a>
+          {{/each}}
+        {{/if}}
+      </div>
     {{/if}}
-    </div>
   </article>
 </div>
 
@@ -53,6 +53,7 @@
 export default {
   data() {
     return {
+      display: 'full',
       isBrowser: typeof window !== undefined
     };
   }

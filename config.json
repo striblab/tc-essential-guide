@@ -14,7 +14,8 @@
     "globals": [
       "https://cdn.polyfill.io/v2/polyfill.min.js",
       "http://static.startribune.com/assets/libs/lodash/4.17.4/lodash.min.js",
-      "http://static.startribune.com/assets/libs/jquery/3.2.1/jquery.slim.min.js"
+      "http://static.startribune.com/assets/libs/jquery/3.2.1/jquery.slim.min.js",
+      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBN1TbeUQKZhhulEsc24KlJzskpNpBUAUI"
     ]
   },
   "content": {},

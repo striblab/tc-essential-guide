@@ -2,7 +2,6 @@
  * Styles for groups
  */
 
-
 // Have to override the general nav style (should be fixed upstream)
 nav.groups-nav {
   font-family: inherit;
@@ -79,10 +78,39 @@ ul.groups-items {
         color: $color-white;
         position: absolute;
         bottom: 0;
-        width:100%;
+        width: 100%;
         font-weight: bold;
         font-size: 20px;
       }
     }
+  }
+}
+
+.has-minor-navigation.view-map {
+  padding-top: calc(3em + 33vh);
+}
+
+.map-items {
+  .item {
+    border: 1px solid $color-black;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 0.5em;
+  }
+}
+
+.map-wrapper {
+  width: 100%;
+  position: fixed;
+  height: 10em;
+  height: 33.33vh;
+  background-color: red;
+  z-index: 999;
+  top: 6.5em;
+
+  .map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
 }

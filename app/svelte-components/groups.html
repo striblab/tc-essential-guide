@@ -1,12 +1,21 @@
-<div class="component component-group has-minor-navigation">
+<div class="component component-group has-minor-navigation view-{{ view }}">
   <nav class="minor-navigation items-2">
     <h1>TO DO</h1>
+
     <ul class="cf">
+<<<<<<< HEAD
+      <li><a href="#/featured" on:click="eventSet(event, { view: 'featured' })"
+        class="featured {{ view === 'featured' ? 'active' : '' }}">Featured</a></li>
+      <li><a href="#/map" on:click="eventSet(event, { view: 'map' })"
+        class="distance {{ view === 'map' ? 'active' : '' }}">Near Me</a></li>
+=======
       <li><a href="#" class="featured active">Featured</a></li>
       <li><a href="#" class="distance">Map</a></li>
+>>>>>>> cd276b4e2c6d41980bbb3096d2e2ef803de263bf
     </ul>
   </nav>
 
+<<<<<<< HEAD
   <ul class="groups-items">
     {{#each allItems as i @airtableId}}
       <li>
@@ -19,15 +28,185 @@
       </li>
     {{/each}}
   </ul>
+=======
+  {{#if view === 'featured'}}
+    <ul class="groups-items">
+      {{#each allListsItems as i @airtableId}}
+        <li>
+          <a href="{{ data.basePath }}/{{ i.filename }}">
+            {{#if i.mainImage && i.mainImage[0] }}
+              <img src="{{ i.mainImage[0].url }}" alt="Main image for '{{ i.title }}'">
+            {{/if}}
+            <span>{{ i.title || i.name }}</span>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if view === 'map'}}
+    <div class="map-wrapper">
+      <div class="map" ref:itemsMap></div>
+    </div>
+
+    <div class="map-items">
+      {{#each allItems as i @airtableId}}
+        <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
+          display="map" view="{{ view }}" />
+      {{/each}}
+    </div>
+  {{/if}}
+>>>>>>> 588c484677d35ec1156d062eecc3125108bdc26a
 </div>
 
 <script>
+import Item from './items.html';
+import mapStyles from '../map-styles';
+
 export default {
+  components: {
+    Item
+  },
+
+  oncreate: function() {
+    // React to view change.  Since we need to have access to the dom
+    // for the map, we defer the observe
+    this.observe(
+      'view',
+      (n, o) => {
+        if (n && n !== o) {
+          if (n === 'featured') {
+            this.showFeatured();
+          } else if (n === 'map') {
+            this.showMap();
+          }
+        }
+      },
+      { init: false, defer: true }
+    );
+  },
+
+  methods: {
+    // Proxy around set to be able to prevent default
+    eventSet: function(e, properties) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      this.set(properties);
+    },
+
+    showFeatured: function() {
+      this.set({ view: 'featured' });
+    },
+
+    showMap: function() {
+      this.set({ view: 'map' });
+
+      if (this.get('isBrowser') && window.google) {
+        this.drawMap();
+        this.observeItems();
+      }
+    },
+
+    // Observe the items as the scroll
+    observeItems() {
+      let i = this.get('allItems');
+      if (i && i.length) {
+        // TODO
+      }
+    },
+
+    // Draw google map
+    drawMap: function() {
+      // Twin cities
+      let defaultCenter = {
+        lat: 44.9629232,
+        lng: -93.159196
+      };
+      let defaultZoom = 11;
+
+      // Only draw map if needed
+      if (!this.__map) {
+        this.__map = new window.google.maps.Map(this.refs.itemsMap, {
+          zoom: defaultZoom,
+          center: defaultCenter,
+          zoomControl: true,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false,
+          styles: mapStyles
+        });
+
+        // Create markers if needed
+        if (!this.__markers || !this.__markers.length) {
+          this.__markersBound = new window.google.maps.LatLngBounds();
+          this.__markers = [];
+
+          this.get('allItems').forEach(i => {
+            if (i.latitude && i.longitude) {
+              let p = {
+                lat: parseFloat(i.latitude),
+                lng: parseFloat(i.longitude)
+              };
+
+              let infowindow = new window.google.maps.InfoWindow({
+                content: i.name || i.title
+                // maxWidth: 200
+              });
+
+              let marker = new window.google.maps.Marker({
+                position: p,
+                title: i.name || i.title
+              });
+              marker.addListener('click', function() {
+                infowindow.open(this.__map, marker);
+              });
+
+              this.__markersBound.extend(p);
+              this.__markers.push(marker);
+            }
+          });
+        }
+
+        // Add markers to map
+        this.__markers.forEach(m => {
+          m.setMap(this.__map);
+        });
+
+        // Show all markers
+        this.__map.fitBounds(this.__markersBound);
+      } else {
+        window.google.maps.event.trigger(this.__map, 'resize');
+      }
+    }
+  },
+
   computed: {
-    allItems: function(data) {
+    // Top level lists and items
+    allListsItems: function(data) {
       let o = [];
       if (data.lists) {
         o = o.concat(data.lists);
+      }
+      if (data.items) {
+        o = o.concat(data.items);
+      }
+
+      return o;
+    },
+
+    // All items (items in lists)
+    allItems: function(data) {
+      let o = [];
+      if (data.lists) {
+        data.lists.forEach(l => {
+          if (l.items && l.items.length) {
+            o = o.concat(l.items);
+          }
+        });
       }
       if (data.items) {
         o = o.concat(data.items);
@@ -39,7 +218,8 @@ export default {
 
   data() {
     return {
-      isBrowser: typeof window !== undefined
+      isBrowser: typeof window !== undefined,
+      view: 'featured'
     };
   }
 };
