@@ -3,9 +3,19 @@
 
 <title><%= data.pageTitle || content.title %> | <%= content.organization || 'Star Tribune' %></title>
 
+<meta name="application-name" content="<%= content.title %>">
 <meta name="author" content="<%= htmlEscape(data.pageAuthor || content.metaAuthor || 'Star Tribune Visuals') %>">
 <meta name="description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <meta name="robots" content="index, follow">
+<meta name="rating" content="General">
+
+<link rel="index" href="<%= config.publish.production.url %>">
+
+<!-- Geo tags -->
+<!-- <meta name="ICBM" content="latitude, longitude">
+<meta name="geo.position" content="latitude;longitude">
+<meta name="geo.region" content="US-MN">
+<meta name="geo.placename" content="Minneapolis/St. Paul"> -->
 
 <!-- Shortcut and related icons -->
 <link rel="apple-touch-icon" sizes="180x180" href="<%= data.basePath || '.' %>/assets/images/favicons/apple-touch-icon.png">
@@ -17,8 +27,16 @@
 <meta name="msapplication-config" content="<%= data.basePath || '.' %>/assets/images/favicons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 
+<!-- Add to home screen for Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="<%= content.title %>">
+
+<!-- Add to home screen for Android -->
+<meta name="mobile-web-app-capable" content="yes">
+
 <!-- For proper phone zoom -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Global/external styles -->
 <% if (config.styles && config.styles.globals) { config.styles.globals.forEach(function(s) { %>
@@ -33,12 +51,15 @@
 <meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
 <meta property="og:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
 <meta property="og:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
+<meta property="og:site_name" content="<%= content.title %>">
+<meta property="og:locale" content="en_US">
 <% if (config.social && config.social.image) { %>
   <meta property="og:image" content="<%= config.publish.production.url %><%= config.social.image %>">
 <% } %>
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:creator" content="<%= content.twitterAccount || '@StarTribune' %>">
+<meta name="twitter:site" content="<%= content.twitterAccount || '@StarTribune' %>">
+<meta name="twitter:creator" content="<%= data.twitterAccount || content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
 <meta name="twitter:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <% if (config.social && config.social.image) { %>
