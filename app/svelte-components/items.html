@@ -1,4 +1,15 @@
 <div class="component component-item">
+  <nav class="minor-navigation items-2">
+      <h1>TO DO</h1>
+
+      <ul class="cf">
+        <li><a href="#/featured" on:click="eventSet(event, { view: 'featured' })"
+          class="featured {{ view === 'featured' ? 'active' : '' }}">Featured</a></li>
+        <li><a href="#/map" on:click="eventSet(event, { view: 'map' })"
+          class="distance {{ view === 'map' ? 'active' : '' }}">Map</a></li>
+      </ul>
+    </nav>
+
   <article class="item item-{{ display }}">
     <div class="intro-text">
       <h1 class="heading-alternate">
