@@ -49,7 +49,14 @@ if (dataFile) {
         new components[c]({
           hydrated: true,
           target: el,
-          data: { data: data, utils: utils, store: store }
+          data: {
+            data: data,
+            content: window.__startribune
+              ? window.__startribune.contentSettings
+              : {},
+            utils: utils,
+            store: store
+          }
         });
       });
     })

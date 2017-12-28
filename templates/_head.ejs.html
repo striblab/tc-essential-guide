@@ -97,3 +97,15 @@
     "description": "<%= escapeQuotes(data.pageDescription || content.socialDescription) %>"
   }
 </script>
+
+<!-- Common site data -->
+<script>
+  window.__startribune = window.__startribune || {};
+  try {
+    window.__startribune.contentSettings = <%- JSON.stringify(content) %>;
+  }
+  catch (e) {
+    console.error('Unable to laod site settings');
+    console.error(e);
+  }
+</script>

@@ -1,7 +1,6 @@
 <div class="component component-index">
-
   <nav class="minor-navigation items-2 minor-nav-lists">
-    <h1>ESSENTIAL TWIN CITIES GUIDE</h1>
+    <h1>{{ data.title }}</h1>
   </nav>
 
   <div class="groups cf">
@@ -13,9 +12,9 @@
   </div>
 
   <div class="social-buttons">
-    <a href="#" class="facebook-button"></a>
-    <a href="#" class="twitter-button"></a>
-    <a href="#" class="email-button"></a>
+    <a href="{{ facebookURL }}" target="_blank" rel="noopener" class="facebook-button"></a>
+    <a href="{{ tweetURL }}" target="_blank" rel="noopener" class="twitter-button"></a>
+    <a href="{{ emailURL }}" target="_blank" rel="noopener" class="email-button"></a>
   </div>
 </div>
 
@@ -31,6 +30,28 @@ export default {
         this.set('data', n);
       }
     });
+  },
+
+  computed: {
+    facebookURL: function(data, content) {
+      return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        data.baseURL
+      )}`;
+    },
+
+    tweetURL: function(data, content) {
+      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        content.twitterShare
+      )}&url=${encodeURIComponent(data.baseURL)}&via=${encodeURIComponent(
+        content.twitterAccount
+      )}`;
+    },
+
+    emailURL: function(data, content) {
+      return `mailto:RECIPIENT?subject=${encodeURIComponent(
+        content.emailShare
+      )}&body=${encodeURIComponent(data.baseURL)}`;
+    }
   },
 
   data() {
