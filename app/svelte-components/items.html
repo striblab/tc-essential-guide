@@ -1,5 +1,5 @@
 <div class="component component-item">
-  <article class="item item-{{ display }}">
+  <article class="item item-{{ display }} {{ data.inView ? 'in-view' : '' }}" data-id="{{ data.id }}">
     <div class="intro-text">
       <h1 class="heading-alternate">
         <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>

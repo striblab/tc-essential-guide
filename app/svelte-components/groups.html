@@ -26,15 +26,17 @@
   {{/if}}
 
   {{#if view === 'map'}}
-    <div class="map-wrapper">
-      <div class="map" ref:itemsMap></div>
-    </div>
+    <div class="map-items-container">
+      <div class="map-wrapper">
+        <div class="map" ref:itemsMap></div>
+      </div>
 
-    <div class="map-items">
-      {{#each allItems as i @airtableId}}
-        <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
-          display="map" view="{{ view }}" />
-      {{/each}}
+      <div class="map-items">
+        {{#each allItems as i @airtableId}}
+          <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
+            display="map" view="{{ view }}" />
+        {{/each}}
+      </div>
     </div>
   {{/if}}
 </div>
@@ -49,6 +51,13 @@ export default {
   },
 
   oncreate: function() {
+    // Make all items
+    this.observe('data', n => {
+      if (n.items || n.lists) {
+        this.set({ allItems: this.allItems(this.get('data')) });
+      }
+    });
+
     // React to view change.  Since we need to have access to the dom
     // for the map, we defer the observe
     this.observe(
@@ -91,9 +100,104 @@ export default {
 
     // Observe the items as the scroll
     observeItems() {
-      let i = this.get('allItems');
-      if (i && i.length) {
-        // TODO
+      let threshold = 0.8;
+      let items = this.get('allItems');
+      let observer = new IntersectionObserver(
+        (entries, observer) => {
+          // We only want to highlight one element at a time, so
+          // order by the top and which one is in view.
+          let sorted = _.sortBy(entries, e => {
+            return (
+              (e.intersectionRatio >= threshold ? 1 : 10000) +
+              e.boundingClientRect.y
+            );
+          });
+          if (sorted[0].intersectionRatio >= threshold) {
+            sorted[0].inView = true;
+          }
+
+          // Update views
+          sorted.forEach(e => {
+            let id = e.target.getAttribute('data-id');
+            if (e.inView) {
+              this.itemInView(id);
+            } else {
+              this.itemNotInView(id);
+            }
+          });
+        },
+        {
+          root: document.querySelector('.map-items'),
+          margin: '40%',
+          threshold: [0, 0.5, 0.75, 0.85, 1]
+        }
+      );
+
+      if (items && items.length) {
+        for (let i of items) {
+          let el = document.querySelector('[data-id="' + i.id + '"]');
+          observer.observe(el);
+        }
+      }
+    },
+
+    // Item in view
+    itemInView(item) {
+      let items = this.get('allItems');
+
+      // Handle string ID
+      if (_.isString(item)) {
+        item = _.find(items, { id: item });
+      }
+      if (!item) {
+        return;
+      }
+
+      item.inView = true;
+      this.set({ allItems: items });
+
+      this.__markers[item.id].setIcon({
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillColor: '#00F',
+        fillOpacity: 0.8,
+        strokeWeight: 1
+      });
+
+      // TODO: Handle user location as well
+      let bounds = new window.google.maps.LatLngBounds();
+      bounds.extend({
+        lat: parseFloat(item.latitude),
+        lng: parseFloat(item.longitude)
+      });
+      //this.__map.fitBounds(bounds);
+      this.__map.setCenter(bounds.getCenter());
+      this.__map.setZoom(14);
+    },
+
+    // Item not in view
+    itemNotInView(item) {
+      let items = this.get('allItems');
+
+      // Handle string ID
+      if (_.isString(item)) {
+        item = _.find(items, { id: item });
+      }
+      if (!item) {
+        return;
+      }
+
+      item.inView = false;
+      this.set({ allItems: items });
+
+      if (this.__markers[item.id]) {
+        this.__markers[item.id].setIcon({
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10,
+          fillColor: '#0F0',
+          fillOpacity: 0.8,
+          strokeWeight: 1
+        });
       }
     },
 
@@ -123,7 +227,7 @@ export default {
         // Create markers if needed
         if (!this.__markers || !this.__markers.length) {
           this.__markersBound = new window.google.maps.LatLngBounds();
-          this.__markers = [];
+          this.__markers = {};
 
           this.get('allItems').forEach(i => {
             if (i.latitude && i.longitude) {
@@ -146,36 +250,21 @@ export default {
               });
 
               this.__markersBound.extend(p);
-              this.__markers.push(marker);
+              this.__markers[i.id] = marker;
             }
           });
         }
 
         // Add markers to map
-        this.__markers.forEach(m => {
-          m.setMap(this.__map);
-        });
+        for (let i in this.__markers) {
+          this.__markers[i].setMap(this.__map);
+        }
 
         // Show all markers
         this.__map.fitBounds(this.__markersBound);
       } else {
         window.google.maps.event.trigger(this.__map, 'resize');
       }
-    }
-  },
-
-  computed: {
-    // Top level lists and items
-    allListsItems: function(data) {
-      let o = [];
-      if (data.lists) {
-        o = o.concat(data.lists);
-      }
-      if (data.items) {
-        o = o.concat(data.items);
-      }
-
-      return o;
     },
 
     // All items (items in lists)
@@ -187,6 +276,21 @@ export default {
             o = o.concat(l.items);
           }
         });
+      }
+      if (data.items) {
+        o = o.concat(data.items);
+      }
+
+      return o;
+    }
+  },
+
+  computed: {
+    // Top level lists and items
+    allListsItems: function(data) {
+      let o = [];
+      if (data.lists) {
+        o = o.concat(data.lists);
       }
       if (data.items) {
         o = o.concat(data.items);
