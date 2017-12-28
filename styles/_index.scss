@@ -3,34 +3,109 @@
  */
 
 .layout-index {
-  height: 100vh;
-  background: rgba(0, 99, 65, 1);
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 99, 65, 1) 0%,
-    rgba(0, 130, 74, 1) 100%
-  );
-  overflow: hidden;
-
   // Override header
   &.has-header {
     padding-top: 0;
   }
 
   header[role='banner'] {
-    position: relative;
-    background-color: inherit;
+    display: none;
+  }
 
-    // Remove some regular header parts
-    a.back-logo,
-    a.menu-logo,
+  .vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .vertical-bottom {
+    position: absolute;
+    bottom: 3%;
+    left: 0;
+    right: 0;
+  }
+
+  // Splash screen section
+  .splash {
+    height: 100vh;
+    background: rgba(0, 99, 65, 1);
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 130, 74, 1) 0%,
+      rgba(0, 99, 65, 1) 100%
+    );
+    color: $color-white;
+    padding-top: 0.5em;
+    text-align: center;
+    position: relative;
+
     h1 {
-      display: none;
+      font-family: map-get($font-sets, 'benton-sans');
+      font-size: 2em;
+      text-transform: uppercase;
+
+      span {
+        display: block;
+        padding: 0.5em;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+    }
+
+    .get-started {
+      display: inline-block;
+      background-color: $color-white;
+      color: $color-forest-green;
+      padding: 0.5em 1em;
+      border-radius: 0.5em;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: bold;
+
+      // Offsets the centered content
+      margin-bottom: 20%;
+    }
+
+    .splash-footer {
+      font-size: 0.65em;
+      text-transform: uppercase;
+
+      span {
+        display: block;
+      }
     }
   }
 
-  h1 {
-    font-family: 'Benton Sans';
+  // Group navigation section
+  .group-navigation {
+    height: 100vh;
+    background: rgba(0, 99, 65, 1);
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 99, 65, 1) 0%,
+      rgba(0, 130, 74, 1) 100%
+    );
+    overflow: hidden;
+    position: relative;
+    padding-top: 0.5em;
+  }
+
+  .title-logo {
+    display: block;
+    max-width: 11em;
+    min-height: 1.5em;
+    background-image: url('./assets/images/strib/strib-name-star-white.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    margin: 0.75em auto;
+  }
+
+  .group-navigation h1 {
+    font-family: map-get($font-sets, 'benton-sans');
     font-weight: bold;
     font-size: 1.15em;
     text-align: center;
@@ -43,6 +118,8 @@
   }
 
   .groups {
+    width: 100%;
+
     .group a {
       font-size: 1.1em;
       display: block;
@@ -68,10 +145,7 @@
   }
 
   .social-buttons {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 3%;
+    text-align: center;
 
     a {
       display: inline-block;

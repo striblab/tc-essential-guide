@@ -7,9 +7,7 @@
 
 // Dependencies
 import queryString from 'query-string';
-
-// If smooth scrolling is needed
-//import smoothscroll from 'smoothscroll-polyfill';
+import smoothscroll from 'smoothscroll-polyfill';
 
 // Util class
 class Util {

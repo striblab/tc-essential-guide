@@ -1,18 +1,42 @@
 <div class="component component-index">
-  <h1>{{ data.title }}</h1>
+  <div class="splash">
+    <div class="title-logo"></div>
 
-  <div class="groups cf">
-    {{#each data.groups as g}}
-      <div class="group">
-        <a href="{{ data.basePath }}/{{ g.filename }}"><span>{{ g.title }}</span></a>
-      </div>
-    {{/each}}
+    <div class="vertical-center">
+      <h1>
+        <span>Essential</span>
+        <img src="{{ data.basePath }}/assets/images/twin-cities-illustration.png" alt="Twin Cities">
+        <span>Guide</span>
+      </h1>
+
+      <a href="#/get-started" class="get-started" on:click="goToGroups(event)">Get started</a>
+    </div>
+
+    <div class="vertical-bottom splash-footer">
+      <span>Super Bowl edition sponsored by</span>
+      <img src="{{ data.basePath }}/assets/images/super-bowl-sponsor.png" alt="The Lincoln Motor Company logo">
+    </div>
   </div>
 
-  <div class="social-buttons">
-    <a href="{{ facebookURL }}" target="_blank" rel="noopener" class="facebook-button"></a>
-    <a href="{{ tweetURL }}" target="_blank" rel="noopener" class="twitter-button"></a>
-    <a href="{{ emailURL }}" target="_blank" rel="noopener" class="email-button"></a>
+  <div class="group-navigation" ref:groupNavigation>
+    <div class="title-logo"></div>
+    <h1>{{ data.title }}</h1>
+
+    <div class="vertical-center groups cf">
+      {{#each data.groups as g}}
+        <div class="group">
+          <a href="{{ data.basePath }}/{{ g.filename }}"><span>{{ g.title }}</span></a>
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="vertical-bottom">
+      <div class="social-buttons">
+        <a href="{{ facebookURL }}" target="_blank" rel="noopener" class="facebook-button"></a>
+        <a href="{{ tweetURL }}" target="_blank" rel="noopener" class="twitter-button"></a>
+        <a href="{{ emailURL }}" target="_blank" rel="noopener" class="email-button"></a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -28,6 +52,19 @@ export default {
         this.set('data', n);
       }
     });
+  },
+
+  methods: {
+    goToGroups: function(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      if (this.refs.groupNavigation) {
+        let u = this.get('utils');
+        u.goTo(this.refs.groupNavigation);
+      }
+    }
   },
 
   computed: {
