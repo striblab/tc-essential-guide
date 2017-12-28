@@ -1,6 +1,6 @@
 <div class="component component-group has-minor-navigation view-{{ view }}">
-  <nav class="minor-navigation items-2">
-    <h1>TO DO</h1>
+  <nav class="minor-navigation adjust-header">
+    <h1>{{ data.title }}</h1>
 
     <ul class="cf">
       <li><a href="#/featured" on:click="eventSet(event, { view: 'featured' })"

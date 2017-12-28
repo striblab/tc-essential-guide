@@ -14,15 +14,16 @@ nav.minor-navigation {
   line-height: inherit;
   letter-spacing: inherit;
   font-weight: inherit;
-  padding-top: 1em;
+  padding: 0.75em 1em;
   text-align: center;
   background-color: $color-bg-gray;
-  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
   width: 100%;
   z-index: 99;
   position: fixed;
   top: 3.3em;
-  height: 3em;
+  display: flex;
+  justify-content: space-between;
 
   ul {
     margin: 0;
@@ -30,24 +31,22 @@ nav.minor-navigation {
     width: 100%;
     display: block;
     text-align: right;
-    position: absolute;
-    right: 4%;
-    top: 25%;
+    margin-right: auto;
   }
 
   li {
     margin: 0;
     padding: 0;
     width: auto;
+
     &:first-child {
-      margin-right: 10px;
+      margin-right: 1em;
     }
 
     a {
       // For some reason strib styles has an !important
-      color: $color-forest-green !important;
-      display: block;
-      padding-bottom: 0.1em;
+      color: $color-forest-green;
+      display: inline-block;
       border-bottom: 0.15em solid $color-bg-gray;
       text-decoration: none;
       text-transform: uppercase;
@@ -55,30 +54,23 @@ nav.minor-navigation {
       font-size: 0.75em;
 
       &.active {
-        color: $color-forest-green !important;
+        color: $color-forest-green;
         border-bottom-color: $color-forest-green;
       }
     }
   }
 
   h1 {
-    font-family: "Benton Sans";
+    margin: 0;
+    padding: 0;
+    font-family: map-get($font-sets, 'benton-sans');
     font-weight: bold;
     font-size: 1.15em;
     text-align: left;
     color: $color-forest-green;
-    position: absolute;
-    margin-left: 4%;
-    margin-top: -2.5%;
-  }
-
-  &.minor-nav-lists ul li a {
-    color: $color-forest-green !important;
-    border-bottom: 0.15em solid $color-bg-gray;
-
-    &.active {
-      color: $color-forest-green !important;
-      border-bottom-color: $color-forest-green;
-    }
+    margin-right: auto;
+    min-width: 50%;
+    vertical-align: middle;
+    text-transform: uppercase;
   }
 }

@@ -16,6 +16,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    width: 100%;
   }
 
   .vertical-bottom {
@@ -23,6 +24,7 @@
     bottom: 3%;
     left: 0;
     right: 0;
+    width: 100%;
   }
 
   // Splash screen section
@@ -50,7 +52,7 @@
       }
 
       img {
-        display: block;
+        display: inline-block;
         max-width: 100%;
       }
     }

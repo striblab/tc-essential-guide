@@ -2,29 +2,35 @@
  * Header styles
  */
 
-header[role="banner"] {
+header[role='banner'] {
   text-align: center;
   color: $color-white;
   background-color: $color-forest-green;
-  padding-bottom: .4em;
   width: 100%;
   z-index: 100;
   position: fixed;
   top: 0;
+  padding: 0;
 
   nav {
-    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0.85em 1em;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
   }
 
   .middle-logo {
     vertical-align: middle;
-    display: inline-block;
+    display: block;
     width: 11em;
     height: 1.5em;
-    background-image: url('http://static.startribune.com/images/icons/reverse-startribune-logo-white.svg');
+    background-image: url('./assets/images/strib/strib-name-star-white.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    margin: 0 auto;
 
     &:hover {
       opacity: 0.85;
@@ -34,32 +40,31 @@ header[role="banner"] {
   .back-logo {
     vertical-align: middle;
     display: inline-block;
-    position: absolute;
-    left: 4%;
-    top: 1em;
+    margin-right: auto;
     width: 1.5em;
     height: 1.5em;
-    background-image: url('http://static.startribune.com/images/icons/back.svg');
+    background-image: url('./assets/images/icons/back.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    text-align: left;
+
     &:hover {
       opacity: 0.85;
     }
   }
 
   .menu-logo {
-    position: absolute;
-    right: 4%;
-    top: 1em;
+    margin-left: auto;
     vertical-align: middle;
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
-    background-image: url('http://static.startribune.com/images/icons/hamburger.svg');
+    background-image: url('./assets/images/icons/hamburger.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    text-align: right;
 
     &:hover {
       opacity: 0.85;
@@ -79,8 +84,4 @@ header[role="banner"] {
     color: $color-forest-green;
     display: none;
   }
-}
-
-nav {
-  box-shadow: none;
 }

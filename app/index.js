@@ -62,3 +62,23 @@ if (dataFile) {
     })
     .catch(console.error);
 }
+
+// Some general handling of spacing for fixed items
+function adjustFixedElements() {
+  let $header = $('.project-header');
+  let $mNav = $('.minor-navigation');
+
+  // Header
+  $('.has-header').each((i, el) => {
+    $(el).css('padding-top', $header.outerHeight());
+  });
+  $('.adjust-header').each((i, el) => {
+    $(el).css('top', $header.outerHeight());
+  });
+
+  // Minor nav
+  $('.has-minor-navigation').each((i, el) => {
+    $(el).css('padding-top', $mNav.outerHeight());
+  });
+}
+$(document).ready(adjustFixedElements);
