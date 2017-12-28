@@ -100,12 +100,21 @@ export default {
 
     // Observe the items as the scroll
     observeItems() {
-      let threshold = 0.8;
+      let currentID = 1;
+      let threshold = 0.85;
       let items = this.get('allItems');
       let observer = new IntersectionObserver(
         (entries, observer) => {
+          // Note: The first time this is called, it is
+          // called with all the elements/entries, regardless
+          // of where they are; after that, it is only called
+          // with elements that are in view.
+
           // We only want to highlight one element at a time, so
           // order by the top and which one is in view.
+          //
+          // TODO: This only works on initial call when all elements
+          // are present, need to test all elements.
           let sorted = _.sortBy(entries, e => {
             return (
               (e.intersectionRatio >= threshold ? 1 : 10000) +
@@ -119,8 +128,9 @@ export default {
           // Update views
           sorted.forEach(e => {
             let id = e.target.getAttribute('data-id');
-            if (e.inView) {
+            if (e.inView && currentID !== id) {
               this.itemInView(id);
+              currentID = 1;
             } else {
               this.itemNotInView(id);
             }
@@ -128,8 +138,8 @@ export default {
         },
         {
           root: document.querySelector('.map-items'),
-          margin: '40%',
-          threshold: [0, 0.5, 0.75, 0.85, 1]
+          //margin: '40%',
+          threshold: [0, 0.8, 0.85, 0.9]
         }
       );
 
