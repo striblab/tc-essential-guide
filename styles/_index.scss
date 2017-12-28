@@ -3,70 +3,46 @@
  */
 
 .layout-index {
-    height: 100vh;
-    background: rgba(0,99,65,1);
-    background: -moz-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,99,65,1)), color-stop(100%, rgba(0,130,74,1)));
-    background: -webkit-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
-    background: -o-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
-    background: -ms-linear-gradient(top, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
-    background: linear-gradient(to bottom, rgba(0,99,65,1) 0%, rgba(0,130,74,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006341', endColorstr='#00824a', GradientType=0 );
-    overflow: hidden;
-    padding-bottom: 40px;
+  height: 100vh;
+  background: rgba(0, 99, 65, 1);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 99, 65, 1) 0%,
+    rgba(0, 130, 74, 1) 100%
+  );
+  overflow: hidden;
 
-  header[role="banner"] {
-    a.back-logo {
-      display: none;
-    }
-    a.menu-logo {
-      display: none;
-    }
+  // Override header
+  &.has-header {
+    padding-top: 0;
+  }
+
+  header[role='banner'] {
+    position: relative;
+    background-color: inherit;
+
+    // Remove some regular header parts
+    a.back-logo,
+    a.menu-logo,
     h1 {
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      transform: translateX(-50%);
-      border-top: 1px solid white;
-      width: 64%;
-      color: $color-white;
+      display: none;
     }
   }
 
-  nav.minor-navigation {
-    font-family: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
-    font-weight: inherit;
-    padding-top: 1em;
-    box-shadow: none;
+  h1 {
+    font-family: 'Benton Sans';
+    font-weight: bold;
+    font-size: 1.15em;
     text-align: center;
-    background-color: $color-forest-green;
-    box-shadow: none;
-    width: 100%;
-    z-index: 101;
-    position: fixed;
-    top: 3.3em;
-    height: 3em;
-
-    h1 {
-      font-family: "Benton Sans";
-      font-weight: bold;
-      font-size: 1.15em;
-      text-align: center;
-      color: $color-white;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-left: 0;
-      margin-top: -4%;
-      width: 67%;
-      border-top: 1px solid white;
-    }
+    text-transform: uppercase;
+    color: $color-white;
+    width: 67%;
+    min-width: 16em;
+    border-top: 1px solid $color-white;
+    margin: 0 auto 3em;
   }
 
   .groups {
-    margin-top: 5em;
-
     .group a {
       font-size: 1.1em;
       display: block;
@@ -92,52 +68,35 @@
   }
 
   .social-buttons {
-      margin-top: 30px;
-      position: absolute;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      transform: translateX(-50%);
-      bottom: 3%;
-      .facebook-button {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        margin-right: 2px;
-        background-image: url('http://static.startribune.com/images/icons/facebook-white.svg');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 3%;
 
-          &:hover {
-            opacity: 0.85;
-          }
-      }
-      .twitter-button {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        margin-right: 2px;
-        background-image: url('http://static.startribune.com/images/icons/twitter-white.svg');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
+    a {
+      display: inline-block;
+      width: 2.2em;
+      height: 2.2em;
+      margin-right: 0.1em;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
 
-          &:hover {
-            opacity: 0.85;
-          }
-      }
-      .email-button {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        background-image: url('http://static.startribune.com/images/icons/link-white.svg');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-
-          &:hover {
-            opacity: 0.85;
-          }
+      &:hover {
+        opacity: 0.85;
       }
     }
+
+    .facebook-button {
+      background-image: url('./assets/images/social/facebook-white.svg');
+    }
+
+    .twitter-button {
+      background-image: url('./assets/images/social/twitter-white.svg');
+    }
+
+    .email-button {
+      background-image: url('./assets/images/social/broadcast-white.svg');
+    }
+  }
 }
