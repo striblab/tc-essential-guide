@@ -2,50 +2,6 @@
  * Styles for groups
  */
 
-// Have to override the general nav style (should be fixed upstream)
-nav.groups-nav {
-  font-family: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  font-weight: inherit;
-  padding-top: 1em;
-  margin-bottom: 1em;
-  box-shadow: none;
-  text-align: center;
-
-  ul {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: block;
-  }
-
-  li {
-    margin: 0;
-    padding: 0;
-    display: block;
-    width: 33.3332%;
-    float: left;
-
-    a {
-      // For some reason strib styles has an !important
-      color: $color-white !important;
-      display: block;
-      width: 100%;
-      padding-bottom: 0.5em;
-      border-bottom: 0.5em solid $color-white;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-weight: bold;
-
-      &.active {
-        color: $color-highlight-blue !important;
-        border-bottom-color: $color-highlight-blue;
-      }
-    }
-  }
-}
-
 ul.groups-items {
   margin: 0;
   padding: 0;
@@ -61,8 +17,6 @@ ul.groups-items {
       display: block;
       margin: 0 0 1em;
       text-decoration: none;
-      // For border radius to work over children elements
-      overflow: hidden;
 
       img {
         display: block;
@@ -72,15 +26,14 @@ ul.groups-items {
 
       span {
         display: block;
-        font-size: 2em;
-        background-color: rgba(40, 40, 40, 0.85);
-        padding: 1em;
+        font-size: 1.5em;
+        background-color: rgba(40, 40, 40, 0.8);
+        padding: 1rem;
         color: $color-white;
         position: absolute;
         bottom: 0;
         width: 100%;
         font-weight: bold;
-        font-size: 20px;
       }
     }
   }
@@ -129,10 +82,10 @@ ul.groups-items {
     }
 
     p {
-      font-family: Benton Sans;
+      font-family: map-get($font-sets, 'benton-sans');
       line-height: 1.5;
       letter-spacing: 0.15px;
-      height: 4.5em;
+      height: 5em;
       overflow: hidden;
       margin-top: 0.3em;
       position: relative;
@@ -140,8 +93,8 @@ ul.groups-items {
       &::after {
         content: '... Read more';
         display: inline;
-        font-family: Benton Sans;
-        line-height: 1.5;
+        font-family: map-get($font-sets, 'benton-sans');
+        line-height: 1.5em;
         letter-spacing: 0;
         font-weight: bold;
         position: absolute;

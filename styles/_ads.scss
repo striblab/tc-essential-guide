@@ -1,0 +1,15 @@
+/**
+ * Style for ads
+ */
+
+.ad {
+  margin: 2em 1em;
+
+  &.ad-placeholder {
+    min-height: 6em;
+    line-height: 6em;
+    text-align: center;
+    background-color: #BABABF;
+    color: #111111;
+  }
+}
