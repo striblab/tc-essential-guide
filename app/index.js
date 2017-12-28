@@ -54,6 +54,7 @@ if (dataFile) {
             content: window.__startribune
               ? window.__startribune.contentSettings
               : {},
+            groups: window.__startribune ? window.__startribune.groups : {},
             utils: utils,
             store: store
           }

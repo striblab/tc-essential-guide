@@ -103,9 +103,10 @@
   window.__startribune = window.__startribune || {};
   try {
     window.__startribune.contentSettings = <%- JSON.stringify(content) %>;
+    window.__startribune.groups = <%- JSON.stringify(groups) %>;
   }
   catch (e) {
-    console.error('Unable to laod site settings');
+    console.error('Unable to laod site data');
     console.error(e);
   }
 </script>

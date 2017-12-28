@@ -1,24 +1,45 @@
 <nav>
-	<a href="#" class="back-logo" title="Go back a page">
-    <span class="sr-only">Back</span>
-  </a>
+  <div class="top-nav-section">
+  	<a href="{{ data.basePath || '.' }}/" class="back-logo" title="Go back a page">
+      <span class="sr-only">Back</span>
+    </a>
 
-  <a href="{{ data.basePath || '.' }}/" class="middle-logo" title="Home">
-    <span class="sr-only">Go to homepage</span>
-  </a>
+    <a href="{{ data.basePath || '.' }}/" class="middle-logo" title="Home">
+      <span class="sr-only">Go to homepage</span>
+    </a>
 
-  <a href="#" class="menu-logo" title="Menu">
-    <span class="sr-only">Menu</span>
-  </a>
+    <a href="#/menu" class="menu-logo {{ fullNavOpen ? 'menu-logo-close' : '' }}" title="Menu" on:click="toggleFullNav(event)">
+      <span class="sr-only">Menu</span>
+    </a>
 
-  <h1 class="sr-only">{{ data.name || data.title || content.title }}</h1>
+    <h1 class="sr-only">{{ data.name || data.title || content.title }}</h1>
+  </div>
+
+  <div class="full-nav {{ fullNavOpen ? 'full-nav-open' : '' }}">
+    <ul>
+      {{#each groups as g}}
+        <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
+      {{/each}}
+    </ul>
+  </div>
 </nav>
 
 <script>
 export default {
+  methods: {
+    toggleFullNav: function(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      this.set({ fullNavOpen: !this.get('fullNavOpen') });
+    }
+  },
+
   data() {
     return {
-      isBrowser: typeof window !== undefined
+      isBrowser: typeof window !== undefined,
+      fullNavOpen: false
     };
   }
 };
