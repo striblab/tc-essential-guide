@@ -21,6 +21,20 @@
 
 <script>
 export default {
+  oncreate() {
+    console.log('TTTTTTTTTTTTTT');
+    this.observe('data', n => {
+      if (n && n.groups && n.groups.length) {
+        n.groups = n.groups.sort((a, b) => {
+          console.log(a);
+          return b.order - a.order;
+        });
+
+        this.set('data', n);
+      }
+    });
+  },
+
   data() {
     return {
       isBrowser: typeof window !== undefined
