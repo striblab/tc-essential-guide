@@ -1,6 +1,6 @@
 <nav>
   <div class="top-nav-section">
-  	<a href="{{ data.basePath || '.' }}/" class="back-logo" title="Go back a page">
+  	<a href="{{ data.basePath || '.' }}/" class="back-logo" title="Go back a page" on:click="goBack(event)">
       <span class="sr-only">Back</span>
     </a>
 
@@ -33,6 +33,16 @@ export default {
       }
 
       this.set({ fullNavOpen: !this.get('fullNavOpen') });
+    },
+
+    goBack: function(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      if (window.history) {
+        window.history.back(-1);
+      }
     }
   },
 
