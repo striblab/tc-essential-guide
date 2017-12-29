@@ -6,17 +6,20 @@ article.item {
   margin-top: 1.5em;
   border-bottom: 1px solid black;
   padding-bottom: 3em;
+
   h1 {
     display: inline-block;
     vertical-align: bottom;
     margin-bottom: 0.1em;
-      &.heading-alternate {
-        text-align: left;
-        margin-top: 0;
-        font-size: 1.6em;
-        line-height: 1;
-        width: 75%;
+
+    &.heading-alternate {
+      text-align: left;
+      margin-top: 0;
+      font-size: 1.6em;
+      line-height: 1;
+      width: 75%;
     }
+
     a {
       text-decoration: none;
       color: $color-text;
@@ -26,7 +29,7 @@ article.item {
 
     &.near-me {
       text-align: right;
-      font-family: "Benton Sans";
+      font-family: 'Benton Sans';
       font-weight: normal;
       font-size: 1.5em;
       width: 23%;
@@ -35,6 +38,7 @@ article.item {
 
   .social-buttons {
     margin-top: 30px;
+
     .facebook-button {
       display: inline-block;
       width: 2.2em;
@@ -44,10 +48,12 @@ article.item {
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-        &:hover {
-          opacity: 0.85;
-        }
+
+      &:hover {
+        opacity: 0.85;
+      }
     }
+
     .twitter-button {
       display: inline-block;
       width: 2.2em;
@@ -58,10 +64,11 @@ article.item {
       background-position: center center;
       background-size: cover;
 
-        &:hover {
-          opacity: 0.85;
-        }
+      &:hover {
+        opacity: 0.85;
+      }
     }
+
     .email-button {
       display: inline-block;
       width: 2.2em;
@@ -71,9 +78,9 @@ article.item {
       background-position: center center;
       background-size: cover;
 
-        &:hover {
-          opacity: 0.85;
-        }
+      &:hover {
+        opacity: 0.85;
+      }
     }
   }
 
@@ -90,7 +97,8 @@ article.item {
     position: relative;
   }
 
-  .directions, address {
+  .directions,
+  address {
     display: inline-block;
   }
 
@@ -113,21 +121,19 @@ article.item {
   figure cite {
     padding-left: 0.5em;
     padding-right: 1em;
-    font-family: "Benton Sans";
+    font-family: 'Benton Sans';
     letter-spacing: 1px;
     margin-bottom: -20px;
     font-size: 0.65em;
   }
 
   .item-image {
-    width: 120%;
-    margin-left: -10%;
     margin-top: 0.5em;
     margin-bottom: 3em;
   }
 
   dt::before {
-    content: "";
+    content: '';
     display: block;
   }
 
@@ -144,6 +150,7 @@ article.item {
     border-bottom: 1px solid $color-emerald-green;
     padding-bottom: 1px;
     margin-left: 0.3em;
+
     a {
       text-decoration: none;
       color: $color-default-black;
@@ -157,27 +164,35 @@ article.item {
     margin-top: 6em;
     width: 85%;
     margin-bottom: 4em;
+
     h1 {
       font-weight: bold;
+
       &.near-me {
         font-weight: normal;
       }
     }
+
     p {
       font-family: Benton Sans;
       line-height: 1.5;
       letter-spacing: 0.15px;
     }
-    .related  {
+
+    .related {
       margin-top: 2em;
-      h3, a {
+
+      h3,
+      a {
         display: inline;
       }
+
       h3 {
-        font-family: "Benton Sans";
+        font-family: 'Benton Sans';
         font-weight: bold;
         font-size: 1em;
       }
+
       a {
         border-bottom: 1px solid $color-emerald-green;
         padding-bottom: 1px;
@@ -189,7 +204,7 @@ article.item {
 }
 
 .layout-items {
-  header[role="banner"] {
+  header[role='banner'] {
     h1 {
       display: none;
     }

@@ -53,11 +53,27 @@ nav.toggle-nav {
 }
 
 article.lists {
-  margin: 0 auto;
-  margin-top: 3em;
-  margin-bottom: 1em;
-  width: 85%;
+  margin: 3rem 2rem 1em;
   max-width: 40em;
+
+  @media screen and (max-width: 300px) {
+    & {
+      margin-right: 1rem;
+      margin-left: 1rem;
+    }
+  }
+
+  .item .item-image {
+    margin-left: -2rem;
+    margin-right: -2rem;
+
+    @media screen and (max-width: 300px) {
+      & {
+        margin-right: -1rem;
+        margin-left: -1rem;
+      }
+    }
+  }
 
   h1 {
     font-size: 1.8em;
