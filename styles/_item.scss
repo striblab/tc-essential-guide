@@ -4,132 +4,96 @@
 
 article.item {
   margin-top: 1.5em;
-  border-bottom: 1px solid black;
   padding-bottom: 3em;
 
-  h1 {
-    display: inline-block;
-    vertical-align: bottom;
-    margin-bottom: 0.1em;
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.3em;
 
-    &.heading-alternate {
+    .item-header-left {
+      margin-right: auto;
+      min-width: 50%;
       text-align: left;
-      margin-top: 0;
-      font-size: 1.6em;
-      line-height: 1;
-      width: 75%;
     }
+
+    .item-header-right {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    * {
+      vertical-align: top;
+    }
+  }
+
+  h1 {
+    font-size: 1.6em;
+    line-height: 1.25em;
+    text-align: left;
+    padding-top: 0;
+    margin-bottom: 0.25em;
 
     a {
       text-decoration: none;
       color: $color-text;
-      display: block;
-      line-height: 1.1;
-    }
-
-    &.near-me {
-      text-align: right;
-      font-family: 'Benton Sans';
-      font-weight: normal;
-      font-size: 1.5em;
-      width: 23%;
     }
   }
 
-  .social-buttons {
-    margin-top: 30px;
-
-    .facebook-button {
-      display: inline-block;
-      width: 2.2em;
-      height: 2.2em;
-      margin-right: 2px;
-      background-image: url('http://static.startribune.com/images/icons/facebook.svg?cache=trash1');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-
-      &:hover {
-        opacity: 0.85;
-      }
-    }
-
-    .twitter-button {
-      display: inline-block;
-      width: 2.2em;
-      height: 2.2em;
-      margin-right: 2px;
-      background-image: url('http://static.startribune.com/images/icons/twitter.svg?cache=trash');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-
-      &:hover {
-        opacity: 0.85;
-      }
-    }
-
-    .email-button {
-      display: inline-block;
-      width: 2.2em;
-      height: 2.2em;
-      background-image: url('http://static.startribune.com/images/icons/link.svg?cache=trash');
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-
-      &:hover {
-        opacity: 0.85;
-      }
-    }
+  .near-me {
+    text-align: right;
+    font-family: map-get($font-sets, 'benton-sans');
+    font-weight: normal;
+    font-size: 1.6em;
+    line-height: 1.25em;
+    margin-bottom: 0.25em;
   }
 
   address {
     font-style: normal;
     font-weight: bold;
     font-size: 0.85em;
-    margin-bottom: 1.3em;
-    margin-top: 0.5em;
-    width: 70%;
-  }
-
-  .intro-text {
-    position: relative;
-  }
-
-  .directions,
-  address {
-    display: inline-block;
   }
 
   .directions {
-    position: absolute;
-    right: 0;
+    display: inline-block;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 0.55em;
     letter-spacing: 0.2px;
     border: 1px solid $color-emerald-green;
-    padding: 5px 5px 3px 5px;
+    padding: 0.25em 0.5em;
     text-decoration: none;
     color: $color-emerald-green;
-    border-radius: 5px;
-    width: auto;
-    bottom: 15%;
+    border-radius: 0.5em;
+  }
+
+  .item-image {
+    margin-bottom: 3em;
   }
 
   figure cite {
     padding-left: 0.5em;
     padding-right: 1em;
-    font-family: 'Benton Sans';
+    font-family: map-get($font-sets, 'benton-sans');
     letter-spacing: 1px;
     margin-bottom: -20px;
     font-size: 0.65em;
   }
 
-  .item-image {
-    margin-top: 0.5em;
-    margin-bottom: 3em;
+  dl {
+    margin-bottom: 2em;
+  }
+
+  dt,
+  dd {
+    display: inline;
+
+    span {
+      display: inline-block;
+      margin-bottom: 0.25em;
+      margin-right: 0.15em;
+    }
   }
 
   dt::before {
@@ -137,18 +101,9 @@ article.item {
     display: block;
   }
 
-  .phone {
-    margin-bottom: 0.3em;
-  }
-
-  dt,
-  dd {
-    display: inline;
-  }
-
-  dd {
+  dd span {
     border-bottom: 1px solid $color-emerald-green;
-    padding-bottom: 1px;
+    padding-bottom: 0.02em;
     margin-left: 0.3em;
 
     a {
@@ -157,56 +112,58 @@ article.item {
     }
   }
 
+  .related {
+    h3,
+    a {
+      display: inline-block;
+    }
+
+    h3 {
+      font-family: map-get($font-sets, 'benton-sans');
+      font-weight: bold;
+      font-size: 1em;
+      margin-right: 0.15em;
+    }
+
+    a {
+      border-bottom: 1px solid $color-emerald-green;
+      padding-bottom: 0.02em;
+      text-decoration: none;
+      color: $color-default-black;
+    }
+  }
+
   // For linkable page only
   .layout-items & {
-    margin: 0 auto;
     background-color: $color-bg-gray;
-    margin-top: 6em;
-    width: 85%;
-    margin-bottom: 4em;
+    margin: 6em 2rem;
+    padding-bottom: 0;
 
-    h1 {
-      font-weight: bold;
-
-      &.near-me {
-        font-weight: normal;
+    @media screen and (max-width: 300px) {
+      & {
+        margin-right: 1rem;
+        margin-left: 1rem;
       }
     }
 
-    p {
-      font-family: Benton Sans;
-      line-height: 1.5;
-      letter-spacing: 0.15px;
+    .item-image {
+      margin-left: -2rem;
+      margin-right: -2rem;
+
+      @media screen and (max-width: 300px) {
+        & {
+          margin-right: -1rem;
+          margin-left: -1rem;
+        }
+      }
+    }
+
+    .social-buttons {
+      margin-bottom: 2em;
     }
 
     .related {
       margin-top: 2em;
-
-      h3,
-      a {
-        display: inline;
-      }
-
-      h3 {
-        font-family: 'Benton Sans';
-        font-weight: bold;
-        font-size: 1em;
-      }
-
-      a {
-        border-bottom: 1px solid $color-emerald-green;
-        padding-bottom: 1px;
-        text-decoration: none;
-        color: $color-default-black;
-      }
-    }
-  }
-}
-
-.layout-items {
-  header[role='banner'] {
-    h1 {
-      display: none;
     }
   }
 }

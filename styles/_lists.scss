@@ -99,6 +99,7 @@ article.lists {
 
   article.item {
     margin-bottom: 3em;
+    border-bottom: 1px solid black;
 
     &:last-child {
       margin-bottom: inherit;

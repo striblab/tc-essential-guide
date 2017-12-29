@@ -46,7 +46,7 @@
       <div class="item-list">
         {{#each data.items as p @id}}
           <Item data="{{ p }}" utils="{{ utils }}" store="{{ store }}"
-            display="list" view="{{ view }}" />
+            display="list" view="{{ view }}" content="{{ content }}" />
         {{/each}}
       </div>
     {{else}}
@@ -190,7 +190,7 @@ export default {
 
     twitterURL: function(data, content) {
       return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        content.twitterShare
+        data.twitterShare || content.twitterShare
       )}&url=${encodeURIComponent(
         data.baseURL + data.filename
       )}&via=${encodeURIComponent(content.twitterAccount)}`;
@@ -198,7 +198,7 @@ export default {
 
     emailURL: function(data, content) {
       return `mailto:RECIPIENT?subject=${encodeURIComponent(
-        content.emailShare
+        data.emailShare || content.emailShare
       )}&body=${encodeURIComponent(data.baseURL + data.filename)}`;
     }
   },
