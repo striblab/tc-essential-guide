@@ -38,7 +38,7 @@
       </div>
 
       <div class="related">
-        {{#if display === 'list' && data.lists}}
+        {{#if display !== 'list' && data.lists}}
           <h3>Related</h3>
           {{#each data.lists as l @id}}
             <a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a>

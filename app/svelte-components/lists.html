@@ -1,18 +1,8 @@
 <div class="component component-list has-minor-navigation">
   <nav class="minor-navigation items-2 minor-nav-lists">
-    <h1>TO DO</h1>
-
-    <!-- {{#if utils && utils.hasGeolocate }}
-      <ul class="cf">
-        <li><a href="#/alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
-        <li>
-          <a href="#/distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">Near Me</a>
-          {{#if isGeolocating}}
-            <i class="fa fa-spinner fa-spin"></i>
-          {{/if}}
-        </li>
-      </ul>
-    {{/if}} -->
+    {{#if data.groups && data.groups[0] }}
+      <h1>{{ data.groups[0].title }}</h1>
+    {{/if}}
   </nav>
 
   <article class="lists">
@@ -54,6 +44,10 @@
     {{else}}
       <div><em>This list should have items.</em></div>
     {{/if}}
+
+    <div class="ad ad-placeholder">
+      Ad Placeholder
+    </div>
   </article>
 </div>
 
@@ -65,9 +59,7 @@ export default {
     Item
   },
 
-  oncreate() {
-    console.log(this);
-  },
+  oncreate() {},
 
   ondestroy() {
     let u = this.get('utils');
@@ -142,8 +134,7 @@ export default {
             if (_.isFunction(done)) {
               return done(error);
             }
-          }
-          else if (position) {
+          } else if (position) {
             this.set({ store: { location: position } });
 
             if (_.isFunction(done)) {
