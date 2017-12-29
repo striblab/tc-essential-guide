@@ -21,6 +21,8 @@ nav.minor-navigation {
   width: 100%;
   z-index: 99;
   position: fixed;
+  left: 0;
+  right: 0;
   top: 3.3em;
   display: flex;
   justify-content: space-between;
@@ -44,7 +46,6 @@ nav.minor-navigation {
     }
 
     a {
-      // For some reason strib styles has an !important
       color: $color-forest-green;
       display: inline-block;
       border-bottom: 0.15em solid $color-bg-gray;

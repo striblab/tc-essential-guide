@@ -2,102 +2,54 @@
  * Styling for lists
  */
 
-.layout-lists {
-  .list-social-buttons {
-    text-align: center;
-      .facebook-button {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        margin-right: 2px;
-        background-image: url('http://static.startribune.com/images/icons/facebook.svg?cache=trash1');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-          &:hover {
-            opacity: 0.85;
-          }
-      }
-      .twitter-button {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        margin-right: 2px;
-        background-image: url('http://static.startribune.com/images/icons/twitter.svg?cache=trash');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-
-          &:hover {
-            opacity: 0.85;
-          }
-      }
-      .email-button {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        background-image: url('http://static.startribune.com/images/icons/link.svg?cache=trash');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-
-          &:hover {
-            opacity: 0.85;
-          }
-      }
-    }
-}
-
 nav.toggle-nav {
-    box-shadow: none;
-    padding-top: 0em;
-    height: auto;
-    margin-top: 3em;
-    margin-bottom: 2em;
-    ul {
-      position: relative;
-/*      width: 270px;*/
-      text-align: center;
-      left: 50%;
-      transform: translateX(-50%);
-      li {
+  box-shadow: none;
+  height: auto;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 2em;
+  text-align: center;
+
+  ul {
+    display: inline-block;
+    position: relative;
+
+    li {
+      display: inline-block;
+      margin: 0;
+
+      a {
+        padding: 0.25em 0.5em;
+        font-size: 0.85em;
+        letter-spacing: 0.2px;
+        border: 1.4px solid $color-forest-green;
+        min-width: 10.5em;
         display: inline-block;
-        margin: 0;
-        &:first-child {
-          margin-left: 1.5%;
-          margin-right: -1.5%;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $color-forest-green;
+
+        &.active {
+          background-color: $color-forest-green;
+          color: $color-bg-gray;
         }
-        a {
-          padding: 0;
-          font-size: 0.85em;
-          letter-spacing: 0.2px;
-          border: 1.4px solid $color-forest-green !important;
-          padding: 8px;
-          width: 120px;
-          display: block;
-          line-height: 0.4;
-          text-transform: uppercase;
-          font-weight: bold;
+
+        &:hover {
+          background-color: map-get($grays, 'light');
+          border-color: map-get($grays, 'light');
           color: $color-forest-green;
-          &.active {
-            background-color: $color-forest-green;
-            color: $color-bg-gray !important;
-          }
-          &.distance {
-            border-bottom-right-radius: 20px;
-            border-top-right-radius: 20px;
-            border-bottom-left-radius: 0px;
-            border-top-left-radius: 0px;
-          }
-          &.alphabetical {
-            border-bottom-right-radius: 0px;
-            border-top-right-radius: 0px;
-            border-bottom-left-radius: 20px;
-            border-top-left-radius: 20px;
-          }
+        }
+
+        &.distance {
+          border-radius: 0 1em 1em 0;
+        }
+
+        &.alphabetical {
+          border-radius: 1em 0 0 1em;
         }
       }
     }
+  }
 }
 
 article.lists {
@@ -105,30 +57,28 @@ article.lists {
   margin-top: 3em;
   margin-bottom: 1em;
   width: 85%;
+  max-width: 40em;
 
   h1 {
     font-size: 1.8em;
     text-align: center;
     font-weight: bold;
     letter-spacing: -0.3px;
+    margin-bottom: 1em;
   }
 
   .byline {
     text-align: center;
-    font-family: "Benton Sans";
-    margin-top: 2em;
+    font-family: map-get($font-sets, 'benton-sans');
+  }
+
+  .social-buttons {
+    margin-bottom: 1em;
   }
 
   .article-description {
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
     text-align: center;
-  }
-
-  p {
-    font-family: Benton Sans;
-    line-height: 1.5;
-    letter-spacing: 0.15px;
   }
 
   article.item {

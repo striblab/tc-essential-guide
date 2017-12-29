@@ -82,9 +82,6 @@ ul.groups-items {
     }
 
     p {
-      font-family: map-get($font-sets, 'benton-sans');
-      line-height: 1.5;
-      letter-spacing: 0.15px;
       height: 5em;
       overflow: hidden;
       margin-top: 0.3em;
@@ -93,7 +90,6 @@ ul.groups-items {
       &::after {
         content: '... Read more';
         display: inline;
-        font-family: map-get($font-sets, 'benton-sans');
         line-height: 1.5em;
         letter-spacing: 0;
         font-weight: bold;

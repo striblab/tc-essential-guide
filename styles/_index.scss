@@ -130,34 +130,4 @@
       }
     }
   }
-
-  .social-buttons {
-    text-align: center;
-
-    a {
-      display: inline-block;
-      width: 2.2em;
-      height: 2.2em;
-      margin-right: 0.1em;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-
-      &:hover {
-        opacity: 0.85;
-      }
-    }
-
-    .facebook-button {
-      background-image: url('./assets/images/social/facebook-white.svg');
-    }
-
-    .twitter-button {
-      background-image: url('./assets/images/social/twitter-white.svg');
-    }
-
-    .email-button {
-      background-image: url('./assets/images/social/broadcast-white.svg');
-    }
-  }
 }
