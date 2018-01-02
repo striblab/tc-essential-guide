@@ -119,16 +119,12 @@ export default {
           // with elements that are in view.
 
           // We only want to highlight one element at a time, so
-          // order by the top and which one is in view.
-          //
-          // TODO: This only works on initial call when all elements
-          // are present, need to test all elements.
-          let sorted = _.sortBy(entries, e => {
-            return (
-              (e.intersectionRatio >= threshold ? 1 : 10000) +
-              e.boundingClientRect.y
-            );
-          });
+          // order by the top and which one is most in view.
+          let sorted = _.orderBy(
+            entries,
+            ['intersectionRatio', e => e.boundingClientRect.y],
+            ['desc', 'asc']
+          );
           if (sorted[0].intersectionRatio >= threshold) {
             sorted[0].inView = true;
           }
@@ -146,8 +142,8 @@ export default {
         },
         {
           root: document.querySelector('.map-items'),
-          //margin: '40%',
-          threshold: [0, 0.8, 0.85, 0.9]
+          // We use many to make sure we know about all elements currently in view
+          threshold: _.map(_.range(0, 20), i => i * 5 / 100)
         }
       );
 
