@@ -35,13 +35,19 @@
     <p>{{{ data.description }}}</p>
 
     {{#if display !== 'map'}}
-      <dl>
-        <dt><span>Phone</span></dt>
-        <dd><span>{{ data.phone }}</span></dd>
+      {{#if data.phone || data.website}}
+        <dl>
+          {{#if data.phone}}
+            <dt><span>Phone</span></dt>
+            <dd><span>{{ data.phone }}</span></dd>
+          {{/if}}
 
-        <dt><span>Website</span></dt>
-        <dd><span><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></span></dd>
-      </dl>
+          {{#if data.website}}
+            <dt><span>Website</span></dt>
+            <dd><span><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></span></dd>
+          {{/if}}
+        </dl>
+      {{/if}}
 
       <div class="social-buttons social-buttons-gray">
         <a href="{{ facebookURL }}" target="_blank" rel="noopener" class="facebook-button">
