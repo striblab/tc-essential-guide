@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<title><%= data.pageTitle || content.title %> | <%= content.organization || 'Star Tribune' %></title>
+<title><%= data.pageTitle || data.title || data.name || content.title %> | <%= content.organization || 'Star Tribune' %></title>
 
 <meta name="application-name" content="<%= content.title %>">
 <meta name="author" content="<%= htmlEscape(data.pageAuthor || content.metaAuthor || 'Star Tribune Visuals') %>">
@@ -11,11 +11,13 @@
 
 <link rel="index" href="<%= config.publish.production.url %>">
 
-<!-- Geo tags -->
-<!-- <meta name="ICBM" content="latitude, longitude">
-<meta name="geo.position" content="latitude;longitude">
-<meta name="geo.region" content="US-MN">
-<meta name="geo.placename" content="Minneapolis/St. Paul"> -->
+<% if (data.latitude && data.longitude) { %>
+  <!-- Geo tags -->
+  <meta name="ICBM" content="<%= data.latitude %>, <%= data.longitude %>">
+  <meta name="geo.position" content="<%= data.latitude %>;<%= data.longitude %>">
+  <meta name="geo.region" content="US-MN">
+  <meta name="geo.placename" content="<%= data.pageTitle || data.title || data.name %>">
+<% } %>
 
 <!-- Shortcut and related icons -->
 <link rel="apple-touch-icon" sizes="180x180" href="<%= data.basePath || '.' %>/assets/images/favicons/apple-touch-icon.png">
@@ -49,7 +51,7 @@
 <!-- Social Media Tags -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
-<meta property="og:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
+<meta property="og:title" content="<%= htmlEscape(data.pageTitle || data.title || data.name || content.title) %>">
 <meta property="og:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <meta property="og:site_name" content="<%= content.title %>">
 <meta property="og:locale" content="en_US">
@@ -60,7 +62,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="<%= content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:creator" content="<%= data.twitterAccount || content.twitterAccount || '@StarTribune' %>">
-<meta name="twitter:title" content="<%= htmlEscape(data.pageTitle || content.title) %>">
+<meta name="twitter:title" content="<%= htmlEscape(data.pageTitle || data.title || data.name || content.title) %>">
 <meta name="twitter:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
 <% if (config.social && config.social.image) { %>
   <meta name="twitter:image" content="<%= config.publish.production.url %><%= config.social.image %>">
@@ -75,7 +77,7 @@
       "@type": "WebPage",
       "@id": "<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>"
     },
-    "headline": "<%= escapeQuotes(data.pageDescription || content.metaDescription) %>",
+    "headline": "<%= escapeQuotes(data.pageTitle || data.title || data.name || content.title) %>",
     "image": {
       "@type": "ImageObject",
       "url": "<%= config.publish.production.url %><%= config.social.image %>"
