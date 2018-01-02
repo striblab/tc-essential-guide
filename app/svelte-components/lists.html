@@ -98,7 +98,10 @@ export default {
       this.set({ view: 'distance' });
       this.geolocate((error, position) => {
         // TODO: Handle error
-        console.log(error, position);
+        if (error) {
+          console.error(error);
+          return;
+        }
 
         let d = this.get('data');
         d.items = _.sortBy(d.items, i => {
