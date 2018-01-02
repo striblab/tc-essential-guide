@@ -55,6 +55,7 @@ ul.groups-items {
     width: 100%;
     height: 40%;
     position: relative;
+    box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
   }
 
   .map {
@@ -71,7 +72,7 @@ ul.groups-items {
   .item {
     border: 1px solid $color-emerald-green;
     padding: 1.5em 2em;
-    margin: 1em;
+    margin: 1.5em;
     border-radius: 0.5em;
     background-color: $color-white;
     opacity: 0.5;
