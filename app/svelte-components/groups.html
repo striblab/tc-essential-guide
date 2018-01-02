@@ -38,7 +38,7 @@
       <div class="map-items">
         {{#each allItems as i @airtableId}}
           <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
-            display="map" view="{{ view }}" />
+            display="map" view="{{ view }}" content="{{ content }}" />
         {{/each}}
 
         <div class="ad ad-placeholder">
