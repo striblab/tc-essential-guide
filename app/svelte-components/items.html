@@ -6,8 +6,14 @@
           <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
         </h1>
 
-        {{#if byline && display !== 'list'}}
-          <div class="byline">{{{ byline }}}</div>
+        {{#if data.byline && display !== 'list'}}
+          <div class="byline">
+            {{#if fullByline}}
+              {{{ data.byline }}}
+            {{else}}
+              <strong>By {{ escapeHTML(data.byline) }}</strong> • Star Tribune
+            {{/if}}
+          </div>
         {{/if}}
 
         {{#if data.address}}
@@ -113,12 +119,8 @@ export default {
   },
 
   computed: {
-    byline: function(data) {
-      return !data || !data.byline
-        ? ''
-        : ~data.byline.indexOf('•')
-          ? data.byline
-          : `<strong>By ${data.byline}</strong> • Star Tribune`;
+    fullByline: function(data) {
+      return data && data.byline && ~data.byline.indexOf('•');
     },
 
     directionsURL: function(data, store) {
@@ -155,6 +157,10 @@ export default {
   },
 
   helpers: {
+    escapeHTML: function(input) {
+      return input ? input.replace(/(<([^>]+)>)/gi, '') : '';
+    },
+
     srcset: function(data, prop = 'mainImageLocal', extension) {
       let p = data.basePath + '/' + data[prop];
 

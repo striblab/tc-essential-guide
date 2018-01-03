@@ -9,7 +9,11 @@
     <h1 class="heading-alternate">{{ data.title }}</h1>
 
     <div class="byline">
-      {{{ byline }}}
+      {{#if fullByline}}
+        {{{ data.byline }}}
+      {{else}}
+        <strong>By {{ escapeHTML(data.byline) }}</strong> • Star Tribune
+      {{/if}}
     </div>
 
     <div class="social-buttons social-buttons-gray">
@@ -24,7 +28,7 @@
       </a>
     </div>
 
-    <p class="article-description">{{{ data.description }}}</p>
+    <div class="article-description">{{{ data.description }}}</div>
 
     <nav class="toggle-nav">
       {{#if utils && utils.hasGeolocate }}
@@ -178,11 +182,15 @@ export default {
     }
   },
 
+  helpers: {
+    escapeHTML: function(input) {
+      return input ? input.replace(/(<([^>]+)>)/gi, '') : '';
+    }
+  },
+
   computed: {
-    byline: function(data) {
-      return ~data.byline.indexOf('•')
-        ? data.byline
-        : `<strong>By ${data.byline}</strong> • Star Tribune`;
+    fullByline: function(data) {
+      return data && data.byline && ~data.byline.indexOf('•');
     },
 
     facebookURL: function(data, content) {
