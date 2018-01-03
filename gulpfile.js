@@ -20,6 +20,7 @@ const htmlhint = require('gulp-htmlhint');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const a11y = require('gulp-a11y');
+const responsive = require('gulp-responsive');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
@@ -31,6 +32,7 @@ const gulpPublish = require('./lib/gulp-publish.js');
 const jest = require('./lib/gulp-jest.js');
 const layouts = require('./lib/gulp-layouts.js');
 const airtable = require('./lib/gulp-airtable.js');
+const responsiveConfig = require('./lib/gulp-responsive.js');
 const config = exists('config.custom.json')
   ? require('./config.custom.json')
   : require('./config.json');
@@ -93,9 +95,9 @@ gulp.task('html:lint:details', ['html'], () => {
     .pipe(a11y.reporter());
 });
 
-// Wrapper for dat and html
+// Wrapper for data and html
 gulp.task('html:full', done => {
-  runSequence('source:data', 'html:lint:details', done);
+  runSequence('source:data', 'assets:responsive', 'html:lint:details', done);
 });
 
 // Content tasks
@@ -167,12 +169,25 @@ gulp.task('assets', () => {
   return gulp.src('assets/**/*').pipe(gulp.dest('build/assets'));
 });
 
+// Responsive images.  This is an expensive task.
+gulp.task('assets:responsive', () => {
+  return gulp
+    .src('assets/images/airtable/*.{jpg,png}')
+    .pipe(
+      responsive(
+        responsiveConfig(responsive).sizes,
+        responsiveConfig(responsive).options
+      )
+    )
+    .pipe(gulp.dest('build/assets/images/airtable'));
+});
+
 // Clean build
 gulp.task('clean', () => {
   return del(['build/**/*']);
 });
 
-// Testing ,manully using jest module because
+// Testing, manully using jest module because
 gulp.task(
   'js:test',
   jest('js:test', {
@@ -231,15 +246,9 @@ gulp.task('publish:confirm', gulpPublish.confirmToken(gulp));
 gulp.task('publish:open', gulpPublish.openURL(gulp));
 
 // Short build and full build
-gulp.task('build', ['publish:build', 'assets', 'html', 'styles', 'js']);
-gulp.task('build:full', [
-  'publish:build',
-  'assets',
-  'html:full',
-  'styles',
-  'js'
-]);
-gulp.task('default', ['build']);
+gulp.task('build', ['assets', 'html', 'styles', 'js']);
+gulp.task('build:full', ['assets', 'html:full', 'styles', 'js']);
+gulp.task('default', ['build:full']);
 
 // Deploy (build and publish)
 gulp.task('deploy', done => {

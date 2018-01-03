@@ -25,7 +25,20 @@
     {{#if data.mainImage && data.mainImage[0] && display !== 'map' }}
       <div class="item-image">
         <figure>
-          <img src="{{ data.mainImage[0].url }}" alt="Main image for '{{ data.name }}'">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="{{ srcset(data, 'mainImageLocal', 'webp') }}"
+              sizes="100vw">
+            <source
+              type="image/jpeg"
+              srcset="{{ srcset(data) }}"
+              sizes="100vw">
+            <img
+              alt="Main image for '{{ data.name }}'"
+              src="{{ data.basePath }}/{{ data.mainImageLocal }}">
+          </picture>
+
           <cite>{{ data.imageCredit}}</cite>
         </figure>
       </div>
@@ -113,6 +126,25 @@ export default {
       return `mailto:RECIPIENT?subject=${encodeURIComponent(
         data.emailShare || (content ? content.emailShare : '')
       )}&body=${encodeURIComponent(data.baseURL + data.filename)}`;
+    }
+  },
+
+  helpers: {
+    srcset: function(data, prop = 'mainImageLocal', extension) {
+      let p = data.basePath + '/' + data[prop];
+
+      return ['300', '600', '900', '1200', '2000']
+        .map(w => {
+          return (
+            p
+              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
+              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
+            ' ' +
+            w +
+            'w'
+          );
+        })
+        .join(', ');
     }
   }
 };

@@ -49,6 +49,7 @@
     "gulp-json-editor": "^2.2.1",
     "gulp-noopener": "^1.0.5",
     "gulp-rename": "^1.2.2",
+    "gulp-responsive": "^2.8.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylelint": "^3.9.0",
