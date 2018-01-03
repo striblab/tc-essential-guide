@@ -17,6 +17,8 @@ ul.groups-items {
       display: block;
       margin: 0 0 1em;
       text-decoration: none;
+      min-height: 10em;
+      background-color: map-get($grays, 'light');
 
       img {
         display: block;
