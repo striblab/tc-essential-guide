@@ -16,7 +16,19 @@
         <li>
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImage && i.mainImage[0] }}
-              <img src="{{ i.mainImage[0].url }}" alt="Main image for '{{ i.title }}'">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="{{ srcset(data.basePath, i.mainImageLocal, 'webp') }}"
+                  sizes="100vw">
+                <source
+                  type="image/jpeg"
+                  srcset="{{ srcset(data.basePath, i.mainImageLocal) }}"
+                  sizes="100vw">
+                <img
+                  alt="Main image for '{{ i.title }}'"
+                  src="{{ data.basePath }}/{{ i.mainImageLocal }}">
+              </picture>
             {{/if}}
             <span>{{ i.title || i.name }}</span>
           </a>
@@ -311,6 +323,25 @@ export default {
       }
 
       return o;
+    }
+  },
+
+  helpers: {
+    srcset: function(basePath, imagePath, extension) {
+      let p = basePath + '/' + imagePath;
+
+      return ['300', '600', '900', '1200', '2000']
+        .map(w => {
+          return (
+            p
+              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
+              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
+            ' ' +
+            w +
+            'w'
+          );
+        })
+        .join(', ');
     }
   },
 
