@@ -57,6 +57,8 @@ gulp.task(
     base: 'appdVGBfh1z13BSwv',
     apiKey: process.env.AIRTABLE_API_KEY,
     tables: ['Groups', 'Lists', 'Items'],
+    images: ['lists.mainImage', 'items.mainImage'],
+    imagePath: 'assets/images/airtable',
     markdown: ['lists.byline', 'lists.description', 'items.description'],
     outputPath: 'sources/guide-data.json'
   })

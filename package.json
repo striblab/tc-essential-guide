@@ -59,6 +59,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "moment": "^2.19.1",
+    "node-fetch": "^1.7.3",
     "openurl": "^1.1.1",
     "run-sequence": "^1.2.2",
     "strib-styles": "0.0.6",
