@@ -2,12 +2,14 @@
   <nav class="minor-navigation adjust-header">
     <h1>{{ data.title }}</h1>
 
-    <ul class="cf">
-      <li><a href="#/featured" on:click="eventSet(event, { view: 'featured' })"
-        class="featured {{ view === 'featured' ? 'active' : '' }}">Featured</a></li>
-      <li><a href="#/map" on:click="eventSet(event, { view: 'map' })"
-        class="distance {{ view === 'map' ? 'active' : '' }}">Map</a></li>
-    </ul>
+    {{#if hasLocations}}
+      <ul class="cf">
+        <li><a href="#/featured" on:click="eventSet(event, { view: 'featured' })"
+          class="featured {{ view === 'featured' ? 'active' : '' }}">Featured</a></li>
+        <li><a href="#/map" on:click="eventSet(event, { view: 'map' })"
+          class="distance {{ view === 'map' ? 'active' : '' }}">Map</a></li>
+      </ul>
+    {{/if}}
   </nav>
 
   {{#if view === 'featured'}}
@@ -323,6 +325,19 @@ export default {
       }
 
       return o;
+    },
+
+    hasLocations: function(allListsItems) {
+      return !!allListsItems.find(i => {
+        return (
+          (i && i.latitude && i.longitude) ||
+          (i &&
+            i.items &&
+            !!i.items.find(t => {
+              return t && t.latitude && t.longitude;
+            }))
+        );
+      });
     }
   },
 
