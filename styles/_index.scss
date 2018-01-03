@@ -38,7 +38,7 @@
 
       img {
         display: inline-block;
-        max-width: 100%;
+        max-width: 35rem;
       }
     }
 
@@ -54,6 +54,10 @@
 
       // Offsets the centered content
       margin-bottom: 20%;
+
+      @include full-view {
+        margin-bottom: 5%;
+      }
     }
 
     .splash-footer {

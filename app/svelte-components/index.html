@@ -5,7 +5,19 @@
     <div class="vertical-center">
       <h1>
         <span>Essential</span>
-        <img src="{{ data.basePath }}/assets/images/twin-cities-illustration.png" alt="Twin Cities">
+
+        <picture>
+          <source
+            type="image/webp"
+            srcset="{{ srcset(data.basePath, 'assets/images/twin-cities-illustration.png', 'webp') }}"
+            sizes="100vw">
+          <source
+            type="image/jpeg"
+            srcset="{{ srcset(data.basePath, 'assets/images/twin-cities-illustration.png') }}"
+            sizes="100vw">
+          <img src="{{ data.basePath }}/assets/images/twin-cities-illustration.png" alt="Twin Cities">
+        </picture>
+
         <span>Guide</span>
       </h1>
 
@@ -92,6 +104,25 @@ export default {
       return `mailto:RECIPIENT?subject=${encodeURIComponent(
         content.emailShare
       )}&body=${encodeURIComponent(data.baseURL)}`;
+    }
+  },
+
+  helpers: {
+    srcset: function(basePath, imagePath, extension) {
+      let p = basePath + '/' + imagePath;
+
+      return ['300', '600', '900', '1200', '2000']
+        .map(w => {
+          return (
+            p
+              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
+              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
+            ' ' +
+            w +
+            'w'
+          );
+        })
+        .join(', ');
     }
   },
 
