@@ -180,7 +180,7 @@ export default {
 
   computed: {
     byline: function(data) {
-      return data.byline.indexOf('•')
+      return ~data.byline.indexOf('•')
         ? data.byline
         : `<strong>By ${data.byline}</strong> • Star Tribune`;
     },

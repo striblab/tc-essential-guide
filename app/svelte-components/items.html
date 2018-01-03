@@ -6,7 +6,13 @@
           <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
         </h1>
 
-        <address>{{ data.address }}</address>
+        {{#if byline && display !== 'list'}}
+          <div class="byline">{{{ byline }}}</div>
+        {{/if}}
+
+        {{#if data.address}}
+          <address>{{ data.address }}</address>
+        {{/if}}
       </div>
 
       <div class="item-header-right">
@@ -18,7 +24,9 @@
           {{/if}}
         </div>
 
-        <a href="{{ directionsURL }}" target="_blank" rel="noopener" class="directions">Directions</a>
+        {{#if data.latitude && data.longitude}}
+          <a href="{{ directionsURL }}" target="_blank" rel="noopener" class="directions">Directions</a>
+        {{/if}}
       </div>
     </div>
 
@@ -44,20 +52,29 @@
       </div>
     {{/if}}
 
-
     <p>{{{ data.description }}}</p>
 
     {{#if display !== 'map'}}
-      {{#if data.phone || data.website}}
+      {{#if data.phone || data.website || data.startDate}}
         <dl>
+          {{#if data.startDate}}
+            <dt><span>When</span></dt>
+            <dd><span>
+              {{ data.startDate }}
+              {{ data.endDate && data.startDate !== data.endDate ? ' - ' + data.endDate : '' }}
+            </span></dd>
+          {{/if}}
+
           {{#if data.phone}}
             <dt><span>Phone</span></dt>
-            <dd><span>{{ data.phone }}</span></dd>
+            <dd><span class="linkable">{{ data.phone }}</span></dd>
           {{/if}}
 
           {{#if data.website}}
             <dt><span>Website</span></dt>
-            <dd><span><a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a></span></dd>
+            <dd><span class="linkable">
+              <a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a>
+            </span></dd>
           {{/if}}
         </dl>
       {{/if}}
@@ -96,6 +113,14 @@ export default {
   },
 
   computed: {
+    byline: function(data) {
+      return !data || !data.byline
+        ? ''
+        : ~data.byline.indexOf('•')
+          ? data.byline
+          : `<strong>By ${data.byline}</strong> • Star Tribune`;
+    },
+
     directionsURL: function(data, store) {
       let location =
         store && store.location && store.location.position

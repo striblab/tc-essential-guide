@@ -103,9 +103,13 @@ article.item {
   }
 
   dd span {
-    border-bottom: 1px solid $color-emerald-green;
+    border: 1px solid transparent;
     padding-bottom: 0.02em;
     margin-left: 0.3em;
+
+    &.linkable {
+      border-bottom: 1px solid $color-emerald-green;
+    }
 
     a {
       text-decoration: none;
@@ -137,7 +141,7 @@ article.item {
   // For linkable page only
   .layout-items & {
     background-color: $color-bg-gray;
-    margin: 6em 2rem;
+    margin: 3rem 2rem;
     padding-bottom: 0;
 
     @media screen and (max-width: 300px) {
