@@ -83,6 +83,7 @@
 
 <script>
 import Item from './items.html';
+import observe from '../observe.js';
 
 export default {
   components: {
@@ -91,9 +92,22 @@ export default {
 
   oncreate() {
     this.observe('data', n => {
-      if (n && n.mainImageLocal) {
+      if (!n) {
+        return;
+      }
+
+      if (n.mainImageLocal) {
         // When data is set, make default main visual
         this.set({ mainVisual: n.mainImageLocal });
+      }
+
+      // Observe list
+      if (this.get('isBrowser')) {
+        this.__itemObserver = observe({
+          visibleThreshold: 0.5,
+          elements: document.querySelectorAll('.item-list .component-item'),
+          onObserve: _.bind(this.observeItem, this)
+        });
       }
     });
   },
@@ -106,6 +120,18 @@ export default {
   },
 
   methods: {
+    observeItem: function(id) {
+      let item = _.find(this.get('data').items, { id: id });
+
+      // Update image
+      if (item && item.mainImageLocal) {
+        this.set({
+          mainVisual: item.mainImageLocal,
+          mainVisualAlt: item.imageDescription
+        });
+      }
+    },
+
     sortAlpha: function(e) {
       if (e && e.preventDefault) {
         e.preventDefault();
