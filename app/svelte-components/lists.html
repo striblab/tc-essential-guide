@@ -1,3 +1,21 @@
+<div class="main-visual">
+  {{#if mainVisual}}
+    <picture>
+      <source
+        type="image/webp"
+        srcset="{{ srcset(data.basePath, mainVisual, 'webp') }}"
+        sizes="100vw">
+      <source
+        type="image/jpeg"
+        srcset="{{ srcset(data.basePath, mainVisual) }}"
+        sizes="100vw">
+      <img
+        alt="Main image for '{{ mainVisualTitle }}'"
+        src="{{ data.basePath }}/{{ mainVisual }}">
+    </picture>
+  {{/if}}
+</div>
+
 <div class="component component-list has-minor-navigation">
   <nav class="minor-navigation items-2 minor-nav-lists">
     {{#if data.groups && data.groups[0] }}
@@ -71,7 +89,14 @@ export default {
     Item
   },
 
-  oncreate() {},
+  oncreate() {
+    this.observe('data', n => {
+      if (n && n.mainImageLocal) {
+        // When data is set, make default main visual
+        this.set({ mainVisual: n.mainImageLocal });
+      }
+    });
+  },
 
   ondestroy() {
     let u = this.get('utils');
@@ -185,6 +210,23 @@ export default {
   helpers: {
     escapeHTML: function(input) {
       return input ? input.replace(/(<([^>]+)>)/gi, '') : '';
+    },
+
+    srcset: function(basePath, imagePath, extension) {
+      let p = basePath + '/' + imagePath;
+
+      return ['300', '600', '900', '1200', '2000']
+        .map(w => {
+          return (
+            p
+              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
+              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
+            ' ' +
+            w +
+            'w'
+          );
+        })
+        .join(', ');
     }
   },
 

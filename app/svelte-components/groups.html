@@ -1,3 +1,21 @@
+<div class="main-visual">
+  {{#if mainVisual}}
+    <picture>
+      <source
+        type="image/webp"
+        srcset="{{ srcset(data.basePath, mainVisual, 'webp') }}"
+        sizes="100vw">
+      <source
+        type="image/jpeg"
+        srcset="{{ srcset(data.basePath, mainVisual) }}"
+        sizes="100vw">
+      <img
+        alt="Main image for '{{ mainVisualTitle }}'"
+        src="{{ data.basePath }}/{{ mainVisual }}">
+    </picture>
+  {{/if}}
+</div>
+
 <div class="component component-group has-minor-navigation view-{{ view }}">
   <nav class="minor-navigation adjust-header">
     <h1>{{ data.title }}</h1>
@@ -15,7 +33,7 @@
   {{#if view === 'featured'}}
     <ul class="groups-items">
       {{#each allListsItems as i @airtableId}}
-        <li>
+        <li on:mouseover="hoverItem(event, i)">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImage && i.mainImage[0] }}
               <picture>
@@ -78,6 +96,9 @@ export default {
       if (n.items || n.lists) {
         this.set({ allItems: this.allItems(this.get('data')) });
       }
+
+      // When data is set, make default main visual
+      this.set({ mainVisual: this.get('data').lists[0].mainImageLocal });
     });
 
     // React to view change.  Since we need to have access to the dom
@@ -118,6 +139,17 @@ export default {
         this.drawMap();
         this.observeItems();
       }
+    },
+
+    // Hover items
+    hoverItem(e, item) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      this.set({
+        mainVisual: item.mainImageLocal ? item.mainImageLocal : undefined
+      });
     },
 
     // Observe the items as the scroll
