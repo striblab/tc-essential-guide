@@ -82,8 +82,10 @@
 </div>
 
 <script>
-import Item from './items.html';
+import helpers from './common/helpers.js';
+import methods from './common/methods.js';
 import mapStyles from '../map-styles';
+import Item from './items.html';
 
 export default {
   components: {
@@ -119,19 +121,14 @@ export default {
   },
 
   methods: {
-    // Proxy around set to be able to prevent default
-    eventSet: function(e, properties) {
-      if (e && e.preventDefault) {
-        e.preventDefault();
-      }
+    eventSet: methods.eventSet,
 
-      this.set(properties);
-    },
-
+    // Set view to featured
     showFeatured: function() {
       this.set({ view: 'featured' });
     },
 
+    // Set view to map
     showMap: function() {
       this.set({ view: 'map' });
 
@@ -354,6 +351,8 @@ export default {
       return o;
     },
 
+    // Determine if any item has location (otherwise, don't show)
+    // map link.
     hasLocations: function(allListsItems) {
       return !!allListsItems.find(i => {
         return (
@@ -369,22 +368,7 @@ export default {
   },
 
   helpers: {
-    srcset: function(basePath, imagePath, extension) {
-      let p = basePath + '/' + imagePath;
-
-      return ['300', '600', '900', '1200', '2000']
-        .map(w => {
-          return (
-            p
-              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
-              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
-            ' ' +
-            w +
-            'w'
-          );
-        })
-        .join(', ');
-    }
+    srcset: helpers.srcset
   },
 
   data() {

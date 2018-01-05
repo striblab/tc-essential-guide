@@ -44,13 +44,13 @@
 
     <div class="vertical-bottom">
       <div class="social-buttons">
-        <a href="{{ facebookURL }}" target="_blank" rel="noopener" class="facebook-button">
+        <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
           <span class="sr-only">Share on Facebook</span>
         </a>
-        <a href="{{ twitterURL }}" target="_blank" rel="noopener" class="twitter-button">
+        <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
           <span class="sr-only">Share on Twitter</span>
         </a>
-        <a href="{{ emailURL }}" target="_blank" rel="noopener" class="email-button">
+        <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
           <span class="sr-only">Share via email</span>
         </a>
       </div>
@@ -59,9 +59,13 @@
 </div>
 
 <script>
+import helpers from './common/helpers.js';
+import methods from './common/methods.js';
+
 export default {
   oncreate() {
     this.observe('data', n => {
+      // Default sort
       if (n && n.groups && n.groups.length) {
         n.groups = n.groups.sort((a, b) => {
           return b.order - a.order;
@@ -73,6 +77,7 @@ export default {
   },
 
   methods: {
+    // Go to groups/menu
     goToGroups: function(e) {
       if (e && e.preventDefault) {
         e.preventDefault();
@@ -85,45 +90,11 @@ export default {
     }
   },
 
-  computed: {
-    facebookURL: function(data, content) {
-      return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        data.baseURL
-      )}`;
-    },
-
-    twitterURL: function(data, content) {
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        content.twitterShare
-      )}&url=${encodeURIComponent(data.baseURL)}&via=${encodeURIComponent(
-        content.twitterAccount
-      )}`;
-    },
-
-    emailURL: function(data, content) {
-      return `mailto:RECIPIENT?subject=${encodeURIComponent(
-        content.emailShare
-      )}&body=${encodeURIComponent(data.baseURL)}`;
-    }
-  },
-
   helpers: {
-    srcset: function(basePath, imagePath, extension) {
-      let p = basePath + '/' + imagePath;
-
-      return ['300', '600', '900', '1200', '2000']
-        .map(w => {
-          return (
-            p
-              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
-              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
-            ' ' +
-            w +
-            'w'
-          );
-        })
-        .join(', ');
-    }
+    srcset: helpers.srcset,
+    facebookURL: helpers.facebookURL,
+    twitterURL: helpers.twitterURL,
+    emailURL: helpers.emailURL
   },
 
   data() {
