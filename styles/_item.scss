@@ -71,6 +71,10 @@ article.item {
 
   .item-image {
     margin-bottom: 3em;
+
+    @include full-view {
+      display: none;
+    }
   }
 
   figure cite {
@@ -140,9 +144,12 @@ article.item {
 
   // For linkable page only
   .layout-items & {
-    background-color: $color-bg-gray;
     margin: 3rem 2rem;
     padding-bottom: 0;
+
+    @include full-view {
+      margin: 3rem 2rem 1em;
+    }
 
     @media screen and (max-width: 300px) {
       & {
@@ -165,6 +172,10 @@ article.item {
 
     .social-buttons {
       margin-bottom: 2em;
+
+      @include full-view {
+        text-align: left;
+      }
     }
 
     .related {

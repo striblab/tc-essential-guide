@@ -1,4 +1,24 @@
-<div class="component component-item" data-id="{{ data.id }}">
+{{#if display === 'full'}}
+  <div class="main-visual">
+    {{#if data.mainImageLocal}}
+      <picture>
+        <source
+          type="image/webp"
+          srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
+          sizes="100vw">
+        <source
+          type="image/jpeg"
+          srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
+          sizes="100vw">
+        <img
+          alt="Main image for '{{ mainVisualTitle }}'"
+          src="{{ data.basePath }}/{{ data.mainImageLocal }}">
+      </picture>
+    {{/if}}
+  </div>
+{{/if}}
+
+<div class="component component-item component-item-{{ display }}" data-id="{{ data.id }}">
   <article class="item item-{{ display }} {{ data.inView ? 'in-view' : '' }}" data-id="{{ data.id }}">
     <div class="item-header">
       <div class="item-header-left">
