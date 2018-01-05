@@ -28,7 +28,7 @@ class Observer {
       root: _.isElement(this.options.root)
         ? this.options.root
         : document.querySelector(this.options.root),
-      threshold: _.map(_.range(0, 50), i => i * 2 / 100)
+      threshold: _.map(_.range(0, 25), i => i * 4 / 100)
     });
 
     // Add elements

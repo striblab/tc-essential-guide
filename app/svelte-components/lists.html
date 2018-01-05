@@ -93,12 +93,16 @@ export default {
   },
 
   oncreate() {
+    // In theory, we should be more specific and watch for data.items
+    // changes, but that isn't actually going to change on the client.
+    this.__dataInitialized = false;
     this.observe('data', n => {
-      if (!n) {
+      if (!n || this.__dataInitialized) {
         return;
       }
+      this.__dataInitialized = true;
 
-      if (n.mainImageLocal) {
+      if (n.mainImageLocal && !this.get('mainVisual')) {
         // When data is set, make default main visual
         this.set({ mainVisual: n.mainImageLocal });
       }
@@ -108,8 +112,23 @@ export default {
         this.__itemObserver = observe({
           visibleThreshold: 0.5,
           elements: document.querySelectorAll('.item-list .component-item'),
-          onObserve: _.bind(this.observeItem, this)
+          onObserve: _.throttle(_.bind(this.observeItem, this), 500)
         });
+      }
+    });
+
+    // Watch for in view change.
+    this.observe('inViewID', (n, o) => {
+      if (n && n !== o) {
+        let data = this.get('data');
+        let item = _.find(data.items, { id: n });
+
+        if (item) {
+          data.items.forEach(i => {
+            i.inView = i.id === n ? true : false;
+          });
+          this.set({ data: data });
+        }
       }
     });
   },
@@ -127,7 +146,13 @@ export default {
 
     // Handle when an item is observed
     observeItem: function(id) {
-      let item = _.find(this.get('data').items, { id: id });
+      let data = this.get('data');
+      let item = _.find(data.items, { id: id });
+
+      // Mark as in view
+      if (id) {
+        this.set({ inViewID: id });
+      }
 
       // Update image
       if (item && item.mainImageLocal) {

@@ -136,4 +136,15 @@ article.lists {
       text-align: left;
     }
   }
+
+  @include full-view {
+    .item {
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .item.in-view {
+      opacity: 1;
+    }
+  }
 }
