@@ -31,6 +31,21 @@ module.exports = {
     return data && data.byline && ~data.byline.indexOf('•');
   },
 
+  // URL for directions via Google.  TODO: Is there a way to specify
+  // the position and a name?
+  // https://developers.google.com/maps/documentation/urls/guide#directions-action
+  directionsURL: function(data, store) {
+    let location =
+      store && store.location && store.location.position
+        ? store.location.position.lat + ',' + store.location.position.lng
+        : undefined;
+    return `https://www.google.com/maps/dir/?api=1${
+      location ? '&origin=' + encodeURIComponent(location) : ''
+    }&destination=${encodeURIComponent(data.latitude)},${encodeURIComponent(
+      data.longitude
+    )}`;
+  },
+
   // URL for facebook link
   facebookURL: function(data) {
     if (!data) {
