@@ -8,9 +8,23 @@
       <span class="sr-only">Go to homepage</span>
     </a>
 
-    <a href="#/menu" class="menu-logo {{ fullNavOpen ? 'menu-logo-close' : '' }}" title="Menu" on:click="toggleFullNav(event)">
-      <span class="sr-only">Menu</span>
-    </a>
+    <div class="top-nav-left">
+      <div class="social-buttons social-buttons-gray">
+        <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
+          <span class="sr-only">Share on Facebook</span>
+        </a>
+        <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
+          <span class="sr-only">Share on Twitter</span>
+        </a>
+        <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
+          <span class="sr-only">Share via email</span>
+        </a>
+      </div>
+
+      <a href="#/menu" class="menu-logo {{ fullNavOpen ? 'menu-logo-close' : '' }}" title="Menu" on:click="toggleFullNav(event)">
+        <span class="sr-only">Menu</span>
+      </a>
+    </div>
 
     <h1 class="sr-only">{{ data.name || data.title || content.title }}</h1>
   </div>
@@ -25,8 +39,11 @@
 </nav>
 
 <script>
+import helpers from './common/helpers.js';
+
 export default {
   methods: {
+    // Toggle the full nav
     toggleFullNav: function(e) {
       if (e && e.preventDefault) {
         e.preventDefault();
@@ -35,6 +52,7 @@ export default {
       this.set({ fullNavOpen: !this.get('fullNavOpen') });
     },
 
+    // Go back using browser
     goBack: function(e) {
       if (e && e.preventDefault) {
         e.preventDefault();
@@ -44,6 +62,12 @@ export default {
         window.history.back(-1);
       }
     }
+  },
+
+  helpers: {
+    facebookURL: helpers.facebookURL,
+    twitterURL: helpers.twitterURL,
+    emailURL: helpers.emailURL
   },
 
   data() {
