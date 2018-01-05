@@ -110,9 +110,10 @@ export default {
       // Observe list
       if (this.get('isBrowser')) {
         this.__itemObserver = observe({
-          visibleThreshold: 0.5,
+          visibleThreshold: 0.75,
           elements: document.querySelectorAll('.item-list .component-item'),
-          onObserve: _.throttle(_.bind(this.observeItem, this), 500)
+          onObserve: _.bind(this.observeItem, this),
+          throttle: false
         });
       }
     });

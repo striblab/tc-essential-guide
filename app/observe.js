@@ -8,6 +8,10 @@
 
 class Observer {
   constructor(options = {}) {
+    // ACtually throttling is bad because we can miss when something gets
+    // to a relevant place
+    options.throttle =
+      options.throttle === false || options.throttle ? options.throttle : 150;
     options.attribute = options.attribute || 'data-id';
     options.visibleThreshold = options.visibleThreshold || 0.85;
     options.onObserve = options.onObserve || function() {};
@@ -24,12 +28,17 @@ class Observer {
     }
 
     // Make observer
-    this.observer = new IntersectionObserver(_.bind(this.onObserve, this), {
-      root: _.isElement(this.options.root)
-        ? this.options.root
-        : document.querySelector(this.options.root),
-      threshold: _.map(_.range(0, 25), i => i * 4 / 100)
-    });
+    this.observer = new IntersectionObserver(
+      this.options.throttle
+        ? _.throttle(_.bind(this.onObserve, this), this.options.throttle)
+        : _.bind(this.onObserve, this),
+      {
+        root: _.isElement(this.options.root)
+          ? this.options.root
+          : document.querySelector(this.options.root),
+        threshold: _.map(_.range(0, 50), i => i * 2 / 100)
+      }
+    );
 
     // Add elements
     if (_.isArrayLike(this.options.elements)) {
