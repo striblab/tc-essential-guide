@@ -11,7 +11,7 @@
           srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
           sizes="100vw">
         <img
-          alt="Main image for '{{ mainVisualTitle }}'"
+          alt="{{ data.mainImageDescription }}"
           src="{{ data.basePath }}/{{ data.mainImageLocal }}">
       </picture>
     {{/if}}

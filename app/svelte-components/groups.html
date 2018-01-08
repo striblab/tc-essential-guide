@@ -1,17 +1,17 @@
 <div class="main-visual">
-  {{#if mainVisual}}
+  {{#if data.mainVisual}}
     <picture>
       <source
         type="image/webp"
-        srcset="{{ srcset(data.basePath, mainVisual, 'webp') }}"
+        srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
         sizes="100vw">
       <source
         type="image/jpeg"
-        srcset="{{ srcset(data.basePath, mainVisual) }}"
+        srcset="{{ srcset(data.basePath, data.mainVisual) }}"
         sizes="100vw">
       <img
-        alt="Main image for '{{ mainVisualTitle }}'"
-        src="{{ data.basePath }}/{{ mainVisual }}">
+        alt="{{ data.mainVisualDescription }}"
+        src="{{ data.basePath }}/{{ data.mainVisual }}">
     </picture>
   {{/if}}
 </div>
@@ -84,6 +84,7 @@
 <script>
 import helpers from './common/helpers.js';
 import methods from './common/methods.js';
+import observe from '../observe.js';
 import mapStyles from '../map-styles';
 import Item from './items.html';
 
@@ -98,9 +99,6 @@ export default {
       if (n.items || n.lists) {
         this.set({ allItems: this.allItems(this.get('data')) });
       }
-
-      // When data is set, make default main visual
-      this.set({ mainVisual: this.get('data').lists[0].mainImageLocal });
     });
 
     // React to view change.  Since we need to have access to the dom
@@ -144,8 +142,13 @@ export default {
         e.preventDefault();
       }
 
+      let data = this.get('data');
+      data.mainVisual = item.mainImageLocal ? item.mainImageLocal : undefined;
+      data.mainVisualDescription = item.mainImageDescription
+        ? item.mainImageDescription
+        : undefined;
       this.set({
-        mainVisual: item.mainImageLocal ? item.mainImageLocal : undefined
+        data: data
       });
     },
 
