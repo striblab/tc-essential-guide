@@ -85,7 +85,7 @@
 import helpers from './common/helpers.js';
 import methods from './common/methods.js';
 import observe from '../observe.js';
-import mapStyles from '../map-styles';
+import mapStyles from '../map-styles.js';
 import Item from './items.html';
 
 export default {
@@ -236,26 +236,15 @@ export default {
 
         // Inactive all markers
         _.each(allItems, i => {
-          if (this.__markers[i.id] && this.__map) {
-            this.__markers[i.id].setIcon({
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 10,
-              fillColor: '#0FF',
-              fillOpacity: 0.8,
-              strokeWeight: 1
-            });
+          if (this.__markers[i.id] && this.__map && id !== i.id) {
+            this.__markers[i.id].setIcon(this.mapIcon());
           }
         });
 
         // Update active marker
         if (this.__markers[item.id] && this.__map) {
-          this.__markers[item.id].setIcon({
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
-            fillColor: '#00F',
-            fillOpacity: 0.8,
-            strokeWeight: 1
-          });
+          this.__markers[item.id].setIcon(this.mapIcon('active'));
+          this.__markers[item.id].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
 
           // TODO: Handle user location as well
           let bounds = new window.google.maps.LatLngBounds();
@@ -312,7 +301,8 @@ export default {
 
               let marker = new window.google.maps.Marker({
                 position: p,
-                title: i.name || i.title
+                title: i.name || i.title,
+                icon: this.mapIcon()
               });
               marker.addListener('click', function() {
                 infowindow.open(this.__map, marker);
@@ -334,6 +324,19 @@ export default {
       } else {
         window.google.maps.event.trigger(this.__map, 'resize');
       }
+    },
+
+    // Make map icon
+    mapIcon: function(color = '#C5C5C5') {
+      return {
+        path:
+          'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
+        scale: 0.5,
+        anchor: new google.maps.Point(39 / 2, 50),
+        fillColor: color === 'active' ? '#00824A' : color ? color : '#C5C5C5',
+        fillOpacity: 0.95,
+        strokeWeight: 0
+      };
     },
 
     // All items (items in lists)
