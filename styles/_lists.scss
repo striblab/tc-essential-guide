@@ -10,6 +10,10 @@ nav.toggle-nav {
   margin-bottom: 2em;
   text-align: center;
 
+  @include full-view {
+    display: none;
+  }
+
   ul {
     display: inline-block;
     position: relative;
@@ -56,6 +60,10 @@ article.lists {
   margin: 3rem 2rem 1em;
   max-width: 40em;
 
+  @include full-view {
+    max-width: none;
+  }
+
   @media screen and (max-width: 300px) {
     & {
       margin-right: 1rem;
@@ -72,6 +80,10 @@ article.lists {
         margin-right: -1rem;
         margin-left: -1rem;
       }
+    }
+
+    @include full-view {
+      display: none;
     }
   }
 
@@ -90,6 +102,16 @@ article.lists {
 
   .social-buttons {
     margin-bottom: 1em;
+
+    @include full-view {
+      display: none;
+    }
+  }
+
+  @include full-view {
+    .item-list .social-buttons {
+      display: block;
+    }
   }
 
   .article-description {
@@ -103,6 +125,26 @@ article.lists {
 
     &:last-child {
       margin-bottom: inherit;
+    }
+  }
+
+  @include full-view {
+    h1,
+    .byline,
+    .social-buttons,
+    .article-description {
+      text-align: left;
+    }
+  }
+
+  @include full-view {
+    .item {
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .item.in-view {
+      opacity: 1;
     }
   }
 }

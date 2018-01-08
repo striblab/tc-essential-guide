@@ -1,3 +1,21 @@
+<div class="main-visual">
+  {{#if mainVisual}}
+    <picture>
+      <source
+        type="image/webp"
+        srcset="{{ srcset(data.basePath, mainVisual, 'webp') }}"
+        sizes="100vw">
+      <source
+        type="image/jpeg"
+        srcset="{{ srcset(data.basePath, mainVisual) }}"
+        sizes="100vw">
+      <img
+        alt="Main image for '{{ mainVisualTitle }}'"
+        src="{{ data.basePath }}/{{ mainVisual }}">
+    </picture>
+  {{/if}}
+</div>
+
 <div class="component component-group has-minor-navigation view-{{ view }}">
   <nav class="minor-navigation adjust-header">
     <h1>{{ data.title }}</h1>
@@ -15,7 +33,7 @@
   {{#if view === 'featured'}}
     <ul class="groups-items">
       {{#each allListsItems as i @airtableId}}
-        <li>
+        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImage && i.mainImage[0] }}
               <picture>
@@ -64,8 +82,10 @@
 </div>
 
 <script>
-import Item from './items.html';
+import helpers from './common/helpers.js';
+import methods from './common/methods.js';
 import mapStyles from '../map-styles';
+import Item from './items.html';
 
 export default {
   components: {
@@ -78,6 +98,9 @@ export default {
       if (n.items || n.lists) {
         this.set({ allItems: this.allItems(this.get('data')) });
       }
+
+      // When data is set, make default main visual
+      this.set({ mainVisual: this.get('data').lists[0].mainImageLocal });
     });
 
     // React to view change.  Since we need to have access to the dom
@@ -98,19 +121,14 @@ export default {
   },
 
   methods: {
-    // Proxy around set to be able to prevent default
-    eventSet: function(e, properties) {
-      if (e && e.preventDefault) {
-        e.preventDefault();
-      }
+    eventSet: methods.eventSet,
 
-      this.set(properties);
-    },
-
+    // Set view to featured
     showFeatured: function() {
       this.set({ view: 'featured' });
     },
 
+    // Set view to map
     showMap: function() {
       this.set({ view: 'map' });
 
@@ -120,6 +138,17 @@ export default {
       }
     },
 
+    // Hover items
+    hoverItem(e, item) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+
+      this.set({
+        mainVisual: item.mainImageLocal ? item.mainImageLocal : undefined
+      });
+    },
+
     // Observe the items as the scroll
     observeItems() {
       let currentID = 1;
@@ -127,11 +156,6 @@ export default {
       let items = this.get('allItems');
       let observer = new IntersectionObserver(
         (entries, observer) => {
-          // Note: The first time this is called, it is
-          // called with all the elements/entries, regardless
-          // of where they are; after that, it is only called
-          // with elements that are in view.
-
           // We only want to highlight one element at a time, so
           // order by the top and which one is most in view.
           let sorted = _.orderBy(
@@ -327,6 +351,8 @@ export default {
       return o;
     },
 
+    // Determine if any item has location (otherwise, don't show)
+    // map link.
     hasLocations: function(allListsItems) {
       return !!allListsItems.find(i => {
         return (
@@ -342,22 +368,7 @@ export default {
   },
 
   helpers: {
-    srcset: function(basePath, imagePath, extension) {
-      let p = basePath + '/' + imagePath;
-
-      return ['300', '600', '900', '1200', '2000']
-        .map(w => {
-          return (
-            p
-              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
-              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
-            ' ' +
-            w +
-            'w'
-          );
-        })
-        .join(', ');
-    }
+    srcset: helpers.srcset
   },
 
   data() {

@@ -12,10 +12,11 @@
   },
   "js": {
     "globals": [
-      "https://cdn.polyfill.io/v2/polyfill.min.js",
-      "http://static.startribune.com/assets/libs/lodash/4.17.4/lodash.min.js",
-      "http://static.startribune.com/assets/libs/jquery/3.2.1/jquery.slim.min.js",
-      "https://maps.googleapis.com/maps/api/js?key=AIzaSyBN1TbeUQKZhhulEsc24KlJzskpNpBUAUI"
+      "//cdn.polyfill.io/v2/polyfill.min.js",
+      "//static.startribune.com/assets/libs/object-fit-images/3.2.3/ofi.min.js",
+      "//static.startribune.com/assets/libs/lodash/4.17.4/lodash.min.js",
+      "//static.startribune.com/assets/libs/jquery/3.2.1/jquery.slim.min.js",
+      "//maps.googleapis.com/maps/api/js?key=AIzaSyBN1TbeUQKZhhulEsc24KlJzskpNpBUAUI"
     ]
   },
   "content": {},
@@ -24,7 +25,7 @@
       "bucket": "static.startribune.com",
       "path": "news/projects-staging/all/super-bowl-guide",
       "url":
-        "http://static.startribune.com/news/projects-staging/all/super-bowl-guide/",
+        "https://static.startribune.com/news/projects-staging/all/super-bowl-guide/",
       "cacheSeconds": 30
     },
     "testing": {
@@ -36,9 +37,8 @@
     },
     "production": {
       "bucket": "static.startribune.com",
-      "path": "news/projects/all/super-bowl-guide",
-      "url":
-        "http://static.startribune.com/news/projects/all/super-bowl-guide/",
+      "path": "guide",
+      "url": "https://static.startribune.com/guide/",
       "cacheSeconds": 600
     }
   },

@@ -267,7 +267,7 @@ gulp.task('default', ['build:full']);
 
 // Deploy (build and publish)
 gulp.task('deploy', done => {
-  return runSequence('clean', 'build', 'publish', done);
+  return runSequence('clean', 'build:full', 'publish', done);
 });
 gulp.task('deploy:open', ['publish:open']);
 

@@ -58,8 +58,12 @@ header[role='banner'] {
     }
   }
 
-  .menu-logo {
+  .top-nav-left {
     margin-left: auto;
+    vertical-align: middle;
+  }
+
+  .menu-logo {
     vertical-align: middle;
     display: inline-block;
     width: 1.5em;
@@ -72,6 +76,17 @@ header[role='banner'] {
 
     &:hover {
       opacity: 0.85;
+    }
+  }
+
+  .social-buttons {
+    display: none;
+    vertical-align: middle;
+    font-size: 0.65em;
+    margin-right: 1rem;
+
+    @include full-view {
+      display: inline-block;
     }
   }
 

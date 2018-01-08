@@ -6,6 +6,11 @@ ul.groups-items {
   margin: 0;
   padding: 0;
 
+  @include full-view {
+    padding-top: 5em;
+    margin-bottom: 5em;
+  }
+
   li {
     padding: 0;
     margin: 0;
@@ -20,10 +25,20 @@ ul.groups-items {
       min-height: 10em;
       background-color: map-get($grays, 'light');
 
+      @include full-view {
+        margin: 0 0 3em;
+        min-height: auto;
+        background-color: inherit;
+      }
+
       img {
         display: block;
         min-width: 100%;
         height: auto;
+
+        @include full-view {
+          display: none;
+        }
       }
 
       span {
@@ -36,6 +51,18 @@ ul.groups-items {
         bottom: 0;
         width: 100%;
         font-weight: bold;
+
+        @include full-view {
+          position: relative;
+          padding: 2rem;
+          background-color: $color-emerald-green;
+          color: $color-white;
+          transition: background-color 0.1s;
+
+          &:hover {
+            background-color: $color-forest-green;
+          }
+        }
       }
     }
   }

@@ -55,6 +55,11 @@ class Util {
       this.checkGeolocate();
       this.checkLocalStorage();
     }
+
+    // Polyfill object-fit if available
+    if (window.objectFitImages) {
+      window.objectFitImages();
+    }
   }
 
   // Set view (make note)

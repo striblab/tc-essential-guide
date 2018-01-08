@@ -1,4 +1,24 @@
-<div class="component component-item">
+{{#if display === 'full'}}
+  <div class="main-visual">
+    {{#if data.mainImageLocal}}
+      <picture>
+        <source
+          type="image/webp"
+          srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
+          sizes="100vw">
+        <source
+          type="image/jpeg"
+          srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
+          sizes="100vw">
+        <img
+          alt="Main image for '{{ mainVisualTitle }}'"
+          src="{{ data.basePath }}/{{ data.mainImageLocal }}">
+      </picture>
+    {{/if}}
+  </div>
+{{/if}}
+
+<div class="component component-item component-item-{{ display }}" data-id="{{ data.id }}">
   <article class="item item-{{ display }} {{ data.inView ? 'in-view' : '' }}" data-id="{{ data.id }}">
     <div class="item-header">
       <div class="item-header-left">
@@ -8,7 +28,7 @@
 
         {{#if data.byline && display !== 'list'}}
           <div class="byline">
-            {{#if fullByline}}
+            {{#if fullByline(data)}}
               {{{ data.byline }}}
             {{else}}
               <strong>By {{ escapeHTML(data.byline) }}</strong> • Star Tribune
@@ -31,7 +51,7 @@
         </div>
 
         {{#if data.latitude && data.longitude}}
-          <a href="{{ directionsURL }}" target="_blank" rel="noopener" class="directions">Directions</a>
+          <a href="{{ directionsURL(data, store) }}" target="_blank" rel="noopener" class="directions">Directions</a>
         {{/if}}
       </div>
     </div>
@@ -42,11 +62,11 @@
           <picture>
             <source
               type="image/webp"
-              srcset="{{ srcset(data, 'mainImageLocal', 'webp') }}"
+              srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
               sizes="100vw">
             <source
               type="image/jpeg"
-              srcset="{{ srcset(data) }}"
+              srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
               sizes="100vw">
             <img
               alt="Main image for '{{ data.name }}'"
@@ -86,13 +106,13 @@
       {{/if}}
 
       <div class="social-buttons social-buttons-gray">
-        <a href="{{ facebookURL }}" target="_blank" rel="noopener" class="facebook-button">
+        <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
           <span class="sr-only">Share on Facebook</span>
         </a>
-        <a href="{{ twitterURL }}" target="_blank" rel="noopener" class="twitter-button">
+        <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
           <span class="sr-only">Share on Twitter</span>
         </a>
-        <a href="{{ emailURL }}" target="_blank" rel="noopener" class="email-button">
+        <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
           <span class="sr-only">Share via email</span>
         </a>
       </div>
@@ -110,73 +130,25 @@
 </div>
 
 <script>
+import helpers from './common/helpers.js';
+import methods from './common/methods.js';
+
 export default {
+  helpers: {
+    fullByline: helpers.fullByline,
+    directionsURL: helpers.directionsURL,
+    facebookURL: helpers.facebookURL,
+    twitterURL: helpers.twitterURL,
+    emailURL: helpers.emailURL,
+    escapeHTML: helpers.escapeHTML,
+    srcset: helpers.srcset
+  },
+
   data() {
     return {
       display: 'full',
       isBrowser: typeof window !== undefined
     };
-  },
-
-  computed: {
-    fullByline: function(data) {
-      return data && data.byline && ~data.byline.indexOf('•');
-    },
-
-    directionsURL: function(data, store) {
-      let location =
-        store && store.location && store.location.position
-          ? store.location.position.lat + ',' + store.location.position.lng
-          : undefined;
-      return `https://www.google.com/maps/dir/?api=1${encodeURIComponent(
-        location ? '&origin=' + location : ''
-      )}&destination=${encodeURIComponent(data.latitude)},${encodeURIComponent(
-        data.longitude
-      )}`;
-    },
-
-    facebookURL: function(data, content) {
-      return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        data.baseURL + data.filename
-      )}`;
-    },
-
-    twitterURL: function(data, content) {
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        data.twitterShare || (content ? content.twitterShare : '')
-      )}&url=${encodeURIComponent(
-        data.baseURL + data.filename
-      )}&via=${encodeURIComponent(content.twitterAccount)}`;
-    },
-
-    emailURL: function(data, content) {
-      return `mailto:RECIPIENT?subject=${encodeURIComponent(
-        data.emailShare || (content ? content.emailShare : '')
-      )}&body=${encodeURIComponent(data.baseURL + data.filename)}`;
-    }
-  },
-
-  helpers: {
-    escapeHTML: function(input) {
-      return input ? input.replace(/(<([^>]+)>)/gi, '') : '';
-    },
-
-    srcset: function(data, prop = 'mainImageLocal', extension) {
-      let p = data.basePath + '/' + data[prop];
-
-      return ['300', '600', '900', '1200', '2000']
-        .map(w => {
-          return (
-            p
-              .replace(/\.([a-z]+$)/i, '-' + w + 'px.$1')
-              .replace(/\.([a-z]+$)/i, extension ? '.' + extension : '.$1') +
-            ' ' +
-            w +
-            'w'
-          );
-        })
-        .join(', ');
-    }
   }
 };
 </script>
