@@ -41,13 +41,34 @@ class Observer {
     );
 
     // Add elements
-    if (_.isArrayLike(this.options.elements)) {
-      this.options.elements.forEach(e => {
+    if (this.options.elements) {
+      this.addElements(this.options.elements);
+    }
+  }
+
+  addElements(elements) {
+    if (_.isArrayLike(elements)) {
+      if (_.isArrayLike(this.options.elements)) {
+        this.options.elements = _.map(this.options.elements);
+        this.options.elements.concat(elements);
+      }
+      else {
+        this.options.elements = elements;
+      }
+
+      elements.forEach(e => {
         this.observer.observe(e);
       });
     }
-    else if (_.isElement(this.options.element)) {
-      this.observer.observe(this.options.element);
+    else if (_.isElement(elements)) {
+      if (_.isArrayLike(this.options.elements)) {
+        this.options.elements.push(elements);
+      }
+      else {
+        this.options.elements = [elements];
+      }
+
+      this.observer.observe(elements);
     }
   }
 
@@ -73,6 +94,13 @@ class Observer {
       sorted[0].inView ? sorted[0] : undefined,
       sorted
     );
+  }
+
+  // Stop (disconnect) all items
+  stop() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 }
 

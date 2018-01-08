@@ -33,7 +33,7 @@
   {{#if view === 'featured'}}
     <ul class="groups-items">
       {{#each allListsItems as i @airtableId}}
-        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}">
+        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImage && i.mainImage[0] }}
               <picture>
@@ -109,12 +109,37 @@ export default {
         if (n && n !== o) {
           if (n === 'featured') {
             this.showFeatured();
+
+            // Observe feature events
+            if (!this.__featuredObserver) {
+              this.__featuredObserver = observe({
+                visibleThreshold: 0.75,
+                elements: document.querySelectorAll('.groups-items li'),
+                onObserve: _.bind(this.observeFeaturedItem, this),
+                throttle: false
+              });
+            }
           } else if (n === 'map') {
             this.showMap();
+
+            // Observe map events
+            if (this.__mapObserver) {
+              this.__mapObserver.stop();
+              this.__mapObserver.addElements(
+                document.querySelectorAll('.map-items .item')
+              );
+            } else {
+              this.__mapObserver = observe({
+                visibleThreshold: 0.75,
+                elements: document.querySelectorAll('.map-items .item'),
+                onObserve: _.bind(this.observeMapItem, this),
+                throttle: false
+              });
+            }
           }
         }
       },
-      { init: false, defer: true }
+      { defer: true }
     );
   },
 
@@ -132,7 +157,50 @@ export default {
 
       if (this.get('isBrowser') && window.google) {
         this.drawMap();
-        this.observeItems();
+      }
+    },
+
+    // Find item by ID
+    findByID(id) {
+      let data = this.get('data');
+      let allItems = this.allItems(data);
+
+      if (id && data.lists && _.find(data.lists, { id: id })) {
+        return _.find(data.lists, { id: id });
+      } else if (id && data.items && _.find(data.items, { id: id })) {
+        return _.find(data.items, { id: id });
+      } else if (id && allItems && _.find(allItems, { id: id })) {
+        return _.find(allItems, { id: id });
+      }
+    },
+
+    // Set all lists and items
+    setAll(values, set = true) {
+      let data = this.get('data');
+      let allItems = this.allItems(data);
+
+      if (data.lists) {
+        data.lists = _.map(data.lists, l => _.extend(l, values));
+      }
+      if (data.items) {
+        data.items = _.map(data.items, l => _.extend(l, values));
+      }
+      if (allItems) {
+        allItems = _.map(allItems, l => _.extend(l, values));
+      }
+
+      if (set) {
+        this.set({ data: data });
+      }
+    },
+
+    // Observe featured item
+    observeFeaturedItem(id) {
+      let item = this.findByID(id);
+      if (item) {
+        this.setAll({ inView: false }, false);
+        item.inView = true;
+        this.set({ data: this.get('data') });
       }
     },
 
@@ -142,6 +210,7 @@ export default {
         e.preventDefault();
       }
 
+      // Set main visual to hover item
       let data = this.get('data');
       data.mainVisual = item.mainImageLocal ? item.mainImageLocal : undefined;
       data.mainVisualDescription = item.mainImageDescription
@@ -152,107 +221,52 @@ export default {
       });
     },
 
-    // Observe the items as the scroll
-    observeItems() {
-      let currentID = 1;
-      let threshold = 0.85;
-      let items = this.get('allItems');
-      let observer = new IntersectionObserver(
-        (entries, observer) => {
-          // We only want to highlight one element at a time, so
-          // order by the top and which one is most in view.
-          let sorted = _.orderBy(
-            entries,
-            ['intersectionRatio', e => e.boundingClientRect.y],
-            ['desc', 'asc']
-          );
-          if (sorted[0].intersectionRatio >= threshold) {
-            sorted[0].inView = true;
+    // Observe a map item
+    observeMapItem(id) {
+      let item = this.findByID(id);
+      let allItems = this.allItems(this.get('data'));
+
+      if (item) {
+        // Mark items in view
+        this.setAll({ inView: false }, false);
+        item.inView = true;
+
+        // Update data
+        this.set({ data: this.get('data') });
+
+        // Inactive all markers
+        _.each(allItems, i => {
+          if (this.__markers[i.id] && this.__map) {
+            this.__markers[i.id].setIcon({
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 10,
+              fillColor: '#0FF',
+              fillOpacity: 0.8,
+              strokeWeight: 1
+            });
           }
-
-          // Update views
-          sorted.forEach(e => {
-            let id = e.target.getAttribute('data-id');
-            if (e.inView && currentID !== id) {
-              this.itemInView(id);
-              currentID = 1;
-            } else {
-              this.itemNotInView(id);
-            }
-          });
-        },
-        {
-          root: document.querySelector('.map-items'),
-          // We use many to make sure we know about all elements currently in view
-          threshold: _.map(_.range(0, 20), i => i * 5 / 100)
-        }
-      );
-
-      if (items && items.length) {
-        for (let i of items) {
-          let el = document.querySelector('[data-id="' + i.id + '"]');
-          observer.observe(el);
-        }
-      }
-    },
-
-    // Item in view
-    itemInView(item) {
-      let items = this.get('allItems');
-
-      // Handle string ID
-      if (_.isString(item)) {
-        item = _.find(items, { id: item });
-      }
-      if (!item) {
-        return;
-      }
-
-      item.inView = true;
-      this.set({ allItems: items });
-
-      this.__markers[item.id].setIcon({
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: '#00F',
-        fillOpacity: 0.8,
-        strokeWeight: 1
-      });
-
-      // TODO: Handle user location as well
-      let bounds = new window.google.maps.LatLngBounds();
-      bounds.extend({
-        lat: parseFloat(item.latitude),
-        lng: parseFloat(item.longitude)
-      });
-      //this.__map.fitBounds(bounds);
-      this.__map.setCenter(bounds.getCenter());
-      this.__map.setZoom(14);
-    },
-
-    // Item not in view
-    itemNotInView(item) {
-      let items = this.get('allItems');
-
-      // Handle string ID
-      if (_.isString(item)) {
-        item = _.find(items, { id: item });
-      }
-      if (!item) {
-        return;
-      }
-
-      item.inView = false;
-      this.set({ allItems: items });
-
-      if (this.__markers[item.id]) {
-        this.__markers[item.id].setIcon({
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-          fillColor: '#0F0',
-          fillOpacity: 0.8,
-          strokeWeight: 1
         });
+
+        // Update active marker
+        if (this.__markers[item.id] && this.__map) {
+          this.__markers[item.id].setIcon({
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: '#00F',
+            fillOpacity: 0.8,
+            strokeWeight: 1
+          });
+
+          // TODO: Handle user location as well
+          let bounds = new window.google.maps.LatLngBounds();
+          bounds.extend({
+            lat: parseFloat(item.latitude),
+            lng: parseFloat(item.longitude)
+          });
+          //this.__map.fitBounds(bounds);
+          this.__map.setCenter(bounds.getCenter());
+          this.__map.setZoom(14);
+        }
       }
     },
 
