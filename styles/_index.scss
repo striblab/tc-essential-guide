@@ -24,12 +24,14 @@
     color: $color-white;
     padding-top: 0.5em;
     text-align: center;
-    position: relative;
 
     h1 {
       font-family: map-get($font-sets, 'benton-sans');
-      font-size: 2em;
+      font-size: 1.7em;
       text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-top: 10%;
 
       span {
         display: block;
@@ -38,32 +40,37 @@
 
       img {
         display: inline-block;
-        max-width: 35rem;
+        width: 80%;
+        max-width: 550px;
+        overflow: hidden;
+        height: auto;
+      }
+
+      @include full-view {
+        margin-top: 20%;
       }
     }
 
     .get-started {
       display: inline-block;
-      background-color: $color-white;
-      color: $color-forest-green;
+      border: 2px solid $color-white;
+      color: $color-white;
       padding: 0.5em 1em;
       border-radius: 0.5em;
       text-decoration: none;
       text-transform: uppercase;
       font-weight: bold;
-
-      // Offsets the centered content
-      margin-bottom: 20%;
+      margin-top: 10%;
 
       @include full-view {
-        margin-bottom: 5%;
+        margin-bottom: 10%;
       }
     }
 
     .splash-footer {
       font-size: 0.65em;
       text-transform: uppercase;
-
+      display: none;
       span {
         display: block;
       }

@@ -120,8 +120,9 @@ article.lists {
   }
 
   article.item {
-    margin-bottom: 3em;
-    border-bottom: 1px solid black;
+    margin-bottom: 2.5em;
+    border-bottom: 1px solid #626567;
+    padding-top: 1.5em;
 
     &:last-child {
       margin-bottom: inherit;
