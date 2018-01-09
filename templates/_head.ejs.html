@@ -1,22 +1,38 @@
+<%
+  var metaOrganization = content.organization || 'Star Tribune';
+  var metaTitle = data.metaTitle || data.title || data.name || content.title;
+  var metaAuthor = data.metaAuthor || data.byline || content.metaAuthor || 'Star Tribune Visuals';
+  var metaDescription = data.metaDescription || data.description || content.metaDescription;
+  var metaKeywords = data.metaKeywords || content.metaKeywords;
+  var metaImageWidth = '600';
+  var metaImage = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-' + metaImageWidth + 'px.jpg').replace('.png', '-' + metaImageWidth + 'px.png') : config.publish.production.url + config.social.image;
+%>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<title><%= data.pageTitle || data.title || data.name || content.title %> | <%= content.organization || 'Star Tribune' %></title>
+<!-- For proper phone zoom -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<meta name="application-name" content="<%= content.title %>">
-<meta name="author" content="<%= htmlEscape(data.pageAuthor || content.metaAuthor || 'Star Tribune Visuals') %>">
-<meta name="description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
+<title><%= htmlAttribute(metaTitle) %> | <%= htmlAttribute(metaOrganization) %></title>
+
+<meta name="application-name" content="<%= htmlAttribute(content.title) %>">
+<meta name="author" content="<%= htmlAttribute(metaAuthor) %>">
+<meta name="description" content="<%= htmlAttribute(metaDescription) %>">
+<meta name="keywords" content="<%= htmlAttribute(metaKeywords) %>">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="General">
 
 <link rel="index" href="<%= config.publish.production.url %>">
+<link rel="dns-prefetch" href="//startribune.com">
 
 <% if (data.latitude && data.longitude) { %>
   <!-- Geo tags -->
   <meta name="ICBM" content="<%= data.latitude %>, <%= data.longitude %>">
   <meta name="geo.position" content="<%= data.latitude %>;<%= data.longitude %>">
   <meta name="geo.region" content="US-MN">
-  <meta name="geo.placename" content="<%= data.pageTitle || data.title || data.name %>">
+  <meta name="geo.placename" content="<%= htmlAttribute(metaTitle) %>">
+  <meta property="place:location:latitude" content="<%= data.latitude %>">
+  <meta property="place:location:longitude" content="<%= data.longitude %>">
 <% } %>
 
 <!-- Shortcut and related icons -->
@@ -32,13 +48,10 @@
 <!-- Add to home screen for Apple -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="<%= content.title %>">
+<meta name="apple-mobile-web-app-title" content="<%= htmlAttribute(content.title) %>">
 
 <!-- Add to home screen for Android -->
 <meta name="mobile-web-app-capable" content="yes">
-
-<!-- For proper phone zoom -->
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Global/external styles -->
 <% if (config.styles && config.styles.globals) { config.styles.globals.forEach(function(s) { %>
@@ -49,23 +62,32 @@
 <link rel="stylesheet" href="<%= data.basePath || '.' %>/styles.bundle.css" type="text/css">
 
 <!-- Social Media Tags -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
-<meta property="og:title" content="<%= htmlEscape(data.pageTitle || data.title || data.name || content.title) %>">
-<meta property="og:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
-<meta property="og:site_name" content="<%= content.title %>">
-<meta property="og:locale" content="en_US">
-<% if (config.social && config.social.image) { %>
-  <meta property="og:image" content="<%= config.publish.production.url %><%= config.social.image %>">
+<% if (data && data.dataset !== 'index') { %>
+  <meta property="og:type" content="article">
+<% } else { %>
+  <meta property="og:type" content="website">
 <% } %>
 
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
+<meta property="og:title" content="<%= htmlAttribute(metaTitle) %>">
+<meta property="og:description" content="<%= htmlAttribute(metaDescription) %>">
+<meta property="og:site_name" content="<%= htmlAttribute(content.title) %>">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="<%= metaImage %>">
+<meta property="og:image:width" content="<% metaImageWidth %>">
+
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="<%= content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:creator" content="<%= data.twitterAccount || content.twitterAccount || '@StarTribune' %>">
-<meta name="twitter:title" content="<%= htmlEscape(data.pageTitle || data.title || data.name || content.title) %>">
-<meta name="twitter:description" content="<%= htmlEscape(data.pageDescription || content.metaDescription) %>">
-<% if (config.social && config.social.image) { %>
-  <meta name="twitter:image" content="<%= config.publish.production.url %><%= config.social.image %>">
+<meta name="twitter:title" content="<%= htmlAttribute(metaTitle) %>">
+<meta name="twitter:description" content="<%= htmlAttribute(metaDescription) %>">
+<meta name="twitter:image" content="<%= metaImage %>">
+
+<% if (data && data.dataset !== 'index') { %>
+  <meta property="article:published_time" content="<%= (new Date()).toISOString() %>">
+  <meta property="article:modified_time" content="<%= (new Date()).toISOString() %>">
+  <meta property="article:publisher" content="<%= config.publish.production.url %>">
+  <meta property="article:author" content="<%= htmlAttribute(metaAuthor) %>">
 <% } %>
 
 <!-- Google structured data -->
@@ -77,18 +99,21 @@
       "@type": "WebPage",
       "@id": "<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>"
     },
-    "headline": "<%= escapeQuotes(data.pageTitle || data.title || data.name || content.title) %>",
+    "headline": "<%= htmlAttribute(metaTitle) %>",
+    "description": "<%= htmlAttribute(metaDescription) %>",
+    "datePublished": "<%= (new Date()).toISOString() %>",
+    "dateModified": "<%= (new Date()).toISOString() %>",
     "image": {
       "@type": "ImageObject",
-      "url": "<%= config.publish.production.url %><%= config.social.image %>"
+      "url": "<%= metaImage %>"
     },
     "author": {
       "@type": "Person",
-      "name": "<%= escapeQuotes(data.pageAuthor || content.author || 'Star Tribune Visuals') %>"
+      "name": "<%= htmlAttribute(metaAuthor) %>"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "<%= escapeQuotes(content.organization || 'Star Tribune') %>",
+      "name": "<%= htmlAttribute(metaOrganization) %>",
       "logo": {
         "@type": "ImageObject",
         "url": "<%= config.publish.production.url %>assets/images/strib/strib-logo-transparent-307.png",
@@ -96,7 +121,7 @@
         "height": 292
       }
     },
-    "description": "<%= escapeQuotes(data.pageDescription || content.socialDescription) %>"
+    "description": "<%= htmlAttribute(metaDescription) %>"
   }
 </script>
 
