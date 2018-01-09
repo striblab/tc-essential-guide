@@ -27,6 +27,9 @@ class Observer {
       return;
     }
 
+    // Initalize entries
+    this.entries = [];
+
     // Make observer
     this.observer = new IntersectionObserver(
       this.options.throttle
@@ -36,27 +39,51 @@ class Observer {
         root: _.isElement(this.options.root)
           ? this.options.root
           : document.querySelector(this.options.root),
-        threshold: _.map(_.range(0, 50), i => i * 2 / 100)
+        threshold:
+          this.options.threshold || _.map(_.range(0, 26), i => i * 4 / 100)
       }
     );
 
     // Add elements
-    if (_.isArrayLike(this.options.elements)) {
-      this.options.elements.forEach(e => {
+    if (this.options.elements) {
+      this.addElements(this.options.elements);
+    }
+  }
+
+  addElements(elements) {
+    if (_.isArrayLike(elements)) {
+      if (_.isArrayLike(this.options.elements)) {
+        this.options.elements = _.map(this.options.elements);
+        this.options.elements.concat(elements);
+      }
+      else {
+        this.options.elements = elements;
+      }
+
+      elements.forEach(e => {
         this.observer.observe(e);
       });
     }
-    else if (_.isElement(this.options.element)) {
-      this.observer.observe(this.options.element);
+    else if (_.isElement(elements)) {
+      if (_.isArrayLike(this.options.elements)) {
+        this.options.elements.push(elements);
+      }
+      else {
+        this.options.elements = [elements];
+      }
+
+      this.observer.observe(elements);
     }
   }
 
   onObserve(entries) {
     // We only want to highlight one element at a time, so
-    // order by the top and which one is most in view.
+    // order by the top and which one is most in view.  We need
+    // to keep track of entries.
+    entries = this.combinedEntries(entries);
     let sorted = _.orderBy(
       entries,
-      ['intersectionRatio', e => e.boundingClientRect.y],
+      ['roundedRatio', e => e.boundingRect.top],
       ['desc', 'asc']
     );
     if (
@@ -73,6 +100,41 @@ class Observer {
       sorted[0].inView ? sorted[0] : undefined,
       sorted
     );
+  }
+
+  combinedEntries(newEntries) {
+    this.entries = this.entries || [];
+
+    // Find existing
+    _.each(newEntries, n => {
+      let existing = _.findIndex(this.entries, e => {
+        return n.target === e.target;
+      });
+
+      if (~existing) {
+        this.entries[existing] = n;
+      }
+      else {
+        this.entries.push(n);
+      }
+    });
+
+    // Update positions
+    this.entries = _.map(this.entries, e => {
+      // We care about where on the page it is and need to standardize
+      e.boundingRect = e.target.getBoundingClientRect();
+      e.roundedRatio = Math.min(1, Math.round(e.intersectionRatio * 100) / 100);
+      return e;
+    });
+
+    return _.map(this.entries);
+  }
+
+  // Stop (disconnect) all items
+  stop() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 }
 

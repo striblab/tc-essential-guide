@@ -1,0 +1,275 @@
+<div class="map-container" ref:map></div>
+
+<script>
+import mapStyles from '../map-styles.js';
+
+export default {
+  oncreate() {
+    // Ref
+    if (this.get('isBrowser')) {
+      this.drawMap();
+    }
+
+    // When locations are available add markers
+    this.observe(
+      'locations',
+      n => {
+        if (n && this.get('isBrowser')) {
+          this.addMarkers();
+        }
+      },
+      { defer: true }
+    );
+
+    // Watch store for user location
+    this.observe('store', n => {
+      if (
+        n &&
+        n.location &&
+        n.location.lat &&
+        n.location.lng &&
+        this.get('isBrowser')
+      ) {
+        this.updateUserPosition();
+      }
+    });
+
+    // Watch for locations in view (which should be an array of IDs)
+    this.observe('inView', n => {
+      if (n && this.get('isBrowser')) {
+        this.focusLocations(n);
+      }
+    });
+  },
+
+  ondestroy() {
+    this.undrawMap();
+  },
+
+  methods: {
+    // Draw map
+    drawMap: function() {
+      let map = this.get('map');
+
+      // Only draw map if needed
+      if (!map) {
+        map = new window.google.maps.Map(this.refs.map, {
+          zoom: this.get('zoom'),
+          center: this.get('center'),
+          zoomControl: true,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false,
+          styles: mapStyles
+        });
+
+        // Add map to component
+        this.set({ map: map });
+      } else {
+        // If the map is already there for some reason, just
+        // trigger a resize
+        window.google.maps.event.trigger(map, 'resize');
+      }
+    },
+
+    // Undraw map
+    undrawMap: function() {
+      let map = this.get('map');
+      let markers = this.get('markers');
+      if (!map) {
+        return;
+      }
+
+      // Remove markers
+      if (markers && _.size(markers)) {
+        _.each(markers, m => {
+          m.setMap(null);
+        });
+      }
+
+      // Remove events from map
+      if (map) {
+        google.maps.event.clearInstanceListeners(map);
+        google.maps.event.clearListeners(map);
+      }
+    },
+
+    // Add markers
+    addMarkers: function() {
+      let markers = this.get('markers');
+      let locations = this.get('locations');
+      let map = this.get('map');
+
+      // Go through locations
+      locations.forEach(l => {
+        if (!markers[l.id]) {
+          this.addMarker(l);
+        }
+      });
+
+      // Update map view
+      map.fitBounds(this.get('bounds'));
+    },
+
+    // Add a marker
+    addMarker: function(location) {
+      let markers = this.get('markers');
+      let bounds = this.get('bounds');
+
+      // Don't add without a position
+      if (!location.lat || !location.lng) {
+        return;
+      }
+
+      let p = {
+        lat: parseFloat(location.lat),
+        lng: parseFloat(location.lng)
+      };
+
+      let infowindow = new window.google.maps.InfoWindow({
+        content: location.content
+        // maxWidth: 200
+      });
+
+      // Make marker
+      let marker = new window.google.maps.Marker({
+        position: p,
+        title: location.content,
+        icon: this.mapIcon()
+      });
+
+      // Click even
+      marker.addListener('click', function() {
+        infowindow.open(this.get('map'), marker);
+      });
+
+      // Add to map
+      marker.setMap(this.get('map'));
+
+      // Update bounds
+      if (!bounds) {
+        bounds = new google.maps.LatLngBounds();
+      }
+      bounds.extend(p);
+
+      // Add to collection
+      markers = markers || {};
+      markers[location.id] = marker;
+      this.set({ markers, bounds });
+    },
+
+    // Make map icon
+    mapIcon: function(color = '#C5C5C5') {
+      return {
+        path:
+          'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
+        scale: 0.5,
+        anchor: new google.maps.Point(39 / 2, 50),
+        fillColor: color === 'active' ? '#00824A' : color ? color : '#C5C5C5',
+        fillOpacity: 0.95,
+        strokeWeight: 0
+      };
+    },
+
+    // Handle user position
+    updateUserPosition: function() {
+      let s = this.get('store');
+      let positionMarker = this.get('positionMarker');
+      let position =
+        s && s.location && s.location.lat && s.location.lng
+          ? s.location
+          : undefined;
+      if (!position) {
+        return;
+      }
+
+      // Make marker if needed
+      if (!positionMarker) {
+        // Make marker
+        positionMarker = new window.google.maps.Marker({
+          position: position,
+          title: 'Your location',
+          icon: this.mapIcon('#222222')
+        });
+
+        // Add to map
+        positionMarker.setMap(this.get('map'));
+
+        // Add to collection
+        this.set({ positionMarker: positionMarker });
+      } else {
+        positionMarker.setPosition(position);
+      }
+    },
+
+    // Center on locations
+    focusLocations: function(focus, includeUser = true) {
+      focus = _.isString(focus) ? [focus] : _.isArray(focus) ? focus : [];
+      let s = this.get('store');
+      let userPosition =
+        s && s.location && s.location.lat && s.location.lng
+          ? s.location
+          : undefined;
+      let map = this.get('map');
+      let locations = this.get('locations');
+      let markers = this.get('markers');
+
+      // Translate to locations
+      focus = _.filter(
+        _.map(focus, f => {
+          let l = _.find(locations, { id: f });
+          if (l && markers[l.id]) {
+            l.marker = markers[l.id];
+          }
+
+          return l.lat && l.lng ? l : undefined;
+        })
+      );
+      if (!focus || !focus.length) {
+        return;
+      }
+
+      // Go through all markers
+      let bounds = new google.maps.LatLngBounds();
+      _.each(locations, l => {
+        if (_.find(focus, { id: l.id })) {
+          markers[l.id].setIcon(this.mapIcon('active'));
+          bounds.extend({ lat: l.lat, lng: l.lng });
+        } else if (markers[l.id]) {
+          markers[l.id].setIcon(this.mapIcon());
+        }
+      });
+
+      // If just one
+      if (
+        focus.length === 1 &&
+        (!includeUser || (includeUser && !userPosition))
+      ) {
+        map.setCenter({ lat: focus[0].lat, lng: focus[0].lng });
+        map.setZoom(this.get('focusZoom'));
+      } else {
+        // Set bounds
+        map.fitBounds(bounds);
+      }
+    }
+  },
+
+  data() {
+    return {
+      isBrowser: typeof window !== undefined,
+      locations: [],
+      markers: {},
+      bounds: undefined,
+      map: undefined,
+      center: {
+        lat: 44.9629232,
+        lng: -93.159196
+      },
+      zoom: 11,
+      focusZoom: 15
+    };
+  }
+};
+</script>

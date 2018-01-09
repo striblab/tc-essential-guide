@@ -96,6 +96,10 @@ gulp.task('html:lint:details', ['html'], () => {
 });
 
 // Wrapper for data and html
+gulp.task('html:data', done => {
+  runSequence('source:data', 'html:lint:details', done);
+});
+// Wrapper for data, images, and html
 gulp.task('html:full', done => {
   runSequence('source:data', 'assets:responsive', 'html:lint:details', done);
 });
@@ -222,7 +226,7 @@ gulp.task(
 );
 
 // Web server for development.  Do build first to ensure something is there.
-gulp.task('server', ['build:full'], () => {
+gulp.task('server', ['build'], () => {
   return browserSync.init({
     port: 3000,
     server: './build/',
@@ -261,7 +265,7 @@ gulp.task('publish:confirm', gulpPublish.confirmToken(gulp));
 gulp.task('publish:open', gulpPublish.openURL(gulp));
 
 // Short build and full build
-gulp.task('build', ['assets', 'html', 'styles', 'js']);
+gulp.task('build', ['assets', 'html:data', 'styles', 'js']);
 gulp.task('build:full', ['assets', 'html:full', 'styles', 'js']);
 gulp.task('default', ['build:full']);
 

@@ -1,17 +1,17 @@
 <div class="main-visual">
-  {{#if mainVisual}}
+  {{#if data.mainVisual}}
     <picture>
       <source
         type="image/webp"
-        srcset="{{ srcset(data.basePath, mainVisual, 'webp') }}"
+        srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
         sizes="100vw">
       <source
         type="image/jpeg"
-        srcset="{{ srcset(data.basePath, mainVisual) }}"
+        srcset="{{ srcset(data.basePath, data.mainVisual) }}"
         sizes="100vw">
       <img
-        alt="Main image for '{{ mainVisualTitle }}'"
-        src="{{ data.basePath }}/{{ mainVisual }}">
+        alt="{{ data.mainVisualDescription }}"
+        src="{{ data.basePath }}/{{ data.mainVisual }}">
     </picture>
   {{/if}}
 </div>
@@ -102,11 +102,6 @@ export default {
       }
       this.__dataInitialized = true;
 
-      if (n.mainImageLocal && !this.get('mainVisual')) {
-        // When data is set, make default main visual
-        this.set({ mainVisual: n.mainImageLocal });
-      }
-
       // Observe list
       if (this.get('isBrowser')) {
         this.__itemObserver = observe({
@@ -157,10 +152,9 @@ export default {
 
       // Update image
       if (item && item.mainImageLocal) {
-        this.set({
-          mainVisual: item.mainImageLocal,
-          mainVisualAlt: item.imageDescription
-        });
+        data.mainVisual = item.mainImageLocal;
+        data.mainVisualDescription = item.imageDescription;
+        this.set({ data: data });
       }
     },
 

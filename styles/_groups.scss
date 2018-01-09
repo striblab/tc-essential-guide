@@ -76,6 +76,15 @@ ul.groups-items {
   bottom: 0;
   left: 0;
 
+  @include full-view {
+    position: relative;
+    width: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
   .has-minor-navigation & {
     top: 5em;
   }
@@ -85,17 +94,30 @@ ul.groups-items {
     height: 50%;
     position: relative;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
+
+    @include full-view {
+      display: none;
+    }
   }
 
   .map {
     position: absolute;
     width: 100%;
     height: 100%;
+
+    @include full-view {
+      display: none;
+    }
   }
 
   .map-items {
     height: 60%;
     overflow-y: scroll;
+
+    @include full-view {
+      height: auto;
+      overflow-y: auto;
+    }
   }
 
   .item {
@@ -143,5 +165,12 @@ ul.groups-items {
     &.in-view {
       opacity: 1;
     }
+  }
+}
+
+@include full-view {
+  .main-visual .main-visual-map {
+    width: 100%;
+    height: 100%;
   }
 }

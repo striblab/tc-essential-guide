@@ -1,17 +1,19 @@
 <div class="main-visual">
-  {{#if mainVisual}}
+  {{#if view === 'map'}}
+    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" />
+  {{elseif data.mainVisual}}
     <picture>
       <source
         type="image/webp"
-        srcset="{{ srcset(data.basePath, mainVisual, 'webp') }}"
+        srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
         sizes="100vw">
       <source
         type="image/jpeg"
-        srcset="{{ srcset(data.basePath, mainVisual) }}"
+        srcset="{{ srcset(data.basePath, data.mainVisual) }}"
         sizes="100vw">
       <img
-        alt="Main image for '{{ mainVisualTitle }}'"
-        src="{{ data.basePath }}/{{ mainVisual }}">
+        alt="{{ data.mainVisualDescription }}"
+        src="{{ data.basePath }}/{{ data.mainVisual }}">
     </picture>
   {{/if}}
 </div>
@@ -33,7 +35,7 @@
   {{#if view === 'featured'}}
     <ul class="groups-items">
       {{#each allListsItems as i @airtableId}}
-        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}">
+        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImage && i.mainImage[0] }}
               <picture>
@@ -64,7 +66,7 @@
   {{#if view === 'map'}}
     <div class="map-items-container">
       <div class="map-wrapper">
-        <div class="map" ref:itemsMap></div>
+        <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="11">
       </div>
 
       <div class="map-items">
@@ -84,23 +86,23 @@
 <script>
 import helpers from './common/helpers.js';
 import methods from './common/methods.js';
-import mapStyles from '../map-styles';
+import observe from '../observe.js';
+import mapStyles from '../map-styles.js';
 import Item from './items.html';
+import Map from './map.html';
 
 export default {
   components: {
-    Item
+    Item,
+    Map
   },
 
   oncreate: function() {
     // Make all items
     this.observe('data', n => {
-      if (n.items || n.lists) {
+      if (n && (n.items || n.lists)) {
         this.set({ allItems: this.allItems(this.get('data')) });
       }
-
-      // When data is set, make default main visual
-      this.set({ mainVisual: this.get('data').lists[0].mainImageLocal });
     });
 
     // React to view change.  Since we need to have access to the dom
@@ -110,31 +112,108 @@ export default {
       (n, o) => {
         if (n && n !== o) {
           if (n === 'featured') {
-            this.showFeatured();
+            // Observe feature events
+            if (this.__featuredObserver) {
+              this.__featuredObserver.stop();
+              this.__featuredObserver.addElements(
+                document.querySelectorAll('.groups-items li')
+              );
+            } else {
+              this.__featuredObserver = observe({
+                visibleThreshold: 0.75,
+                elements: document.querySelectorAll('.groups-items li'),
+                onObserve: _.bind(this.observeFeaturedItem, this),
+                throttle: false
+              });
+            }
           } else if (n === 'map') {
-            this.showMap();
+            // Observe map events
+            if (this.__mapObserver) {
+              this.__mapObserver.stop();
+              this.__mapObserver.addElements(
+                document.querySelectorAll('.map-items .item')
+              );
+            } else {
+              this.__mapObserver = observe({
+                visibleThreshold: 0.9,
+                elements: document.querySelectorAll('.map-items .item'),
+                onObserve: _.bind(this.observeMapItem, this),
+                throttle: false
+              });
+            }
           }
         }
       },
-      { init: false, defer: true }
+      { defer: true }
     );
   },
 
   methods: {
     eventSet: methods.eventSet,
 
-    // Set view to featured
-    showFeatured: function() {
-      this.set({ view: 'featured' });
+    // Find item by ID
+    findByID(id) {
+      let data = this.get('data');
+      let allItems = this.allItems(data);
+
+      if (id && data.lists && _.find(data.lists, { id: id })) {
+        return _.find(data.lists, { id: id });
+      } else if (id && data.items && _.find(data.items, { id: id })) {
+        return _.find(data.items, { id: id });
+      } else if (id && allItems && _.find(allItems, { id: id })) {
+        return _.find(allItems, { id: id });
+      }
     },
 
-    // Set view to map
-    showMap: function() {
-      this.set({ view: 'map' });
+    // Set all lists and items
+    setAll(values, set = true, exceptions = []) {
+      let data = this.get('data');
+      let allItems = this.allItems(data);
 
-      if (this.get('isBrowser') && window.google) {
-        this.drawMap();
-        this.observeItems();
+      if (data.lists) {
+        data.lists = _.map(data.lists, l => {
+          return !exceptions || (exceptions && !~exceptions.indexOf(l.id))
+            ? _.extend(l, values)
+            : l;
+        });
+      }
+      if (data.items) {
+        data.items = _.map(data.items, l => {
+          return !exceptions || (exceptions && !~exceptions.indexOf(l.id))
+            ? _.extend(l, values)
+            : l;
+        });
+      }
+      if (allItems) {
+        allItems = _.map(allItems, l => {
+          return !exceptions || (exceptions && !~exceptions.indexOf(l.id))
+            ? _.extend(l, values)
+            : l;
+        });
+      }
+
+      if (set) {
+        this.set({ data: data });
+      }
+    },
+
+    // Observe featured item
+    observeFeaturedItem(id) {
+      let item = this.findByID(id);
+      if (item) {
+        this.setAll({ inView: false }, false, [id]);
+        item.inView = true;
+        this.set({ data: this.get('data') });
+      }
+    },
+
+    // Observe a map item
+    observeMapItem(id) {
+      let item = this.findByID(id);
+      if (item) {
+        this.setAll({ inView: false }, false, [id]);
+        item.inView = true;
+        this.set({ data: this.get('data'), locationsInView: [id] });
       }
     },
 
@@ -144,179 +223,15 @@ export default {
         e.preventDefault();
       }
 
+      // Set main visual to hover item
+      let data = this.get('data');
+      data.mainVisual = item.mainImageLocal ? item.mainImageLocal : undefined;
+      data.mainVisualDescription = item.mainImageDescription
+        ? item.mainImageDescription
+        : undefined;
       this.set({
-        mainVisual: item.mainImageLocal ? item.mainImageLocal : undefined
+        data: data
       });
-    },
-
-    // Observe the items as the scroll
-    observeItems() {
-      let currentID = 1;
-      let threshold = 0.85;
-      let items = this.get('allItems');
-      let observer = new IntersectionObserver(
-        (entries, observer) => {
-          // We only want to highlight one element at a time, so
-          // order by the top and which one is most in view.
-          let sorted = _.orderBy(
-            entries,
-            ['intersectionRatio', e => e.boundingClientRect.y],
-            ['desc', 'asc']
-          );
-          if (sorted[0].intersectionRatio >= threshold) {
-            sorted[0].inView = true;
-          }
-
-          // Update views
-          sorted.forEach(e => {
-            let id = e.target.getAttribute('data-id');
-            if (e.inView && currentID !== id) {
-              this.itemInView(id);
-              currentID = 1;
-            } else {
-              this.itemNotInView(id);
-            }
-          });
-        },
-        {
-          root: document.querySelector('.map-items'),
-          // We use many to make sure we know about all elements currently in view
-          threshold: _.map(_.range(0, 20), i => i * 5 / 100)
-        }
-      );
-
-      if (items && items.length) {
-        for (let i of items) {
-          let el = document.querySelector('[data-id="' + i.id + '"]');
-          observer.observe(el);
-        }
-      }
-    },
-
-    // Item in view
-    itemInView(item) {
-      let items = this.get('allItems');
-
-      // Handle string ID
-      if (_.isString(item)) {
-        item = _.find(items, { id: item });
-      }
-      if (!item) {
-        return;
-      }
-
-      item.inView = true;
-      this.set({ allItems: items });
-
-      this.__markers[item.id].setIcon({
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: '#00F',
-        fillOpacity: 0.8,
-        strokeWeight: 1
-      });
-
-      // TODO: Handle user location as well
-      let bounds = new window.google.maps.LatLngBounds();
-      bounds.extend({
-        lat: parseFloat(item.latitude),
-        lng: parseFloat(item.longitude)
-      });
-      //this.__map.fitBounds(bounds);
-      this.__map.setCenter(bounds.getCenter());
-      this.__map.setZoom(14);
-    },
-
-    // Item not in view
-    itemNotInView(item) {
-      let items = this.get('allItems');
-
-      // Handle string ID
-      if (_.isString(item)) {
-        item = _.find(items, { id: item });
-      }
-      if (!item) {
-        return;
-      }
-
-      item.inView = false;
-      this.set({ allItems: items });
-
-      if (this.__markers[item.id]) {
-        this.__markers[item.id].setIcon({
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-          fillColor: '#0F0',
-          fillOpacity: 0.8,
-          strokeWeight: 1
-        });
-      }
-    },
-
-    // Draw google map
-    drawMap: function() {
-      // Twin cities
-      let defaultCenter = {
-        lat: 44.9629232,
-        lng: -93.159196
-      };
-      let defaultZoom = 11;
-
-      // Only draw map if needed
-      if (!this.__map) {
-        this.__map = new window.google.maps.Map(this.refs.itemsMap, {
-          zoom: defaultZoom,
-          center: defaultCenter,
-          zoomControl: true,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false,
-          styles: mapStyles
-        });
-
-        // Create markers if needed
-        if (!this.__markers || !this.__markers.length) {
-          this.__markersBound = new window.google.maps.LatLngBounds();
-          this.__markers = {};
-
-          this.get('allItems').forEach(i => {
-            if (i.latitude && i.longitude) {
-              let p = {
-                lat: parseFloat(i.latitude),
-                lng: parseFloat(i.longitude)
-              };
-
-              let infowindow = new window.google.maps.InfoWindow({
-                content: i.name || i.title
-                // maxWidth: 200
-              });
-
-              let marker = new window.google.maps.Marker({
-                position: p,
-                title: i.name || i.title
-              });
-              marker.addListener('click', function() {
-                infowindow.open(this.__map, marker);
-              });
-
-              this.__markersBound.extend(p);
-              this.__markers[i.id] = marker;
-            }
-          });
-        }
-
-        // Add markers to map
-        for (let i in this.__markers) {
-          this.__markers[i].setMap(this.__map);
-        }
-
-        // Show all markers
-        this.__map.fitBounds(this.__markersBound);
-      } else {
-        window.google.maps.event.trigger(this.__map, 'resize');
-      }
     },
 
     // All items (items in lists)
@@ -351,19 +266,35 @@ export default {
       return o;
     },
 
+    // Map locations
+    mapLocations: function(allItems) {
+      return allItems
+        ? allItems.map(i => {
+            return {
+              id: i.id,
+              content: i.name || i.title,
+              lat: parseFloat(i.latitude),
+              lng: parseFloat(i.longitude)
+            };
+          })
+        : [];
+    },
+
     // Determine if any item has location (otherwise, don't show)
     // map link.
-    hasLocations: function(allListsItems) {
-      return !!allListsItems.find(i => {
-        return (
-          (i && i.latitude && i.longitude) ||
-          (i &&
-            i.items &&
-            !!i.items.find(t => {
-              return t && t.latitude && t.longitude;
-            }))
-        );
-      });
+    hasLocations: function(allItems) {
+      return allItems
+        ? !!allItems.find(i => {
+            return (
+              (i && i.latitude && i.longitude) ||
+              (i &&
+                i.items &&
+                !!i.items.find(t => {
+                  return t && t.latitude && t.longitude;
+                }))
+            );
+          })
+        : false;
     }
   },
 
@@ -374,7 +305,13 @@ export default {
   data() {
     return {
       isBrowser: typeof window !== undefined,
-      view: 'featured'
+      view: 'featured',
+      mapCenter: {
+        lat: 44.9629232,
+        lng: -93.159196
+      },
+      smallZoom: 11,
+      largeZoom: 10
     };
   }
 };
