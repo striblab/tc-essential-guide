@@ -1,5 +1,7 @@
 <div class="main-visual">
-  {{#if data.mainVisual}}
+  {{#if view === 'map'}}
+    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" />
+  {{elseif data.mainVisual}}
     <picture>
       <source
         type="image/webp"
@@ -64,7 +66,7 @@
   {{#if view === 'map'}}
     <div class="map-items-container">
       <div class="map-wrapper">
-        <div class="map" ref:itemsMap></div>
+        <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="11">
       </div>
 
       <div class="map-items">
@@ -87,16 +89,18 @@ import methods from './common/methods.js';
 import observe from '../observe.js';
 import mapStyles from '../map-styles.js';
 import Item from './items.html';
+import Map from './map.html';
 
 export default {
   components: {
-    Item
+    Item,
+    Map
   },
 
   oncreate: function() {
     // Make all items
     this.observe('data', n => {
-      if (n.items || n.lists) {
+      if (n && (n.items || n.lists)) {
         this.set({ allItems: this.allItems(this.get('data')) });
       }
     });
@@ -108,10 +112,13 @@ export default {
       (n, o) => {
         if (n && n !== o) {
           if (n === 'featured') {
-            this.showFeatured();
-
             // Observe feature events
-            if (!this.__featuredObserver) {
+            if (this.__featuredObserver) {
+              this.__featuredObserver.stop();
+              this.__featuredObserver.addElements(
+                document.querySelectorAll('.groups-items li')
+              );
+            } else {
               this.__featuredObserver = observe({
                 visibleThreshold: 0.75,
                 elements: document.querySelectorAll('.groups-items li'),
@@ -120,8 +127,6 @@ export default {
               });
             }
           } else if (n === 'map') {
-            this.showMap();
-
             // Observe map events
             if (this.__mapObserver) {
               this.__mapObserver.stop();
@@ -130,7 +135,7 @@ export default {
               );
             } else {
               this.__mapObserver = observe({
-                visibleThreshold: 0.75,
+                visibleThreshold: 0.9,
                 elements: document.querySelectorAll('.map-items .item'),
                 onObserve: _.bind(this.observeMapItem, this),
                 throttle: false
@@ -145,20 +150,6 @@ export default {
 
   methods: {
     eventSet: methods.eventSet,
-
-    // Set view to featured
-    showFeatured: function() {
-      this.set({ view: 'featured' });
-    },
-
-    // Set view to map
-    showMap: function() {
-      this.set({ view: 'map' });
-
-      if (this.get('isBrowser') && window.google) {
-        this.drawMap();
-      }
-    },
 
     // Find item by ID
     findByID(id) {
@@ -175,18 +166,30 @@ export default {
     },
 
     // Set all lists and items
-    setAll(values, set = true) {
+    setAll(values, set = true, exceptions = []) {
       let data = this.get('data');
       let allItems = this.allItems(data);
 
       if (data.lists) {
-        data.lists = _.map(data.lists, l => _.extend(l, values));
+        data.lists = _.map(data.lists, l => {
+          return !exceptions || (exceptions && !~exceptions.indexOf(l.id))
+            ? _.extend(l, values)
+            : l;
+        });
       }
       if (data.items) {
-        data.items = _.map(data.items, l => _.extend(l, values));
+        data.items = _.map(data.items, l => {
+          return !exceptions || (exceptions && !~exceptions.indexOf(l.id))
+            ? _.extend(l, values)
+            : l;
+        });
       }
       if (allItems) {
-        allItems = _.map(allItems, l => _.extend(l, values));
+        allItems = _.map(allItems, l => {
+          return !exceptions || (exceptions && !~exceptions.indexOf(l.id))
+            ? _.extend(l, values)
+            : l;
+        });
       }
 
       if (set) {
@@ -198,9 +201,19 @@ export default {
     observeFeaturedItem(id) {
       let item = this.findByID(id);
       if (item) {
-        this.setAll({ inView: false }, false);
+        this.setAll({ inView: false }, false, [id]);
         item.inView = true;
         this.set({ data: this.get('data') });
+      }
+    },
+
+    // Observe a map item
+    observeMapItem(id) {
+      let item = this.findByID(id);
+      if (item) {
+        this.setAll({ inView: false }, false, [id]);
+        item.inView = true;
+        this.set({ data: this.get('data'), locationsInView: [id] });
       }
     },
 
@@ -219,124 +232,6 @@ export default {
       this.set({
         data: data
       });
-    },
-
-    // Observe a map item
-    observeMapItem(id) {
-      let item = this.findByID(id);
-      let allItems = this.allItems(this.get('data'));
-
-      if (item) {
-        // Mark items in view
-        this.setAll({ inView: false }, false);
-        item.inView = true;
-
-        // Update data
-        this.set({ data: this.get('data') });
-
-        // Inactive all markers
-        _.each(allItems, i => {
-          if (this.__markers[i.id] && this.__map && id !== i.id) {
-            this.__markers[i.id].setIcon(this.mapIcon());
-          }
-        });
-
-        // Update active marker
-        if (this.__markers[item.id] && this.__map) {
-          this.__markers[item.id].setIcon(this.mapIcon('active'));
-          this.__markers[item.id].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
-
-          // TODO: Handle user location as well
-          let bounds = new window.google.maps.LatLngBounds();
-          bounds.extend({
-            lat: parseFloat(item.latitude),
-            lng: parseFloat(item.longitude)
-          });
-          //this.__map.fitBounds(bounds);
-          this.__map.setCenter(bounds.getCenter());
-          this.__map.setZoom(14);
-        }
-      }
-    },
-
-    // Draw google map
-    drawMap: function() {
-      // Twin cities
-      let defaultCenter = {
-        lat: 44.9629232,
-        lng: -93.159196
-      };
-      let defaultZoom = 11;
-
-      // Only draw map if needed
-      if (!this.__map) {
-        this.__map = new window.google.maps.Map(this.refs.itemsMap, {
-          zoom: defaultZoom,
-          center: defaultCenter,
-          zoomControl: true,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false,
-          styles: mapStyles
-        });
-
-        // Create markers if needed
-        if (!this.__markers || !this.__markers.length) {
-          this.__markersBound = new window.google.maps.LatLngBounds();
-          this.__markers = {};
-
-          this.get('allItems').forEach(i => {
-            if (i.latitude && i.longitude) {
-              let p = {
-                lat: parseFloat(i.latitude),
-                lng: parseFloat(i.longitude)
-              };
-
-              let infowindow = new window.google.maps.InfoWindow({
-                content: i.name || i.title
-                // maxWidth: 200
-              });
-
-              let marker = new window.google.maps.Marker({
-                position: p,
-                title: i.name || i.title,
-                icon: this.mapIcon()
-              });
-              marker.addListener('click', function() {
-                infowindow.open(this.__map, marker);
-              });
-
-              this.__markersBound.extend(p);
-              this.__markers[i.id] = marker;
-            }
-          });
-        }
-
-        // Add markers to map
-        for (let i in this.__markers) {
-          this.__markers[i].setMap(this.__map);
-        }
-
-        // Show all markers
-        this.__map.fitBounds(this.__markersBound);
-      } else {
-        window.google.maps.event.trigger(this.__map, 'resize');
-      }
-    },
-
-    // Make map icon
-    mapIcon: function(color = '#C5C5C5') {
-      return {
-        path:
-          'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
-        scale: 0.5,
-        anchor: new google.maps.Point(39 / 2, 50),
-        fillColor: color === 'active' ? '#00824A' : color ? color : '#C5C5C5',
-        fillOpacity: 0.95,
-        strokeWeight: 0
-      };
     },
 
     // All items (items in lists)
@@ -371,19 +266,35 @@ export default {
       return o;
     },
 
+    // Map locations
+    mapLocations: function(allItems) {
+      return allItems
+        ? allItems.map(i => {
+            return {
+              id: i.id,
+              content: i.name || i.title,
+              lat: parseFloat(i.latitude),
+              lng: parseFloat(i.longitude)
+            };
+          })
+        : [];
+    },
+
     // Determine if any item has location (otherwise, don't show)
     // map link.
-    hasLocations: function(allListsItems) {
-      return !!allListsItems.find(i => {
-        return (
-          (i && i.latitude && i.longitude) ||
-          (i &&
-            i.items &&
-            !!i.items.find(t => {
-              return t && t.latitude && t.longitude;
-            }))
-        );
-      });
+    hasLocations: function(allItems) {
+      return allItems
+        ? !!allItems.find(i => {
+            return (
+              (i && i.latitude && i.longitude) ||
+              (i &&
+                i.items &&
+                !!i.items.find(t => {
+                  return t && t.latitude && t.longitude;
+                }))
+            );
+          })
+        : false;
     }
   },
 
@@ -394,7 +305,13 @@ export default {
   data() {
     return {
       isBrowser: typeof window !== undefined,
-      view: 'featured'
+      view: 'featured',
+      mapCenter: {
+        lat: 44.9629232,
+        lng: -93.159196
+      },
+      smallZoom: 11,
+      largeZoom: 10
     };
   }
 };

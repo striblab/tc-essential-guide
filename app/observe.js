@@ -27,6 +27,9 @@ class Observer {
       return;
     }
 
+    // Initalize entries
+    this.entries = [];
+
     // Make observer
     this.observer = new IntersectionObserver(
       this.options.throttle
@@ -36,7 +39,8 @@ class Observer {
         root: _.isElement(this.options.root)
           ? this.options.root
           : document.querySelector(this.options.root),
-        threshold: _.map(_.range(0, 50), i => i * 2 / 100)
+        threshold:
+          this.options.threshold || _.map(_.range(0, 26), i => i * 4 / 100)
       }
     );
 
@@ -74,10 +78,12 @@ class Observer {
 
   onObserve(entries) {
     // We only want to highlight one element at a time, so
-    // order by the top and which one is most in view.
+    // order by the top and which one is most in view.  We need
+    // to keep track of entries.
+    entries = this.combinedEntries(entries);
     let sorted = _.orderBy(
       entries,
-      ['intersectionRatio', e => e.boundingClientRect.y],
+      ['roundedRatio', e => e.boundingRect.top],
       ['desc', 'asc']
     );
     if (
@@ -94,6 +100,34 @@ class Observer {
       sorted[0].inView ? sorted[0] : undefined,
       sorted
     );
+  }
+
+  combinedEntries(newEntries) {
+    this.entries = this.entries || [];
+
+    // Find existing
+    _.each(newEntries, n => {
+      let existing = _.findIndex(this.entries, e => {
+        return n.target === e.target;
+      });
+
+      if (~existing) {
+        this.entries[existing] = n;
+      }
+      else {
+        this.entries.push(n);
+      }
+    });
+
+    // Update positions
+    this.entries = _.map(this.entries, e => {
+      // We care about where on the page it is and need to standardize
+      e.boundingRect = e.target.getBoundingClientRect();
+      e.roundedRatio = Math.min(1, Math.round(e.intersectionRatio * 100) / 100);
+      return e;
+    });
+
+    return _.map(this.entries);
   }
 
   // Stop (disconnect) all items
