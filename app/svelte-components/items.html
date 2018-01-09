@@ -26,16 +26,6 @@
           <a href="{{ data.basePath }}/{{ data.filename }}">{{ data.name }}</a>
         </h1>
 
-        {{#if data.byline && display !== 'list'}}
-          <div class="byline">
-            {{#if fullByline(data)}}
-              {{{ data.byline }}}
-            {{else}}
-              <strong>By {{ escapeHTML(data.byline) }}</strong> • Star Tribune
-            {{/if}}
-          </div>
-        {{/if}}
-
         {{#if data.address}}
           <address>{{ data.address }}</address>
         {{/if}}
@@ -78,6 +68,16 @@
       </div>
     {{/if}}
 
+    {{#if data.byline && display !== 'list'}}
+      <div class="byline">
+        {{#if fullByline(data)}}
+          {{{ data.byline }}}
+        {{else}}
+          <strong>By {{ escapeHTML(data.byline) }}</strong> • Star Tribune
+        {{/if}}
+      </div>
+    {{/if}}
+
     <p>{{{ data.description }}}</p>
 
     {{#if display !== 'map'}}
@@ -93,7 +93,9 @@
 
           {{#if data.phone}}
             <dt><span>Phone</span></dt>
-            <dd><span class="linkable">{{ data.phone }}</span></dd>
+            <dd><span class="linkable">
+              <a href="tel:{{ data.phone }}" target="_blank" rel="noopener">{{ data.phone }}</a>
+            </span></dd>
           {{/if}}
 
           {{#if data.website}}

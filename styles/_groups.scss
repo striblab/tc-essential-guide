@@ -43,8 +43,8 @@ ul.groups-items {
 
       span {
         display: block;
-        font-size: 1.5em;
-        background-color: rgba(40, 40, 40, 0.8);
+        font-size: 1.45em;
+        background-color: rgba(40, 40, 40, 0.85);
         padding: 1rem;
         color: $color-white;
         position: absolute;
@@ -82,7 +82,7 @@ ul.groups-items {
 
   .map-wrapper {
     width: 100%;
-    height: 40%;
+    height: 50%;
     position: relative;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
   }
@@ -104,18 +104,23 @@ ul.groups-items {
     margin: 1.5em;
     border-radius: 0.5em;
     background-color: $color-white;
-    opacity: 0.5;
+    opacity: 0.4;
     transition: opacity 0.2s;
+
+    .item-header {
+      margin-bottom: 0.5em;
+    }
 
     h1 {
       font-weight: bold;
     }
 
     p {
-      height: 5em;
+      height: 4.5em;
       overflow: hidden;
       margin-top: 0.3em;
       position: relative;
+      margin-bottom: 0.5;
 
       &::after {
         content: '... Read more';
@@ -129,6 +134,10 @@ ul.groups-items {
         background-color: $color-white;
         padding-left: 0.5em;
       }
+    }
+
+    .byline {
+      display: none;
     }
 
     &.in-view {

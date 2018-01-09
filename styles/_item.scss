@@ -29,7 +29,7 @@ article.item {
   }
 
   h1 {
-    font-size: 1.55em;
+    font-size: 1.5em;
     line-height: 1.25em;
     text-align: left;
     padding-top: 0;
@@ -81,7 +81,8 @@ article.item {
 
   figure cite {
     padding-left: 0.5em;
-    padding-right: 1em;
+    padding-right: 2em;
+    padding-top: 1em;
     font-family: map-get($font-sets, 'benton-sans');
     letter-spacing: 1px;
     margin-bottom: -20px;
@@ -101,6 +102,11 @@ article.item {
       margin-bottom: 0.25em;
       margin-right: 0.15em;
     }
+  }
+
+  .byline {
+    font-family: map-get($font-sets, 'benton-sans');
+    font-size: 0.95em;
   }
 
   dt::before {
