@@ -35,7 +35,7 @@
   {{#if view === 'featured'}}
     <ul class="groups-items">
       {{#each allListsItems as i @airtableId}}
-        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }}">
+        <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }} {{ i.inFocus ? 'in-focus' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImage && i.mainImage[0] }}
               <picture>
@@ -98,10 +98,21 @@ export default {
   },
 
   oncreate: function() {
+    this.__intialized = false;
+
     // Make all items
     this.observe('data', n => {
       if (n && (n.items || n.lists)) {
-        this.set({ allItems: this.allItems(this.get('data')) });
+        let allItems = this.allItems(this.get('data'));
+        this.set({ allItems: allItems });
+      }
+    });
+
+    // Make first item in focus
+    this.observe('allListsItems', n => {
+      if (n && !this.__intialized) {
+        n[0].inFocus = true;
+        this.__intialized = true;
       }
     });
 
@@ -229,6 +240,13 @@ export default {
       data.mainVisualDescription = item.mainImageDescription
         ? item.mainImageDescription
         : undefined;
+
+      // Since we want a default state and a more stiky state
+      // than what CSS hover can accomplish, we manage it in data
+      this.get('allListsItems').forEach(i => {
+        i.inFocus = i.id === item.id ? true : false;
+      });
+
       this.set({
         data: data
       });
