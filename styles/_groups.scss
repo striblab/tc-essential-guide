@@ -61,11 +61,18 @@ ul.groups-items {
           min-height: 7em;
           margin-bottom: 0;
 
-          &:hover {
+          .in-focus & {
             background-color: $color-emerald-green;
             color: $color-white;
           }
         }
+      }
+    }
+
+    @include full-view {
+      &.in-focus a span {
+        background-color: $color-emerald-green;
+        color: $color-white;
       }
     }
   }
