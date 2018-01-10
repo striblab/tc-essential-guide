@@ -46,6 +46,12 @@ article.item {
     }
   }
 
+  // Phone icon for phone links
+  a[href^='tel:']::after {
+    content: '\260e';
+    margin-left: 0.5em;
+  }
+
   .near-me {
     text-align: right;
     font-family: map-get($font-sets, 'benton-sans');

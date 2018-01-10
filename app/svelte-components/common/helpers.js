@@ -79,5 +79,22 @@ module.exports = {
     return `mailto:RECIPIENT?subject=${encodeURIComponent(
       data.emailShare || content.emailShare
     )}&body=${encodeURIComponent(data.baseURL)}`;
+  },
+
+  phoneURL: function(phone) {
+    return phone ? `tel:${phone.replace(/[^0-9]+/g, '')}` : '';
+  },
+
+  urlLink: function(url) {
+    return url ? (url.match(/^http/i) ? url : `http://${url}`) : '';
+  },
+
+  urlText: function(url) {
+    return url
+      ? url
+        .replace(/^https?:\/\//i, '')
+        .replace(/www\./i, '')
+        .replace(/\/$/, '')
+      : '';
   }
 };

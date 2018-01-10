@@ -94,14 +94,14 @@
           {{#if data.phone}}
             <dt><span>Phone</span></dt>
             <dd><span class="linkable">
-              <a href="tel:{{ data.phone }}" target="_blank" rel="noopener">{{ data.phone }}</a>
+              <a href="{{ phoneURL(data.phone) }}" target="_blank" rel="noopener">{{ data.phone }}</a>
             </span></dd>
           {{/if}}
 
           {{#if data.website}}
             <dt><span>Website</span></dt>
             <dd><span class="linkable">
-              <a href="{{ data.website }}" target="_blank" rel="noopener">{{ data.website }}</a>
+              <a href="{{ urlLink(data.website) }}" target="_blank" rel="noopener">{{ urlText(data.website) }}</a>
             </span></dd>
           {{/if}}
         </dl>
@@ -142,6 +142,9 @@ export default {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
     emailURL: helpers.emailURL,
+    phoneURL: helpers.phoneURL,
+    urlLink: helpers.urlLink,
+    urlText: helpers.urlText,
     escapeHTML: helpers.escapeHTML,
     srcset: helpers.srcset
   },
