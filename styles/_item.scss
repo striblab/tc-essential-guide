@@ -13,12 +13,16 @@ article.item {
 
     .item-header-left {
       margin-right: auto;
+      margin-bottom: auto;
+      padding-right: 0.25em;
       min-width: 50%;
       text-align: left;
     }
 
     .item-header-right {
       margin-left: auto;
+      margin-top: auto;
+      padding-left: 0.25em;
       text-align: right;
       vertical-align: bottom;
     }
@@ -139,14 +143,13 @@ article.item {
     a {
       text-decoration: none;
       color: $color-default-black;
-
     }
   }
 
   p a {
-      text-decoration: none;
-      color: $color-default-black;
-      border-bottom: 1px solid $color-emerald-green;
+    text-decoration: none;
+    color: $color-default-black;
+    border-bottom: 1px solid $color-emerald-green;
   }
 
   .related {
