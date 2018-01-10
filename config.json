@@ -3,7 +3,9 @@
     "This document defines configuration for this project that is not content or copy.",
   "projectIdentifier": "super-bowl-guide",
   "social": {
-    "image": "assets/images/strib/strib-logo-name-social-card.png"
+    "image": "assets/images/strib/strib-logo-name-social-card.png",
+    "width": 1680,
+    "height": 876
   },
   "styles": {
     "globals": [
@@ -12,6 +14,7 @@
   },
   "js": {
     "globals": [
+      "//static.startribune.com/assets/libs/omniture-strib/H.20.3/omniture-strib.min.js",
       "//cdn.polyfill.io/v2/polyfill.min.js",
       "//static.startribune.com/assets/libs/object-fit-images/3.2.3/ofi.min.js",
       "//static.startribune.com/assets/libs/lodash/4.17.4/lodash.min.js",

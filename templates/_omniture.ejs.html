@@ -1,0 +1,53 @@
+<script type="text/javascript">
+if ('undefined' != typeof stribUser) {
+  s.prop16 = stribUser;
+} else {
+  s.prop16 = 'Not Logged In';
+}
+
+if ('undefined' != typeof eEditionUser) {
+  s.prop19 = eEditionUser;
+} else {
+  s.prop19 = 'Not Logged In';
+}
+
+/* Conversion Variables */
+s.campaign = '';
+s.state = '';
+s.zip = '';
+s.events = '';
+s.products = '';
+s.purchaseID = '';
+s.eVar1 = '';
+s.eVar2 = '';
+s.eVar3 = '';
+s.eVar4 = '';
+s.eVar5 = '';
+
+s.prop3 = '<% escapeQuotes(data.dataset) %>';
+s.prop4 = 'Star Tribune';
+s.pageName =
+  '<%= escapeQuotes(content.title, true) %>: <% escapeQuotes(metaTitle, true) %>';
+s.prop2 = 'HTML';
+s.server = 'static.startribune.com';
+s.channel = 'variety';
+s.prop35 = '<% escapeQuotes(metaAuthor, true) %>';
+s.prop24 = 'Essential Twin Cities Guide';
+
+if (readCookie('usersubs')) {
+  s.prop37 = readCookie('usersubs');
+}
+
+var s_code = s.t();
+if (s_code) {
+  document.write(s_code);
+}
+if (navigator.appVersion.indexOf('MSIE') >= 0)
+  document.write(unescape('%3C') + '!-' + '-');
+</script>
+
+<noscript>
+	<a href="http://www.omniture.com" title="Web Analytics">
+    <img src="http://nandomedia.112.2o7.net/b/ss/nmminneapolis/1/H.20.3--NS/0?pageName=<%= encodeURIComponent(content.title + ': ' + metaTitle) %>&server=static.startribune.com&channel=variety&c1=<%= encodeURIComponent(config.publish.production.url + data.filename) %>&c2=HTML&c3=section%20front&c4=Star%20Tribune&c5=noscript&c6=&c7=Variety" height="1" width="1" border="0" alt="" />
+  </a>
+</noscript>

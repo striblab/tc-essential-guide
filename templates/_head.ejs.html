@@ -4,8 +4,8 @@
   var metaAuthor = data.metaAuthor || data.byline || content.metaAuthor || 'Star Tribune Visuals';
   var metaDescription = data.metaDescription || data.description || content.metaDescription;
   var metaKeywords = data.metaKeywords || content.metaKeywords;
-  var metaImageWidth = '600';
-  var metaImage = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-' + metaImageWidth + 'px.jpg').replace('.png', '-' + metaImageWidth + 'px.png') : config.publish.production.url + config.social.image;
+  var metaImage600 = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-600px.jpg').replace('.png', '-600px.png') : config.publish.production.url + config.social.image;
+  var metaImage900 = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-900px.jpg').replace('.png', '-900px.png') : config.publish.production.url + config.social.image;
 %>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -73,15 +73,16 @@
 <meta property="og:description" content="<%= htmlAttribute(metaDescription) %>">
 <meta property="og:site_name" content="<%= htmlAttribute(content.title) %>">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="<%= metaImage %>">
-<meta property="og:image:width" content="<% metaImageWidth %>">
+<meta property="og:image" content="<%= metaImage900 %>">
+<meta property="og:image:width" content="900">
+<meta property="og:image:height" content="<%= Math.round(900 * (3 / 4)) %>">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="<%= content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:creator" content="<%= data.twitterAccount || content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:title" content="<%= htmlAttribute(metaTitle) %>">
 <meta name="twitter:description" content="<%= htmlAttribute(metaDescription) %>">
-<meta name="twitter:image" content="<%= metaImage %>">
+<meta name="twitter:image" content="<%= metaImage900 %>">
 
 <% if (data && data.dataset !== 'index') { %>
   <meta property="article:published_time" content="<%= (new Date()).toISOString() %>">
@@ -105,7 +106,9 @@
     "dateModified": "<%= (new Date()).toISOString() %>",
     "image": {
       "@type": "ImageObject",
-      "url": "<%= metaImage %>"
+      "url": "<%= metaImage900 %>",
+      "width": "900",
+      "height": "<%= Math.round(900 * (3 / 4)) %>"
     },
     "author": {
       "@type": "Person",
@@ -116,12 +119,11 @@
       "name": "<%= htmlAttribute(metaOrganization) %>",
       "logo": {
         "@type": "ImageObject",
-        "url": "<%= config.publish.production.url %>assets/images/strib/strib-logo-transparent-307.png",
-        "width": 307,
-        "height": 292
+        "url": "<%= config.publish.production.url %><%= config.social.image %>",
+        "width": "<%= config.social.width %>",
+        "height": "<%= config.social.height %>"
       }
-    },
-    "description": "<%= htmlAttribute(metaDescription) %>"
+    }
   }
 </script>
 
