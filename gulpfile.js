@@ -187,7 +187,10 @@ gulp.task('assets:responsive:airtable', () => {
 });
 gulp.task('assets:responsive:images', () => {
   return gulp
-    .src(['assets/images/*newtwincities*', 'assets/images/*desktopillustration*'])
+    .src([
+      'assets/images/*newtwincities*',
+      'assets/images/*desktopillustration*'
+    ])
     .pipe(
       responsive(
         responsiveConfig(responsive).sizes,
