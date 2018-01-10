@@ -69,6 +69,19 @@ article.item {
     text-decoration: none;
     color: $color-emerald-green;
     border-radius: 0.5em;
+
+    @include full-view {
+      font-size: 0.6em;
+      letter-spacing: 0.2px;
+      border: none;
+      border-bottom: 1px solid $color-emerald-green;
+      padding: 0;
+      padding-bottom: 0.2em;
+      line-height: 1.5;
+      text-decoration: none;
+      color: $color-default-black;
+      border-radius: 0;
+    }
   }
 
   .item-image {

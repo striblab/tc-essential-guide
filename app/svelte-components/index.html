@@ -5,17 +5,7 @@
     <div class="vertical-center">
       <h1>
         <span id="essential">Essential</span>
-        <picture>
-          <source
-            type="image/webp"
-            srcset="{{ srcset(data.basePath, 'assets/images/newtwincities.png', 'webp') }}"
-            sizes="100vw">
-          <source
-            type="image/jpeg"
-            srcset="{{ srcset(data.basePath, 'assets/images/newtwincities.png') }}"
-            sizes="100vw">
-          <img src="{{ data.basePath }}/assets/images/newtwincities.png" alt="Twin Cities">
-        </picture>
+        <span>Twin Cities</span>
         <span id="guide">Guide</span>
       </h1>
       <a href="#/get-started" class="get-started" on:click="goToGroups(event)" id="start-button">Get started</a>

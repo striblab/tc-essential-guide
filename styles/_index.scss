@@ -42,7 +42,7 @@
       }
 
       @include full-view {
-        margin-top: 20%;
+        margin-top: 00%;
       }
     }
 
@@ -58,7 +58,8 @@
       margin-top: 10%;
 
       @include full-view {
-        margin-bottom: 10%;
+        margin-bottom: -2%;
+        margin-top: 2%;
       }
     }
 

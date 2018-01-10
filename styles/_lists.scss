@@ -61,11 +61,12 @@ nav.toggle-nav {
 }
 
 article.lists {
-  margin: 5em;
+  margin: 2.3em;
   max-width: 40em;
 
   @include full-view {
     max-width: none;
+    margin: 5em 3.7em 5em 3.7em;
   }
 
   @media screen and (max-width: 300px) {
@@ -101,18 +102,26 @@ article.lists {
     font-weight: bold;
     letter-spacing: -0.3px;
     margin-bottom: 1em;
+    @include full-view {
+      font-size: 2em;
+    }
   }
 
   .byline {
     text-align: center;
     font-family: map-get($font-sets, 'benton-sans');
+    @include full-view {
+      font-size: 0.9em;
+      margin-bottom: 5%;
+    }
   }
 
   .social-buttons {
     margin-bottom: 1em;
 
     @include full-view {
-      display: none;
+      display: block;
+      margin-bottom: 2em;
     }
   }
 
@@ -125,6 +134,10 @@ article.lists {
   .article-description {
     margin-bottom: 3em;
     text-align: center;
+    @include full-view {
+      margin-bottom: 5em;
+      font-size: 1.2em;
+    }
   }
 
   article.item {
