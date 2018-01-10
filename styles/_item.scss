@@ -29,7 +29,7 @@ article.item {
   }
 
   h1 {
-    font-size: 1.55em;
+    font-size: 1.5em;
     line-height: 1.25em;
     text-align: left;
     padding-top: 0;
@@ -81,7 +81,8 @@ article.item {
 
   figure cite {
     padding-left: 0.5em;
-    padding-right: 1em;
+    padding-right: 2em;
+    padding-top: 1em;
     font-family: map-get($font-sets, 'benton-sans');
     letter-spacing: 1px;
     margin-bottom: -20px;
@@ -103,6 +104,11 @@ article.item {
     }
   }
 
+  .byline {
+    font-family: map-get($font-sets, 'benton-sans');
+    font-size: 0.95em;
+  }
+
   dt::before {
     content: '';
     display: block;
@@ -120,7 +126,14 @@ article.item {
     a {
       text-decoration: none;
       color: $color-default-black;
+
     }
+  }
+
+  p a {
+      text-decoration: none;
+      color: $color-default-black;
+      border-bottom: 1px solid $color-emerald-green;
   }
 
   .related {

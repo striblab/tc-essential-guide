@@ -7,8 +7,8 @@ ul.groups-items {
   padding: 0;
 
   @include full-view {
-    padding-top: 5em;
-    margin-bottom: 5em;
+    padding-top: 8em;
+    margin-bottom: 8em;
   }
 
   li {
@@ -26,7 +26,7 @@ ul.groups-items {
       background-color: map-get($grays, 'light');
 
       @include full-view {
-        margin: 0 0 3em;
+        margin: 0 0 0em;
         min-height: auto;
         background-color: inherit;
       }
@@ -43,8 +43,8 @@ ul.groups-items {
 
       span {
         display: block;
-        font-size: 1.5em;
-        background-color: rgba(40, 40, 40, 0.8);
+        font-size: 1.55em;
+        background-color: rgba(40, 40, 40, 0.85);
         padding: 1rem;
         color: $color-white;
         position: absolute;
@@ -54,13 +54,16 @@ ul.groups-items {
 
         @include full-view {
           position: relative;
-          padding: 2rem;
-          background-color: $color-emerald-green;
-          color: $color-white;
+          padding: 4rem;
+          background-color: $color-bg-gray;
+          color: $color-black;
           transition: background-color 0.1s;
+          min-height: 7em;
+          margin-bottom: 0;
 
           &:hover {
-            background-color: $color-forest-green;
+            background-color: $color-emerald-green;
+            color: $color-white;
           }
         }
       }
@@ -91,7 +94,7 @@ ul.groups-items {
 
   .map-wrapper {
     width: 100%;
-    height: 40%;
+    height: 50%;
     position: relative;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
 
@@ -126,18 +129,23 @@ ul.groups-items {
     margin: 1.5em;
     border-radius: 0.5em;
     background-color: $color-white;
-    opacity: 0.5;
+    opacity: 0.4;
     transition: opacity 0.2s;
+
+    .item-header {
+      margin-bottom: 0.5em;
+    }
 
     h1 {
       font-weight: bold;
     }
 
     p {
-      height: 5em;
+      height: 4.5em;
       overflow: hidden;
       margin-top: 0.3em;
       position: relative;
+      margin-bottom: 0.5;
 
       &::after {
         content: '... Read more';
@@ -151,6 +159,10 @@ ul.groups-items {
         background-color: $color-white;
         padding-left: 0.5em;
       }
+    }
+
+    .byline {
+      display: none;
     }
 
     &.in-view {

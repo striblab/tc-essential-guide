@@ -2,6 +2,10 @@
  * Styling for lists
  */
 
+/*body {
+  background-color: $color-white;
+}*/
+
 nav.toggle-nav {
   box-shadow: none;
   height: auto;
@@ -38,11 +42,11 @@ nav.toggle-nav {
           color: $color-bg-gray;
         }
 
-        &:hover {
+        /*&:hover {
           background-color: map-get($grays, 'light');
           border-color: map-get($grays, 'light');
           color: $color-forest-green;
-        }
+        }*/
 
         &.distance {
           border-radius: 0 1em 1em 0;
@@ -57,7 +61,7 @@ nav.toggle-nav {
 }
 
 article.lists {
-  margin: 3rem 2rem 1em;
+  margin: 5em;
   max-width: 40em;
 
   @include full-view {
@@ -69,6 +73,10 @@ article.lists {
       margin-right: 1rem;
       margin-left: 1rem;
     }
+  }
+
+  .item .social-buttons {
+    text-align: left;
   }
 
   .item .item-image {

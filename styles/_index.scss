@@ -15,12 +15,7 @@
   // Splash screen section
   .splash {
     height: 100vh;
-    background: rgba(0, 99, 65, 1);
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 130, 74, 1) 0%,
-      rgba(0, 99, 65, 1) 100%
-    );
+    background-color: $color-forest-green;
     color: $color-white;
     padding-top: 0.5em;
     text-align: center;
@@ -40,7 +35,7 @@
 
       img {
         display: inline-block;
-        width: 80%;
+        width: 85%;
         max-width: 550px;
         overflow: hidden;
         height: auto;
