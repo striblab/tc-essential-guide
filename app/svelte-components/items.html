@@ -101,7 +101,7 @@
           {{#if data.website}}
             <dt><span>Website</span></dt>
             <dd><span class="linkable">
-              <a href="{{ data.website }}<" target="_blank" rel="noopener">{{ data.website }}</a>
+              <a href="{{ data.website }}" target="_blank" rel="noopener">{{ data.website }}</a>
             </span></dd>
           {{/if}}
         </dl>
@@ -121,7 +121,7 @@
 
       {{#if display !== 'list' && data.lists}}
         <div class="related">
-          <h3>Related</h3>
+          <h3>Featured in</h3>
           {{#each data.lists as l @id}}
             <a href="{{ data.basePath }}/{{ l.filename }}">{{ l.title }}</a>
           {{/each}}

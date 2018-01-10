@@ -126,7 +126,14 @@ article.item {
     a {
       text-decoration: none;
       color: $color-default-black;
+
     }
+  }
+
+  p a {
+      text-decoration: none;
+      color: $color-default-black;
+      border-bottom: 1px solid $color-emerald-green;
   }
 
   .related {
