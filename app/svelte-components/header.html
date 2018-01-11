@@ -52,10 +52,14 @@ export default {
       this.set({ fullNavOpen: !this.get('fullNavOpen') });
     },
 
-    // Go back using browser
+    // Go back using browser.  If different domain, then go to root
+    // of guide
     goBack: function(e) {
-      if (e && e.preventDefault) {
+      let sameDomain = ~document.referrer.indexOf(window.location.host);
+      if (sameDomain && e && e.preventDefault) {
         e.preventDefault();
+      } else if (!sameDomain) {
+        return;
       }
 
       if (window.history) {
