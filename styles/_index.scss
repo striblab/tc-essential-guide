@@ -9,13 +9,26 @@
   }
 
   header[role='banner'] {
-    display: none;
+    background-color: rgba(0,0,0,0);
+    .top-nav-left {
+      display: none;
+    }
+    .back-logo {
+      display: none;
+    }
+    .middle-logo {
+      background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
+      height: 1.6em;
+    }
   }
 
   // Splash screen section
   .splash {
     height: 100vh;
-    background-color: $color-forest-green;
+    background-image: url('http://static.startribune.com/images/test-images/testphoto.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
     color: $color-white;
     padding-top: 0.5em;
     text-align: center;
@@ -29,8 +42,13 @@
       margin-top: 10%;
 
       span {
+        margin: 0 auto;
         display: block;
-        padding: 0.5em;
+        width: 300px;
+        margin-bottom: 10px;
+        text-align: center;
+        padding: 0.3em;
+        background-color: $color-default-black;
       }
 
       img {
@@ -48,14 +66,19 @@
 
     .get-started {
       display: inline-block;
-      border: 2px solid $color-white;
+      border-bottom: 2px solid $color-white;
+      background-color: $color-default-black;
       color: $color-white;
-      padding: 0.5em 1em;
-      border-radius: 0.5em;
+      padding: 1em;
+      /*border-radius: 0.5em;*/
       text-decoration: none;
       text-transform: uppercase;
       font-weight: bold;
       margin-top: 10%;
+      position: absolute;
+      bottom: -80%;
+      left: 50%;
+      transform: translateX(-50%);
 
       @include full-view {
         margin-bottom: 10%;
@@ -76,18 +99,16 @@
   // Group navigation section
   .group-navigation {
     height: 100vh;
-    background: rgba(0, 99, 65, 1);
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 99, 65, 1) 0%,
-      rgba(0, 130, 74, 1) 100%
-    );
+    background-image: url('http://static.startribune.com/images/test-images/test-blur.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
     overflow: hidden;
     position: relative;
     padding-top: 0.5em;
   }
 
-  .title-logo {
+  /*.title-logo {
     display: block;
     max-width: 11em;
     min-height: 1.5em;
@@ -96,7 +117,7 @@
     background-position: center center;
     background-size: cover;
     margin: 0.75em auto;
-  }
+  }*/
 
   .group-navigation h1 {
     font-family: map-get($font-sets, 'benton-sans');
@@ -104,37 +125,75 @@
     font-size: 1.15em;
     text-align: center;
     text-transform: uppercase;
-    color: $color-white;
+    color: $color-default-black;
     width: 67%;
     min-width: 16em;
-    border-top: 1px solid $color-white;
+    border-top: 2px solid $color-default-black;
     margin: 0 auto 3em;
+    margin-top: 2.6em;
+
+    @include full-view {
+      width: 300px;
+    }
   }
 
   .groups {
     width: 100%;
 
-    .group a {
-      font-size: 1.1em;
-      display: block;
-      width: 100%;
-      height: 7vh;
-      line-height: 7vh;
-      text-align: center;
-      font-weight: normal;
-      color: $color-white;
-      text-transform: uppercase;
-      text-decoration: none;
 
-      span {
+    @include full-view {
+      width: 70%;
+      left: 54%;
+      transform: translateX(-50%);
+      top: 20%;
+    }
+
+    .group {
+
+      @include full-view {
+        width: 42%;
         display: inline-block;
-        vertical-align: middle;
-        line-height: normal;
+        margin-right: 6%;
+        margin-bottom: 1em;
       }
 
-      &:hover {
-        opacity: 0.5;
+      a {
+        font-size: 1.1em;
+        display: block;
+        width: 100%;
+        height: 7vh;
+        line-height: 7vh;
+        text-align: center;
+        font-weight: normal;
+        color: $color-white;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: normal;
+        }
+
+        &:hover {
+          opacity: 0.5;
+          @include full-view {
+            border-bottom: 2px solid $color-white;
+            opacity: 1;
+            font-weight: bold;
+          }
+        }
+
+        @include full-view {
+          width: 100%;
+          display: block;
+          border-bottom: 1px solid $color-white;
+          padding-bottom: 5vh;
+          height: 10vh;
+          margin-right: 30px;
+        }
       }
     }
+
   }
 }
