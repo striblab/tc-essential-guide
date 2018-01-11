@@ -86,8 +86,11 @@
           {{#if data.startDate}}
             <dt><span>When</span></dt>
             <dd><span>
-              {{ data.startDate }}
-              {{ data.endDate && data.startDate !== data.endDate ? ' - ' + data.endDate : '' }}
+              {{ formatDate(data.startDate) }}
+              {{ data.endDate && data.startDate !== data.endDate ? ' - ' + formatDate(data.endDate) : '' }}
+              {{#if datePast(data.endDate) || (!data.endDate && datePast(data.startDate)) }}
+                <br><em>This event has already happened.</em>
+              {{/if}}
             </span></dd>
           {{/if}}
 
@@ -146,7 +149,10 @@ export default {
     urlLink: helpers.urlLink,
     urlText: helpers.urlText,
     escapeHTML: helpers.escapeHTML,
-    srcset: helpers.srcset
+    srcset: helpers.srcset,
+    parseDate: helpers.parseDate,
+    formatDate: helpers.formatDate,
+    datePast: helpers.datePast
   },
 
   data() {
