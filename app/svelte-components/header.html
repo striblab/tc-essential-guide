@@ -30,11 +30,13 @@
   </div>
 
   <div class="full-nav {{ fullNavOpen ? 'full-nav-open' : '' }}">
-    <ul>
-      {{#each groups as g}}
-        <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
-      {{/each}}
-    </ul>
+    <div class="vertical-center">
+      <ul>
+        {{#each groups as g}}
+          <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </nav>
 
