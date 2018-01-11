@@ -86,8 +86,10 @@
           {{#if data.startDate}}
             <dt><span>When</span></dt>
             <dd><span>
-              {{ formatDate(data.startDate) }}
-              {{ data.endDate && data.startDate !== data.endDate ? ' - ' + formatDate(data.endDate) : '' }}
+              <time datetime="formatDate(data.startDate, 'ISO')">{{ formatDate(data.startDate) }}</time>
+              {{#if data.endDate && data.startDate !== data.endDate}}
+                - <time datetime="formatDate(data.endDate, 'ISO')">{{ formatDate(data.endDate) }}</time>
+              {{/if}}
               {{#if datePast(data.endDate) || (!data.endDate && datePast(data.startDate)) }}
                 <br><em>This event has already happened.</em>
               {{/if}}
