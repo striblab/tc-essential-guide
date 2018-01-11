@@ -32,19 +32,35 @@ helpers.fullByline = function(data) {
   return data && data.byline && ~data.byline.indexOf('•');
 };
 
-// URL for directions via Google.  TODO: Is there a way to specify
+// URL for directions via Google or Apple on iOS.  TODO: Is there a way to specify
 // the position and a name?
 // https://developers.google.com/maps/documentation/urls/guide#directions-action
 helpers.directionsURL = function(data, store) {
+  // Simple way of determining ios
+  let ios =
+    typeof window !== 'undefined' &&
+    navigator &&
+    navigator.platform &&
+    navigator.platform.match &&
+    navigator.platform.match(/iphone|ipad/i)
+      ? true
+      : false;
   let location =
     store && store.location && store.location.position
       ? store.location.position.lat + ',' + store.location.position.lng
       : undefined;
-  return `https://www.google.com/maps/dir/?api=1${
-    location ? '&origin=' + encodeURIComponent(location) : ''
-  }&destination=${encodeURIComponent(data.latitude)},${encodeURIComponent(
-    data.longitude
-  )}`;
+
+  return ios
+    ? `https://maps.apple.com/?api=x${
+      location ? '&saddr=' + encodeURIComponent(location) : ''
+    }&daddr=${encodeURIComponent(data.latitude)},${encodeURIComponent(
+      data.longitude
+    )}`
+    : `https://www.google.com/maps/dir/?api=1${
+      location ? '&origin=' + encodeURIComponent(location) : ''
+    }&destination=${encodeURIComponent(data.latitude)},${encodeURIComponent(
+      data.longitude
+    )}`;
 };
 
 // URL for facebook link
