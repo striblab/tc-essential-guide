@@ -32,25 +32,27 @@ helpers.fullByline = function(data) {
   return data && data.byline && ~data.byline.indexOf('•');
 };
 
-// URL for directions via Google or Apple on iOS.  TODO: Is there a way to specify
-// the position and a name?
-// https://developers.google.com/maps/documentation/urls/guide#directions-action
-helpers.directionsURL = function(data, store) {
-  // Simple way of determining ios
-  let ios =
-    typeof window !== 'undefined' &&
+// Simple, hacky way to determine ios
+helpers.isIOS = function() {
+  return typeof window !== 'undefined' &&
     navigator &&
     navigator.platform &&
     navigator.platform.match &&
     navigator.platform.match(/iphone|ipad/i)
-      ? true
-      : false;
+    ? true
+    : false;
+};
+
+// URL for directions via Google or Apple on iOS.  TODO: Is there a way to specify
+// the position and a name?
+// https://developers.google.com/maps/documentation/urls/guide#directions-action
+helpers.directionsURL = function(data, store) {
   let location =
     store && store.location && store.location.position
       ? store.location.position.lat + ',' + store.location.position.lng
       : undefined;
 
-  return ios
+  return helpers.isIOS()
     ? `https://maps.apple.com/?api=x${
       location ? '&saddr=' + encodeURIComponent(location) : ''
     }&daddr=${encodeURIComponent(data.latitude)},${encodeURIComponent(
@@ -70,7 +72,7 @@ helpers.facebookURL = function(data) {
   }
 
   return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    data.baseURL
+    data.baseURL + data.filename
   )}`;
 };
 
@@ -82,9 +84,9 @@ helpers.twitterURL = function(data, content) {
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     data.twitterShare || content.twitterShare
-  )}&url=${encodeURIComponent(data.baseURL)}&via=${encodeURIComponent(
-    content.twitterAccount
-  )}`;
+  )}&url=${encodeURIComponent(
+    data.baseURL + data.filename
+  )}&via=${encodeURIComponent(content.twitterAccount)}`;
 };
 
 // URL for email link
@@ -95,7 +97,18 @@ helpers.emailURL = function(data, content) {
 
   return `mailto:?subject=${encodeURIComponent(
     data.emailShare || data.twitterShare || content.emailShare
-  )}&body=${encodeURIComponent(data.baseURL)}`;
+  )}&body=${encodeURIComponent(data.baseURL + data.filename)}`;
+};
+
+// SMS url
+helpers.smsURL = function(data, content) {
+  if (!data && !content) {
+    return '';
+  }
+
+  return `sms:${helpers.isIOS() ? '&' : '?'}body=${encodeURIComponent(
+    data.emailShare || data.twitterShare || content.emailShare
+  )}\n${encodeURIComponent(data.baseURL + data.filename)}`;
 };
 
 helpers.phoneURL = function(phone) {
