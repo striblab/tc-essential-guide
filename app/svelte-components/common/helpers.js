@@ -93,8 +93,8 @@ helpers.emailURL = function(data, content) {
     return '';
   }
 
-  return `mailto:RECIPIENT?subject=${encodeURIComponent(
-    data.emailShare || content.emailShare
+  return `mailto:?subject=${encodeURIComponent(
+    data.emailShare || data.twitterShare || content.emailShare
   )}&body=${encodeURIComponent(data.baseURL)}`;
 };
 
