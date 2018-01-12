@@ -218,7 +218,7 @@ export default {
     },
 
     // Center on locations
-    focusLocations: function(focus, includeUser = true) {
+    focusLocations: function(focus) {
       focus = _.isString(focus) ? [focus] : _.isArray(focus) ? focus : [];
       let s = this.get('store');
       let userPosition =
@@ -228,6 +228,7 @@ export default {
       let map = this.get('map');
       let locations = this.get('locations');
       let markers = this.get('markers');
+      let includeUser = this.get('focusUserPosition');
 
       // Translate to locations
       focus = _.filter(
@@ -256,7 +257,7 @@ export default {
       });
 
       // Look for user location
-      if (userPosition) {
+      if (userPosition && includeUser) {
         bounds.extend(userPosition, 10);
       }
 
@@ -287,7 +288,8 @@ export default {
         lng: -93.159196
       },
       zoom: 11,
-      focusZoom: 15
+      focusZoom: 15,
+      focusUserPosition: true
     };
   }
 };

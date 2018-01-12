@@ -79,9 +79,10 @@ article.item {
     text-decoration: none;
     color: $color-default-black;
     border-radius: 0.5em;
+
     /*background-color: $highlight-yellow;*/
 
-   /* @include full-view {
+    /* @include full-view {
       font-size: 0.6em;
       letter-spacing: 0.2px;
       border: none;
@@ -111,6 +112,10 @@ article.item {
     letter-spacing: 1px;
     margin-bottom: -20px;
     font-size: 0.65em;
+  }
+
+  .item-description {
+    margin-bottom: 1em;
   }
 
   dl {
@@ -145,11 +150,12 @@ article.item {
 
   dd span {
     border: 1px solid transparent;
-    padding-bottom: 0em;
+    padding-bottom: 0;
     margin-left: 0.3em;
 
     &.linkable {
       border-bottom: 2px solid $highlight-yellow;
+
       /*background-color: $highlight-yellow;*/
       &:hover {
         background-color: $highlight-yellow;
@@ -187,6 +193,7 @@ article.item {
       padding-bottom: 0.02em;
       text-decoration: none;
       color: $color-default-black;
+
       &:hover {
         background-color: $highlight-yellow;
         transition: all 0.2s ease-in-out;
