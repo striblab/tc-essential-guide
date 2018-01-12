@@ -7,7 +7,7 @@ ul.groups-items {
   padding: 0;
 
   @include full-view {
-    padding-top: 0em;
+    padding-top: 0;
     margin-bottom: 8em;
     margin-top: 0.6em;
     background-color: $color-bg-gray;
@@ -28,10 +28,10 @@ ul.groups-items {
       background-color: map-get($grays, 'light');
 
       @include full-view {
-        margin: 0 0 0em;
+        margin: 0 0 0;
         min-height: auto;
         background-color: inherit;
-        border-bottom: 0px solid $color-emerald-green;
+        border-bottom: 0 solid $color-emerald-green;
       }
 
       img {
@@ -72,8 +72,6 @@ ul.groups-items {
             background-color: $color-emerald-green;
             color: $color-white;
             font-weight: bold;
-            ;
-
           }
         }
       }
@@ -83,7 +81,7 @@ ul.groups-items {
       &.in-focus a span {
         background-color: $highlight-yellow;
         color: $color-default-black;
-        box-shadow: inset 0px 0px 40px 0px rgba(0,0,0,0.2);
+        box-shadow: inset 0 0 40px 0 rgba(0, 0, 0, 0.2);
         font-weight: bold;
         letter-spacing: -0.8px;
       }
@@ -165,7 +163,7 @@ ul.groups-items {
       padding-bottom: 3em;
       margin: 1.5em;
       margin-bottom: 3em;
-      border-radius: 0em;
+      border-radius: 0;
       background-color: $color-white;
       opacity: 0.4;
       transition: opacity 0.2s;
@@ -175,15 +173,15 @@ ul.groups-items {
       font-weight: bold;
     }
 
-    p p {
-      height: 4.5em;
+    .item-description {
+      height: 5.5em;
       overflow: hidden;
       margin-top: 0.3em;
       position: relative;
       margin-bottom: 0.5;
 
       @include full-view {
-        height: 7.2em;
+        height: 7em;
         margin-top: 0.8em;
       }
 
@@ -195,16 +193,10 @@ ul.groups-items {
         font-weight: bold;
         position: absolute;
         right: 0;
-        top: 3.3em;
+        bottom: 0;
         background-color: $color-white;
         padding-left: 0.5em;
-
-        @include full-view {
-          top: 5.9em;
-        }
       }
-
-
     }
 
     .byline {
