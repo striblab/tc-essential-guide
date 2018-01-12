@@ -257,4 +257,37 @@
       }
     }
   }
+
+  .in-the-way {
+    height: 100vh;
+    position: relative;
+    background-image: url('http://static.startribune.com/images/test-images/test-blur.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    text-align: center;
+    color: $color-white;
+    display: block;
+
+    @include full-view {
+      display: none;
+    }
+
+    .in-the-way-content-i-mean-ad {
+      width: 50%;
+      margin: 0 auto;
+      position: relative;
+
+      span {
+        display: block;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        padding-bottom: 0.5em;
+      }
+
+      img {
+        height: 4em;
+      }
+    }
+  }
 }

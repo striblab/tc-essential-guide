@@ -8,11 +8,21 @@
         <span>Twin Cities</span>
         <span id="guide">Guide</span>
       </h1>
-      <a href="#/get-started" class="get-started" on:click="goToGroups(event)" id="start-button">Get started</a>
+      <a href="#group-navigation-anchor" class="get-started" on:click="goToGroups(event)" id="start-button">Get started</a>
     </div>
   </div>
 
-  <div class="group-navigation" ref:groupNavigation>
+  <div class="in-the-way" ref:INTHEWAY>
+    <div class="in-the-way-content-i-mean-ad vertical-center">
+      <span>Sponsored by</span>
+
+      <a href="https://www.cub.com/" rel="noopener" target="_blank">
+        <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
+      </a>
+    </div>
+  </div>
+
+  <div id="group-navigation-anchor" class="group-navigation" ref:groupNavigation>
     <div class="title-logo"></div>
     <h1>{{ data.title }}</h1>
 
@@ -71,10 +81,24 @@ export default {
       if (e && e.preventDefault) {
         e.preventDefault();
       }
+      let u = this.get('utils');
 
-      if (this.refs.groupNavigation) {
-        let u = this.get('utils');
+      // Yay, ads!
+      if (u && this.REALLYINTHEWAY() && this.refs.INTHEWAY) {
+        u.goTo(this.refs.INTHEWAY);
+        setTimeout(() => {
+          u.goTo(this.refs.groupNavigation);
+        }, 2800);
+      } else if (u && this.refs.groupNavigation) {
         u.goTo(this.refs.groupNavigation);
+      }
+    },
+
+    // Check if ad is showing
+    REALLYINTHEWAY: function() {
+      if (this.refs.INTHEWAY) {
+        let styles = window.getComputedStyle(this.refs.INTHEWAY, null);
+        return styles.getPropertyValue('display') !== 'none';
       }
     }
   },
