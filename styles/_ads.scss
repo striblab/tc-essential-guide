@@ -11,5 +11,11 @@
     text-align: center;
     background-color: #BABABF;
     color: #111111;
+    @include full-view {
+      height: 250px;
+      width: 300px;
+      margin: 0 auto;
+      margin-top: 50px;
+    }
   }
 }

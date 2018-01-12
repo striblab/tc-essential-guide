@@ -136,12 +136,14 @@ ul.groups-items {
   .map-items {
     height: 60%;
     overflow-y: scroll;
+    background-color: $color-bg-gray;
 
     @include full-view {
       height: auto;
       overflow-y: auto;
       margin: 2.3em;
       margin-top: 0;
+      background-color: $color-white;
     }
   }
 

@@ -62,6 +62,10 @@ nav.minor-navigation {
         color: $color-default-black;
         border-bottom-color: $color-default-black;
       }
+
+      &:visited {
+        color: $color-default-black;
+      }
     }
   }
 
@@ -77,5 +81,8 @@ nav.minor-navigation {
     min-width: 50%;
     vertical-align: middle;
     text-transform: uppercase;
+    a {
+      color: $color-default-black;
+    }
   }
 }
