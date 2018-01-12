@@ -34,19 +34,18 @@ s.eVar5 = '';
 s.server = 'static.startribune.com';
 // Star Tribune specific channel
 s.channel = 'variety';
-s.pageName =
-  '<%= escapeQuotes(content.title, true) %>: <%= escapeQuotes(metaTitle, true) %>';
+s.pageName = '<%= jsString(content.title) %>: <%= jsString(metaTitle) %>';
 
 // Page type
-s.prop3 = '<%= escapeQuotes(data.dataset) %>';
+s.prop3 = '<%= jsString(data.dataset) %>';
 // ?
 s.prop4 = 'Star Tribune';
 // Subsection
-s.prop7 = '<%= escapeQuotes(groupSection, true) %>';
+s.prop7 = '<%= jsString(groupSection) %>';
 // ?
 s.prop2 = 'HTML';
 // Author
-s.prop35 = '<%= metaAuthor ? escapeQuotes(metaAuthor, true) : "" %>';
+s.prop35 = '<%= metaAuthor ? jsString(metaAuthor) : "" %>';
 // Application title?
 s.prop24 = 'Essential Twin Cities Guide';
 
