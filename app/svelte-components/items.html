@@ -57,19 +57,21 @@
     {{#if data.mainImage && data.mainImage[0] && display !== 'map' }}
       <div class="item-image">
         <figure>
-          <picture>
-            <source
-              type="image/webp"
-              srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
-              sizes="100vw">
-            <source
-              type="image/jpeg"
-              srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
-              sizes="100vw">
-            <img
-              alt="Main image for '{{ data.name }}'"
-              src="{{ data.basePath }}/{{ data.mainImageLocal }}">
-          </picture>
+          <a href="{{ data.basePath }}/{{ data.filename }}">
+            <picture>
+              <source
+                type="image/webp"
+                srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
+                sizes="100vw">
+              <source
+                type="image/jpeg"
+                srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
+                sizes="100vw">
+              <img
+                alt="Main image for '{{ data.name }}'"
+                src="{{ data.basePath }}/{{ data.mainImageLocal }}">
+            </picture>
+          </a>
 
           <cite>{{ data.imageCredit}}</cite>
         </figure>
