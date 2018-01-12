@@ -242,6 +242,11 @@ export default {
         }
       });
 
+      // Look for user location
+      if (userPosition) {
+        bounds.extend(userPosition, 10);
+      }
+
       // If just one
       if (
         focus.length === 1 &&
@@ -251,7 +256,8 @@ export default {
         map.setZoom(this.get('focusZoom'));
       } else {
         // Set bounds
-        map.fitBounds(bounds);
+        map.fitBounds(bounds, 20);
+        google.maps.event.trigger(map, 'resize');
       }
     }
   },

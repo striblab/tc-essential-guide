@@ -183,23 +183,12 @@ export default {
         return;
       }
 
+      // Geolocate and sort
       this.set({ view: 'distance' });
       this.geolocate()
         .then(position => {
           let d = this.get('data');
-          d.items = _.sortBy(d.items, i => {
-            // Set distance
-            if (i.latitude && i.longitude) {
-              i.distance = this.distance(
-                i.latitude,
-                i.longitude,
-                position.lat,
-                position.lng
-              );
-            }
-
-            return i.distance || 999999;
-          });
+          d.items = _.sortBy(d.items, i => i.distance || 99999);
           this.set({ data: d });
         })
         .catch(error => {

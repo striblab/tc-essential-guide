@@ -33,7 +33,7 @@
 
       <div class="item-header-right">
         <div class="near-me">
-          {{#if data.distance && view === 'distance'}}
+          {{#if data.distance}}
             {{ utils.round(data.distance, 1) }} mi
           {{else}}
             &nbsp;
@@ -141,6 +141,28 @@ import helpers from './common/helpers.js';
 import methods from './common/methods.js';
 
 export default {
+  oncreate: function() {
+    // Watch store for location
+    this.observe('store', n => {
+      if (n && n.location && n.location.lat && n.location.lng) {
+        let data = this.get('data');
+        if (data.latitude && data.longitude) {
+          data.distance = this.distance(
+            data.latitude,
+            data.longitude,
+            n.location.lat,
+            n.location.lng
+          );
+          this.set({ data: data });
+        }
+      }
+    });
+  },
+
+  methods: {
+    distance: methods.distance
+  },
+
   helpers: {
     fullByline: helpers.fullByline,
     directionsURL: helpers.directionsURL,
