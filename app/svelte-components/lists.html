@@ -21,7 +21,7 @@
 <div class="component component-list has-minor-navigation">
   <nav class="minor-navigation items-2 minor-nav-lists">
     {{#if data.groups && data.groups[0] }}
-      <h1>{{ data.groups[0].title }}</h1>
+      <h1><a href="{{ data.basePath }}/{{ data.groups[0].filename }}">{{ data.groups[0].title }}</a></h1>
     {{/if}}
 
     {{#if utils && utils.hasGeolocate && hasLocations}}
