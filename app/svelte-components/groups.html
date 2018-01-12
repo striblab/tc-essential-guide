@@ -152,6 +152,13 @@ export default {
                 throttle: false
               });
             }
+
+            // Geolocate
+            this.geolocate().catch(error => {
+              // TODO: Do something in the interface about this
+              // error.
+              console.error(error);
+            });
           }
         }
       },
@@ -161,6 +168,8 @@ export default {
 
   methods: {
     eventSet: methods.eventSet,
+    geolocate: methods.geolocate,
+    distance: methods.distance,
 
     // Find item by ID
     findByID(id) {
@@ -210,21 +219,34 @@ export default {
 
     // Observe featured item
     observeFeaturedItem(id) {
+      let currentID = this.get('observeFeaturedItemID');
+      if (currentID && currentID === id) {
+        return;
+      }
       let item = this.findByID(id);
       if (item) {
         this.setAll({ inView: false }, false, [id]);
         item.inView = true;
-        this.set({ data: this.get('data') });
+        this.set({ data: this.get('data'), observeFeaturedItemID: id });
       }
     },
 
     // Observe a map item
     observeMapItem(id) {
+      let currentID = this.get('observeMapItemID');
+      if (currentID && currentID === id) {
+        return;
+      }
+
       let item = this.findByID(id);
       if (item) {
         this.setAll({ inView: false }, false, [id]);
         item.inView = true;
-        this.set({ data: this.get('data'), locationsInView: [id] });
+        this.set({
+          data: this.get('data'),
+          locationsInView: [id],
+          observeMapItemID: id
+        });
       }
     },
 

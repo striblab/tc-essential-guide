@@ -8,7 +8,19 @@
 // Main breakpoint.  This is mobile first style, so means it only applies
 // when the view is this large
 @mixin full-view {
-  @media only screen and (min-width: map-get($breakpoints, 'md')) {
+  @media only screen and (min-width: map-get($breakpoints, 'lg')) {
+    @content;
+  }
+}
+
+@mixin xlarge-view {
+  @media only screen and (min-width: map-get($breakpoints, 'xl')) {
+    @content;
+  }
+}
+
+@mixin xxlarge-view {
+  @media only screen and (min-width: map-get($breakpoints, 'xxl')) {
     @content;
   }
 }

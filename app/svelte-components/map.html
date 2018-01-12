@@ -165,9 +165,28 @@ export default {
       return {
         path:
           'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
+<<<<<<< HEAD
         scale: 0.9,
         anchor: new google.maps.Point(39 / 2, 50),
         fillColor: color === 'active' ? '#2E3574' : color ? color : '#C5C5C5',
+=======
+        scale: 0.5,
+        anchor: new google.maps.Point(45.8 / 2, 66.7),
+        fillColor: color === 'active' ? '#00824A' : color ? color : '#C5C5C5',
+>>>>>>> 83c90c53b11d71c267e200f9b6b9b8fb52a24218
+        fillOpacity: 0.95,
+        strokeWeight: 0
+      };
+    },
+
+    // Person icon for user location
+    userLocationIcon: function(color = '#222222') {
+      return {
+        path:
+          'M24.7,17.4L24.7,17.4h-5.3c3-1.5,5.1-4.6,5.1-8.2c0-5.1-4.1-9.2-9.2-9.2S6.1,4.1,6.1,9.2c0,3.6,2.1,6.7,5.1,8.2H5.9 c-3.3,0-5.9,2.7-5.9,5.9v21.4c0,3.3,2.7,5.9,5.9,5.9h1.3v31.2c0,2.5,2,4.6,4.6,4.6h6.9c2.5,0,4.6-2,4.6-4.6V50.6h1.4 c3.3,0,5.9-2.7,5.9-5.9V23.3C30.6,20,27.9,17.4,24.7,17.4z',
+        scale: 0.4,
+        anchor: new google.maps.Point(30.6 / 2, 86.4),
+        fillColor: color,
         fillOpacity: 0.95,
         strokeWeight: 0
       };
@@ -191,7 +210,7 @@ export default {
         positionMarker = new window.google.maps.Marker({
           position: position,
           title: 'Your location',
-          icon: this.mapIcon('#222222')
+          icon: this.userLocationIcon()
         });
 
         // Add to map
@@ -242,6 +261,11 @@ export default {
         }
       });
 
+      // Look for user location
+      if (userPosition) {
+        bounds.extend(userPosition, 10);
+      }
+
       // If just one
       if (
         focus.length === 1 &&
@@ -251,7 +275,8 @@ export default {
         map.setZoom(this.get('focusZoom'));
       } else {
         // Set bounds
-        map.fitBounds(bounds);
+        map.fitBounds(bounds, 30);
+        google.maps.event.trigger(map, 'resize');
       }
     }
   },

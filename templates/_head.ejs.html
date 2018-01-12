@@ -100,8 +100,8 @@
       "@type": "WebPage",
       "@id": "<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>"
     },
-    "headline": "<%= htmlAttribute(metaTitle) %>",
-    "description": "<%= htmlAttribute(metaDescription) %>",
+    "headline": "<%= jsString(metaTitle, true) %>",
+    "description": "<%= jsString(metaDescription, true) %>",
     "datePublished": "<%= (new Date()).toISOString() %>",
     "dateModified": "<%= (new Date()).toISOString() %>",
     "image": {
@@ -112,11 +112,11 @@
     },
     "author": {
       "@type": "Person",
-      "name": "<%= htmlAttribute(metaAuthor) %>"
+      "name": "<%= jsString(metaAuthor, true) %>"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "<%= htmlAttribute(metaOrganization) %>",
+      "name": "<%= jsString(metaOrganization, true) %>",
       "logo": {
         "@type": "ImageObject",
         "url": "<%= config.publish.production.url %><%= config.social.image %>",

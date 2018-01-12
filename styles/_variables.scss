@@ -17,3 +17,26 @@ $color-highlight-muted-blue: #379BE8;
 
 // Consisten border radius
 $default-border-radius: 0.25rem;
+
+// Breakpoints overrides
+$breakpoints: (
+  default: 0,
+  xs: 420px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1800px
+);
+
+// When using for the whole page, i.e. body class, then font-size
+// can change with the device width
+$breakpoints-font-size: (
+  default: 14px,
+  xs: 14px,
+  sm: 15px,
+  md: 15px,
+  lg: 16px,
+  xl: 16px,
+  xxl: 16px
+);
