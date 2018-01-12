@@ -17,11 +17,19 @@
     background-color: rgba(0,0,0,0);
     animation-delay: 5s;
     animation: fadeIn 3s;
+    background-color: rgba(0, 0, 0, 0);
+
     .top-nav-left {
       display: none;
     }
+
     .back-logo {
       display: none;
+    }
+
+    .middle-logo {
+      background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
+      height: 1.6em;
     }
   }
 
@@ -91,14 +99,13 @@
       }
     }
 
-
-
     .get-started {
       display: inline-block;
       border-bottom: 2px solid $color-white;
       background-color: $color-default-black;
       color: $color-white;
       padding: 1em;
+
       /*border-radius: 0.5em;*/
       text-decoration: none;
       text-transform: uppercase;
@@ -176,22 +183,21 @@
 
   .groups {
     width: 100%;
-
+    text-align: center;
+    margin: 0 auto;
 
     @include full-view {
       width: 70%;
-      left: 54%;
-      transform: translateX(-50%);
-      top: 20%;
+      left: 0;
+      right: 0;
     }
 
     .group {
-
       @include full-view {
-        width: 42%;
-        display: inline-block;
-        margin-right: 6%;
-        margin-bottom: 1em;
+        width: 49.5%;
+        display: block;
+        padding: 0 2em;
+        float: left;
       }
 
       a {
@@ -214,8 +220,11 @@
 
         &:hover {
           opacity: 0.5;
+
           @include full-view {
-            border-bottom: 4px solid $highlight-yellow;
+            // Use box-shadow to not affect height of element
+            border-bottom-color: transparent;
+            box-shadow: 0 -4px 0 0 $highlight-yellow inset;
             opacity: 1;
             font-weight: bold;
             transition: all 0.2s ease-in-out;
@@ -226,13 +235,72 @@
         @include full-view {
           width: 100%;
           display: block;
+          height: auto;
+          line-height: 1em;
           border-bottom: 1px solid $color-white;
-          padding-bottom: 5vh;
-          height: 10vh;
-          margin-right: 30px;
+          padding: 2em 1em;
         }
       }
     }
 
+    .sponsored-by {
+      display: none;
+
+      @include full-view {
+        display: block;
+      }
+
+      a {
+        font-size: 0.75em;
+        border-bottom: none;
+        padding-top: 2rem;
+
+        &:hover {
+          border-bottom: none;
+          box-shadow: none;
+          font-weight: normal;
+          color: $color-white;
+        }
+      }
+
+      img {
+        max-height: 1.5rem;
+        padding-top: 0.25em;
+        display: inline-block;
+      }
+    }
+  }
+
+  .in-the-way {
+    height: 100vh;
+    position: relative;
+    background-image: url('http://static.startribune.com/images/test-images/test-blur.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    text-align: center;
+    color: $color-white;
+    display: block;
+
+    @include full-view {
+      display: none;
+    }
+
+    .in-the-way-content-i-mean-ad {
+      width: 50%;
+      margin: 0 auto;
+      position: relative;
+
+      span {
+        display: block;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        padding-bottom: 0.5em;
+      }
+
+      img {
+        height: 4em;
+      }
+    }
   }
 }
