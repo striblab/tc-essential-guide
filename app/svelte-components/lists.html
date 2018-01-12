@@ -1,5 +1,7 @@
 <div class="main-visual">
-  {{#if data.mainVisual}}
+  {{#if view === 'distance'}}
+    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" />
+  {{elseif data.mainVisual}}
     <picture>
       <source
         type="image/webp"
@@ -20,6 +22,20 @@
   <nav class="minor-navigation items-2 minor-nav-lists">
     {{#if data.groups && data.groups[0] }}
       <h1>{{ data.groups[0].title }}</h1>
+    {{/if}}
+
+    {{#if utils && utils.hasGeolocate && hasLocations}}
+      <ul class="cf">
+        <li><a href="#/alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
+        <li>
+          <a href="#/distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
+            Map
+            {{#if isGeolocating}}
+              <i class="fa fa-spinner fa-spin"></i>
+            {{/if}}
+          </a>
+        </li>
+      </ul>
     {{/if}}
   </nav>
 
@@ -86,30 +102,33 @@ import helpers from './common/helpers.js';
 import methods from './common/methods.js';
 import observe from '../observe.js';
 import Item from './items.html';
+import Map from './map.html';
 
 export default {
   components: {
-    Item
+    Item,
+    Map
   },
 
   oncreate() {
     // In theory, we should be more specific and watch for data.items
     // changes, but that isn't actually going to change on the client.
-    this.__dataInitialized = false;
     this.observe('data', n => {
-      if (!n || this.__dataInitialized) {
-        return;
-      }
-      this.__dataInitialized = true;
-
       // Observe list
       if (this.get('isBrowser')) {
-        this.__itemObserver = observe({
-          visibleThreshold: 0.75,
-          elements: document.querySelectorAll('.item-list .component-item'),
-          onObserve: _.bind(this.observeItem, this),
-          throttle: false
-        });
+        if (this.__itemObserver) {
+          this.__itemObserver.stop();
+          this.__itemObserver.addElements(
+            document.querySelectorAll('.item-list .component-item')
+          );
+        } else {
+          this.__itemObserver = observe({
+            visibleThreshold: 0.75,
+            elements: document.querySelectorAll('.item-list .component-item'),
+            onObserve: _.bind(this.observeItem, this),
+            throttle: false
+          });
+        }
       }
     });
 
@@ -123,7 +142,7 @@ export default {
           data.items.forEach(i => {
             i.inView = i.id === n ? true : false;
           });
-          this.set({ data: data });
+          this.set({ data: data, locationsInView: [n] });
         }
       }
     });
@@ -206,6 +225,32 @@ export default {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
     emailURL: helpers.emailURL
+  },
+
+  computed: {
+    // Determine if any item has location (otherwise, don't show)
+    // map link.
+    hasLocations: function(data) {
+      return data.items
+        ? !!data.items.find(i => {
+            return i && i.latitude && i.longitude;
+          })
+        : false;
+    },
+
+    // Map locations
+    mapLocations: function(data) {
+      return data.items
+        ? data.items.map(i => {
+            return {
+              id: i.id,
+              content: i.name || i.title,
+              lat: parseFloat(i.latitude),
+              lng: parseFloat(i.longitude)
+            };
+          })
+        : [];
+    }
   },
 
   data() {

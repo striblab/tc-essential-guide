@@ -2,10 +2,6 @@
  * Styling for lists
  */
 
-body {
-  background-color: $color-white;
-}
-
 nav.toggle-nav {
   box-shadow: none;
   height: auto;
@@ -60,6 +56,17 @@ nav.toggle-nav {
   }
 }
 
+.layout-lists {
+
+  .minor-navigation ul {
+    display: none;
+
+    @include full-view {
+      display: block;
+    }
+  }
+}
+
 article.lists {
   margin: 2.3em;
   max-width: 40em;
@@ -102,6 +109,7 @@ article.lists {
     font-weight: bold;
     letter-spacing: -0.3px;
     margin-bottom: 1em;
+
     @include full-view {
       font-size: 2em;
     }
@@ -110,6 +118,7 @@ article.lists {
   .byline {
     text-align: center;
     font-family: map-get($font-sets, 'benton-sans');
+
     @include full-view {
       font-size: 0.9em;
       margin-bottom: 5%;
@@ -134,6 +143,7 @@ article.lists {
   .article-description {
     margin-bottom: 3em;
     text-align: center;
+
     @include full-view {
       margin-bottom: 5em;
       font-size: 1.2em;
