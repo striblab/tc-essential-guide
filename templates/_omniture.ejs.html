@@ -1,3 +1,10 @@
+
+<% var groupSection = data.dataset === 'index' ? 'Home' :
+  data.dataset === 'groups' ? data.title :
+  data.groups ? data.groups[0].title :
+  data.lists && data.lists[0] && data.lists[0].groups ? data.lists[0].groups[0].title :
+  'unknown'; %>
+
 <script type="text/javascript">
 if ('undefined' != typeof stribUser) {
   s.prop16 = stribUser;
@@ -24,14 +31,23 @@ s.eVar3 = '';
 s.eVar4 = '';
 s.eVar5 = '';
 
-s.prop3 = '<% escapeQuotes(data.dataset) %>';
-s.prop4 = 'Star Tribune';
-s.pageName =
-  '<%= escapeQuotes(content.title, true) %>: <% escapeQuotes(metaTitle, true) %>';
-s.prop2 = 'HTML';
 s.server = 'static.startribune.com';
+// Star Tribune specific channel
 s.channel = 'variety';
-s.prop35 = '<% escapeQuotes(metaAuthor, true) %>';
+s.pageName =
+  '<%= escapeQuotes(content.title, true) %>: <%= escapeQuotes(metaTitle, true) %>';
+
+// Page type
+s.prop3 = '<%= escapeQuotes(data.dataset) %>';
+// ?
+s.prop4 = 'Star Tribune';
+// Subsection
+s.prop7 = '<%= escapeQuotes(groupSection, true) %>';
+// ?
+s.prop2 = 'HTML';
+// Author
+s.prop35 = '<%= metaAuthor ? escapeQuotes(metaAuthor, true) : '' %>';
+// Application title?
 s.prop24 = 'Essential Twin Cities Guide';
 
 if (readCookie('usersubs')) {
@@ -48,6 +64,6 @@ if (navigator.appVersion.indexOf('MSIE') >= 0)
 
 <noscript>
 	<a href="http://www.omniture.com" title="Web Analytics">
-    <img src="http://nandomedia.112.2o7.net/b/ss/nmminneapolis/1/H.20.3--NS/0?pageName=<%= encodeURIComponent(content.title + ': ' + metaTitle) %>&server=static.startribune.com&channel=variety&c1=<%= encodeURIComponent(config.publish.production.url + data.filename) %>&c2=HTML&c3=section%20front&c4=Star%20Tribune&c5=noscript&c6=&c7=Variety" height="1" width="1" border="0" alt="" />
+    <img src="http://nandomedia.112.2o7.net/b/ss/nmminneapolis/1/H.20.3--NS/0?pageName=<%= encodeURIComponent(content.title + ': ' + metaTitle) %>&server=static.startribune.com&channel=variety&c1=<%= encodeURIComponent(config.publish.production.url + data.filename) %>&c2=HTML&c3=section%20front&c4=Star%20Tribune&c5=noscript&c6=&c7=variety" height="1" width="1" border="0" alt="" />
   </a>
 </noscript>
