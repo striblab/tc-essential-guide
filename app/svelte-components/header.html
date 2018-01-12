@@ -4,7 +4,7 @@
       <span class="sr-only">Back</span>
     </a>
 
-    <a href="{{ data.basePath || '.' }}/" class="middle-logo" title="Home">
+    <a href="http://startribune.com" class="middle-logo" title="Home">
       <span class="sr-only">Go to homepage</span>
     </a>
 
@@ -30,11 +30,13 @@
   </div>
 
   <div class="full-nav {{ fullNavOpen ? 'full-nav-open' : '' }}">
-    <ul>
-      {{#each groups as g}}
-        <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
-      {{/each}}
-    </ul>
+    <div class="vertical-center">
+      <ul>
+        {{#each groups as g}}
+          <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -52,10 +54,14 @@ export default {
       this.set({ fullNavOpen: !this.get('fullNavOpen') });
     },
 
-    // Go back using browser
+    // Go back using browser.  If different domain, then go to root
+    // of guide
     goBack: function(e) {
-      if (e && e.preventDefault) {
+      let sameDomain = ~document.referrer.indexOf(window.location.host);
+      if (sameDomain && e && e.preventDefault) {
         e.preventDefault();
+      } else if (!sameDomain) {
+        return;
       }
 
       if (window.history) {

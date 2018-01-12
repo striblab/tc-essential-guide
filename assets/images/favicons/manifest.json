@@ -1,18 +1,24 @@
 {
-    "name": "",
-    "icons": [
-        {
-            "src": "./assets/images/favicons/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "./assets/images/favicons/android-chrome-256x256.png",
-            "sizes": "256x256",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+  "lang": "en-US",
+  "name": "<%= content.title %>",
+  "short_name": "<%= content.shortTitle %>",
+  "description": "<%= content.metaDescription %>",
+  "orientation": "portrait-primary",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "./assets/images/favicons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/favicons/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#006341",
+  "background_color": "#FFFFFF"
 }

@@ -60,7 +60,7 @@
       }
 
       @include full-view {
-        margin-top: 00%;
+        margin-top: 20%;
       }
     }
 
@@ -81,8 +81,7 @@
       transform: translateX(-50%);
 
       @include full-view {
-        margin-bottom: -2%;
-        margin-top: 2%;
+        margin-bottom: 10%;
       }
     }
 
@@ -90,6 +89,7 @@
       font-size: 0.65em;
       text-transform: uppercase;
       display: none;
+
       span {
         display: block;
       }

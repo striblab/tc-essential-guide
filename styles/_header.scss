@@ -108,6 +108,9 @@ header[role='banner'] {
 
   .full-nav {
     width: 100%;
+    // Note that this will go over the height of the page,
+    // but, since this is fixed, its kind of ok
+    height: 100vh;
     font-size: 1.1em;
     padding: 1em 0 2em;
     z-index: 1000;
@@ -122,6 +125,11 @@ header[role='banner'] {
       margin: 0;
       padding: 0;
       display: block;
+    }
+
+    ul {
+      // Offsets the vertical centering
+      padding-bottom: 5%;
     }
 
     ul li a {

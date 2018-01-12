@@ -12,6 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 const gulp = require('gulp');
+const _ = require('lodash');
 const rename = require('gulp-rename');
 const eslint = require('gulp-eslint');
 const stylelint = require('gulp-stylelint');
@@ -21,6 +22,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const a11y = require('gulp-a11y');
 const responsive = require('gulp-responsive');
+const ejs = require('gulp-ejs');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
@@ -167,8 +169,26 @@ gulp.task('js', ['js:lint', 'js:test'], () => {
 
 // Assets
 gulp.task('assets', () => {
+  let pkg = require('./package.json');
+  let settings = exists('sources/guide-settings.json')
+    ? require('./sources/guide-settings.json')
+    : {};
+  let config = exists('config.custom.json')
+    ? require('./config.custom.json')
+    : require('./config.json');
+  config = _.extend(config, layouts.parseAirtableContent(settings));
+
   // Copy a couple files to root for more global support
   gulp.src(['./assets/images/favicons/favicon.ico']).pipe(gulp.dest('build'));
+  gulp
+    .src(['./assets/images/favicons/manifest.json'])
+    .pipe(
+      ejs({
+        content: config,
+        pkg: pkg
+      })
+    )
+    .pipe(gulp.dest('build'));
 
   return gulp.src('assets/**/*').pipe(gulp.dest('build/assets'));
 });
