@@ -2,9 +2,9 @@
  * Styling for lists
  */
 
-/*body {
+body {
   background-color: $color-white;
-}*/
+}
 
 nav.toggle-nav {
   box-shadow: none;
@@ -30,15 +30,15 @@ nav.toggle-nav {
         padding: 0.25em 0.5em;
         font-size: 0.85em;
         letter-spacing: 0.2px;
-        border: 1.4px solid $color-forest-green;
+        border: 1.4px solid $color-emerald-green;
         min-width: 10.5em;
         display: inline-block;
         text-transform: uppercase;
         font-weight: bold;
-        color: $color-forest-green;
+        color: $color-emerald-green;
 
         &.active {
-          background-color: $color-forest-green;
+          background-color: $color-emerald-green;
           color: $color-bg-gray;
         }
 

@@ -9,6 +9,7 @@ ul.groups-items {
   @include full-view {
     padding-top: 0em;
     margin-bottom: 8em;
+    margin-top: 0.6em;
     background-color: $color-bg-gray;
   }
 
@@ -46,27 +47,31 @@ ul.groups-items {
       span {
         display: block;
         font-size: 1.55em;
-        background-color: rgba(40, 40, 40, 0.85);
+        background-color: rgba(10, 2, 3, 0.75);
         padding: 1rem;
         color: $color-white;
         position: absolute;
         bottom: 0;
         width: 100%;
         font-weight: bold;
+        border-bottom: 0.5px solid $color-emerald-green;
 
         @include full-view {
           position: relative;
-          padding: 4rem;
+          padding: 6rem;
           background-color: $color-bg-gray;
           color: $color-black;
-          transition: background-color 0.1s;
+          transition: background-color 0.15s;
           min-height: 7em;
           margin-bottom: 0;
+          font-size: 1.55em;
+          border-bottom: 0.5px solid $color-emerald-green;
 
           .in-focus & {
             background-color: $color-emerald-green;
             color: $color-white;
-            box-shadow: inset 0 0 20px $color-forest-green;
+            box-shadow: inset 0px 0px 60px 0px rgba(0,0,0,0);
+
           }
         }
       }
@@ -166,7 +171,7 @@ ul.groups-items {
       font-weight: bold;
     }
 
-    p {
+    p p {
       height: 4.5em;
       overflow: hidden;
       margin-top: 0.3em;
@@ -174,7 +179,7 @@ ul.groups-items {
       margin-bottom: 0.5;
 
       @include full-view {
-        height: 8.1em;
+        height: 7.2em;
         margin-top: 0.8em;
       }
 
@@ -191,7 +196,7 @@ ul.groups-items {
         padding-left: 0.5em;
 
         @include full-view {
-          top: 6em;
+          top: 5.9em;
         }
       }
 
