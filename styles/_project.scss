@@ -21,11 +21,11 @@ body {
   .component-group,
   .component-list,
   .component-item {
-    width: 33.333332%;
+    width: 40%;
     z-index: 3;
 
     nav.minor-navigation {
-      width: 33.333332%;
+      width: 40%;
     }
 
     // Reset for components within components
@@ -35,6 +35,30 @@ body {
 
       nav {
         width: inherit;
+      }
+    }
+  }
+
+  @include xlarge-view {
+    .component-group,
+    .component-list,
+    .component-item {
+      width: 33.333332%;
+
+      nav.minor-navigation {
+        width: 33.333332%;
+      }
+    }
+  }
+
+  @include xxlarge-view {
+    .component-group,
+    .component-list,
+    .component-item {
+      width: 25%;
+
+      nav.minor-navigation {
+        width: 25%;
       }
     }
   }
@@ -50,7 +74,7 @@ body {
     bottom: 0;
     top: 0;
     height: 100vh;
-    width: 66.666665%;
+    width: 60%;
     z-index: 1;
 
     img {
@@ -62,6 +86,14 @@ body {
       // Polyfill
       font-family: 'object-fit: cover;';
     }
+  }
+
+  @include xlarge-view {
+    width: 66.666665%;
+  }
+
+  @include xxlarge-view {
+    width: 75%;
   }
 }
 
