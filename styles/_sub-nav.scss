@@ -50,7 +50,7 @@ nav.minor-navigation {
     }
 
     a {
-      color: $color-emerald-green;
+      color: $color-default-black;
       display: inline-block;
       border-bottom: 0.15em solid $color-bg-gray;
       text-decoration: none;
@@ -59,8 +59,8 @@ nav.minor-navigation {
       font-size: 0.8em;
 
       &.active {
-        color: $color-emerald-green;
-        border-bottom-color: $color-emerald-green;
+        color: $color-default-black;
+        border-bottom-color: $color-default-black;
       }
     }
   }
@@ -72,7 +72,7 @@ nav.minor-navigation {
     font-weight: bold;
     font-size: 1.15em;
     text-align: left;
-    color: $color-emerald-green;
+    color: $color-default-black;
     margin-right: auto;
     min-width: 50%;
     vertical-align: middle;

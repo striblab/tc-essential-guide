@@ -30,15 +30,15 @@ nav.toggle-nav {
         padding: 0.25em 0.5em;
         font-size: 0.85em;
         letter-spacing: 0.2px;
-        border: 1.4px solid $color-emerald-green;
+        border: 1.4px solid $color-default-black;
         min-width: 10.5em;
         display: inline-block;
         text-transform: uppercase;
         font-weight: bold;
-        color: $color-emerald-green;
+        color: $color-default-black;
 
         &.active {
-          background-color: $color-emerald-green;
+          background-color: $color-default-black;
           color: $color-bg-gray;
         }
 

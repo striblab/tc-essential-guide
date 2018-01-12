@@ -31,7 +31,7 @@ ul.groups-items {
         margin: 0 0 0em;
         min-height: auto;
         background-color: inherit;
-        border-bottom: 1px solid $color-emerald-green;
+        border-bottom: 0px solid $color-emerald-green;
       }
 
       img {
@@ -58,19 +58,21 @@ ul.groups-items {
 
         @include full-view {
           position: relative;
-          padding: 6rem;
+          padding: 4rem;
           background-color: $color-bg-gray;
           color: $color-black;
           transition: background-color 0.15s;
           min-height: 7em;
           margin-bottom: 0;
           font-size: 1.55em;
-          border-bottom: 0.5px solid $color-emerald-green;
+          border-bottom: 0.5px solid #BDC3C7;
+          font-weight: normal;
 
           .in-focus & {
             background-color: $color-emerald-green;
             color: $color-white;
-            box-shadow: inset 0px 0px 60px 0px rgba(0,0,0,0);
+            font-weight: bold;
+            ;
 
           }
         }
@@ -79,9 +81,11 @@ ul.groups-items {
 
     @include full-view {
       &.in-focus a span {
-        background-color: $color-emerald-green;
-        color: $color-white;
-        box-shadow: inset 0 0 20px $color-forest-green;
+        background-color: $highlight-yellow;
+        color: $color-default-black;
+        box-shadow: inset 0px 0px 40px 0px rgba(0,0,0,0.2);
+        font-weight: bold;
+        letter-spacing: -0.8px;
       }
     }
   }
@@ -209,6 +213,7 @@ ul.groups-items {
 
     &.in-view {
       opacity: 1;
+      border-bottom: 1px solid $color-emerald-green;
     }
   }
 }

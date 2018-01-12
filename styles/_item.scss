@@ -73,25 +73,26 @@ article.item {
     font-weight: bold;
     font-size: 0.6em;
     letter-spacing: 0.2px;
-    border: 1px solid $color-emerald-green;
+    border: 1px solid $color-default-black;
     padding: 0.5em 1em;
     line-height: 1.5;
     text-decoration: none;
-    color: $color-emerald-green;
+    color: $color-default-black;
     border-radius: 0.5em;
+    /*background-color: $highlight-yellow;*/
 
-    @include full-view {
+   /* @include full-view {
       font-size: 0.6em;
       letter-spacing: 0.2px;
       border: none;
-      border-bottom: 1px solid $color-emerald-green;
-      padding: 0;
-      padding-bottom: 0.2em;
       line-height: 1.5;
       text-decoration: none;
       color: $color-default-black;
+      background-color: $color-white;
+      border-bottom: 2px solid $highlight-yellow;
       border-radius: 0;
-    }
+      padding: 0.05em;
+    }*/
   }
 
   .item-image {
@@ -131,6 +132,10 @@ article.item {
   .byline {
     font-family: map-get($font-sets, 'benton-sans');
     font-size: 0.95em;
+
+    @include full-view {
+      margin-top: 3em;
+    }
   }
 
   dt::before {
@@ -140,11 +145,16 @@ article.item {
 
   dd span {
     border: 1px solid transparent;
-    padding-bottom: 0.02em;
+    padding-bottom: 0em;
     margin-left: 0.3em;
 
     &.linkable {
-      border-bottom: 1px solid $color-emerald-green;
+      border-bottom: 2px solid $highlight-yellow;
+      /*background-color: $highlight-yellow;*/
+      &:hover {
+        background-color: $highlight-yellow;
+        transition: all 0.2s ease-in-out;
+      }
     }
 
     a {
@@ -173,10 +183,14 @@ article.item {
     }
 
     a {
-      border-bottom: 1px solid $color-emerald-green;
+      border-bottom: 2px solid $highlight-yellow;
       padding-bottom: 0.02em;
       text-decoration: none;
       color: $color-default-black;
+      &:hover {
+        background-color: $highlight-yellow;
+        transition: all 0.2s ease-in-out;
+      }
     }
   }
 
