@@ -40,7 +40,7 @@ class Observer {
           ? this.options.root
           : document.querySelector(this.options.root),
         threshold:
-          this.options.threshold || _.map(_.range(0, 11), i => i * 10 / 100)
+          this.options.threshold || _.map(_.range(0, 21), i => i * 5 / 100)
       }
     );
 
