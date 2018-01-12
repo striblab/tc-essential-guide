@@ -18,12 +18,14 @@
   </div>
 {{/if}}
 
-<div class="component component-item component-item-{{ display }} has-minor-navigation" data-id="{{ data.id }}">
-  <nav class="minor-navigation minor-nav-lists">
-    {{#if sectionGroup }}
-      <h1><a href="{{ data.basePath }}/{{ sectionGroup.filename }}">{{ sectionGroup.title }}</a></h1>
-    {{/if}}
-  </nav>
+<div class="component component-item component-item-{{ display }} {{ display === 'full' ? 'has-minor-navigation' : '' }}" data-id="{{ data.id }}">
+  {{#if display === 'full'}}
+    <nav class="minor-navigation minor-nav-lists">
+      {{#if sectionGroup }}
+        <h1><a href="{{ data.basePath }}/{{ sectionGroup.filename }}">{{ sectionGroup.title }}</a></h1>
+      {{/if}}
+    </nav>
+  {{/if}}
 
   <article class="item item-{{ display }} {{ data.inView ? 'in-view' : '' }}" data-id="{{ data.id }}">
     <div class="item-header">
