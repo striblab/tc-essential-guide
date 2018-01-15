@@ -82,18 +82,12 @@ article.item {
 
     /*background-color: $highlight-yellow;*/
 
-    /* @include full-view {
-      font-size: 0.6em;
-      letter-spacing: 0.2px;
-      border: none;
-      line-height: 1.5;
-      text-decoration: none;
-      color: $color-default-black;
-      background-color: $color-white;
-      border-bottom: 2px solid $highlight-yellow;
-      border-radius: 0;
-      padding: 0.05em;
-    }*/
+    @include full-view {
+      &:hover {
+        background-color: $highlight-yellow;
+        transition: 0.1s ease-in-out;
+      }
+    }
   }
 
   .item-image {

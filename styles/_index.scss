@@ -14,7 +14,8 @@
   }
 
   header[role='banner'] {
-    background-color: rgba(0,0,0,0);
+    display: none;
+    /*background-color: rgba(0,0,0,0);
     animation-delay: 5s;
     animation: fadeIn 3s;
     background-color: rgba(0, 0, 0, 0);
@@ -30,13 +31,13 @@
     .middle-logo {
       background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
       height: 1.6em;
-    }
+    }*/
   }
 
   // Splash screen section
   .splash {
     height: 100vh;
-    background-image: url('http://static.startribune.com/images/test-images/realphoto.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/realphoto-mobile.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 0%;
@@ -45,6 +46,28 @@
     text-align: center;
     animation-delay: 2s;
     animation: fadeIn 5s;
+    position: relative;
+    background-attachment: fixed;
+
+    @include full-view {
+      background-image: url('http://static.startribune.com/images/test-images/realphoto.jpg');
+    }
+
+    .title-logo {
+      position: absolute;
+      top: 3%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
+      vertical-align: middle;
+      display: block;
+      width: 11em;
+      height: 1.5em;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      margin: 0 auto;
+    }
 
     h1 {
       font-family: map-get($font-sets, 'benton-sans');
@@ -144,25 +167,35 @@
   // Group navigation section
   .group-navigation {
     height: 100vh;
-    background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 0%;
     overflow: hidden;
     position: relative;
     padding-top: 0.5em;
+    background-attachment: fixed;
+
+    @include full-view {
+      background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
+    }
   }
 
-  /*.title-logo {
-    display: block;
-    max-width: 11em;
-    min-height: 1.5em;
-    background-image: url('./assets/images/strib/strib-name-star-white.svg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    margin: 0.75em auto;
-  }*/
+  .title-logo {
+      position: absolute;
+      top: 3%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-image: url('./assets/images/strib/strib-name-star-white.svg');
+      vertical-align: middle;
+      display: block;
+      width: 11em;
+      height: 1.5em;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      margin: 0 auto;
+    }
 
   .group-navigation h1 {
     font-family: map-get($font-sets, 'benton-sans');
@@ -175,7 +208,7 @@
     min-width: 16em;
     border-top: 2px solid $color-white;
     margin: 0 auto 3em;
-    margin-top: 2.6em;
+    margin-top: 2.9em;
 
     @include full-view {
       width: 300px;
@@ -275,13 +308,14 @@
   .in-the-way {
     height: 100vh;
     position: relative;
-    background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 0%;
     text-align: center;
     color: $color-white;
     display: block;
+    background-attachment: fixed;
 
     @include full-view {
       display: none;
