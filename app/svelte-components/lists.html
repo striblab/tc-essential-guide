@@ -111,11 +111,16 @@ export default {
   },
 
   oncreate() {
-    // In theory, we should be more specific and watch for data.items
-    // changes, but that isn't actually going to change on the client.
-    this.observe('data', n => {
+    // In theory, we should be more specific and watch for any changes
+    // in data.items, but this is a simple look to see if the length has
+    // changed.
+    this.observe('data', (n, o) => {
       // Observe list
-      if (this.get('isBrowser')) {
+      if (
+        this.get('isBrowser') &&
+        ((n && n.items && o && o.items && n.items.length !== o.items.length) ||
+          !o)
+      ) {
         if (this.__itemObserver) {
           this.__itemObserver.stop();
           this.__itemObserver.addElements(
@@ -161,6 +166,11 @@ export default {
 
     // Handle when an item is observed
     observeItem: function(id) {
+      let currentID = this.get('observeMapItemID');
+      if (currentID && id && currentID === id) {
+        return;
+      }
+
       let data = this.get('data');
       let item = _.find(data.items, { id: id });
 
@@ -170,11 +180,13 @@ export default {
       }
 
       // Update image
-      if (item && item.mainImageLocal) {
+      if (id && item && item.mainImageLocal) {
         data.mainVisual = item.mainImageLocal;
         data.mainVisualDescription = item.imageDescription;
         this.set({ data: data });
       }
+
+      this.set({ observeMapItemID: id });
     },
 
     // Sort items by alpha
