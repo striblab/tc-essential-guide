@@ -221,7 +221,7 @@ export default {
           position: position,
           title: 'Your location',
           icon: this.userLocationIcon(),
-          zIndex: 999
+          zIndex: google.maps.Marker.MAX_ZINDEX + 999
         });
 
         // Add to map
@@ -264,6 +264,7 @@ export default {
       _.each(locations, l => {
         if (_.find(focus, { id: l.id })) {
           markers[l.id].setIcon(this.mapIcon('active'));
+          markers[l.id].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
           bounds.extend({ lat: l.lat, lng: l.lng });
         } else if (markers[l.id]) {
           markers[l.id].setIcon(this.mapIcon());
