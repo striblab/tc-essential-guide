@@ -27,6 +27,7 @@ const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
+const argv = require('yargs').argv;
 const webpackConfig = require('./webpack.config.js');
 const del = require('del');
 const gulpContent = require('./lib/gulp-content.js');
@@ -253,7 +254,8 @@ gulp.task('server', ['build'], () => {
   return browserSync.init({
     port: 3000,
     server: './build/',
-    files: './build/**/*'
+    files: './build/**/*',
+    https: argv.https
   });
 });
 
