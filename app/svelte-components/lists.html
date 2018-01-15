@@ -150,7 +150,10 @@ export default {
           data.items.forEach(i => {
             i.inView = i.id === n ? true : false;
           });
-          this.set({ data: data, locationsInView: [n] });
+          this.set({
+            data: data,
+            locationsInView: item.latitude && item.longitude ? [n] : []
+          });
         }
       }
     });

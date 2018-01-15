@@ -253,11 +253,13 @@ export default {
 
       let item = this.findByID(id);
       if (item) {
-        this.setAll({ inView: false }, false, [id]);
+        // Check if item has location
+        let loc = item.latitude && item.longitude;
+        this.setAll({ inView: false }, false, loc ? [id] : []);
         item.inView = true;
         this.set({
           data: this.get('data'),
-          locationsInView: [id],
+          locationsInView: loc ? [id] : [],
           observeMapItemID: id
         });
       }
