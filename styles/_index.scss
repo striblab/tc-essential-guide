@@ -126,6 +126,7 @@
 
       @include full-view {
         margin-bottom: 0%;
+        margin-top: 10%;
       }
     }
 
@@ -274,7 +275,7 @@
   .in-the-way {
     height: 100vh;
     position: relative;
-    background-image: url('http://static.startribune.com/images/test-images/test-blur.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 0%;
