@@ -134,8 +134,17 @@ class Util {
 
   // Check for geolocation
   checkGeolocate() {
-    if (_.isUndefined(this.localStorage)) {
+    if (_.isUndefined(this.hasGeolocate)) {
       this.hasGeolocate = window.navigator && 'geolocation' in window.navigator;
+
+      // Double check as https is needed, but doesn't necessarily
+      // remove the API
+      try {
+        window.navigator.geolocation();
+      }
+      catch (e) {
+        this.hasGeolocate = false;
+      }
     }
 
     return this.hasGeolocate;

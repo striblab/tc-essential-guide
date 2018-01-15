@@ -169,6 +169,13 @@ export default {
     );
   },
 
+  ondestroy() {
+    let u = this.get('utils');
+    if (u) {
+      u.stopGeolocate();
+    }
+  },
+
   methods: {
     startQueryRouter: methods.startQueryRouter,
     eventSet: methods.eventSet,
