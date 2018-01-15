@@ -43,10 +43,10 @@ body {
     .component-group,
     .component-list,
     .component-item {
-      width: 33.333332%;
+      width: 30%;
 
       nav.minor-navigation {
-        width: 33.333332%;
+        width: 30%;
       }
     }
   }
@@ -89,7 +89,7 @@ body {
   }
 
   @include xlarge-view {
-    width: 66.666665%;
+    width: 70%;
   }
 
   @include xxlarge-view {

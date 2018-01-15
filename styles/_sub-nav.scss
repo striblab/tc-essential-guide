@@ -5,7 +5,7 @@
 // Since the nav is fixed, use this around the parent dom to
 // create the necessary space
 .has-minor-navigation {
-  padding-top: 2.9em;
+  padding-top: 2.5em;
 }
 
 // Have to override the general nav style (should be fixed upstream)
@@ -28,7 +28,7 @@ nav.minor-navigation {
   justify-content: space-between;
 
   @include full-view {
-    padding: 1.15em 1.15em 0.9em 1.15em;
+    padding: 1.15em 1.15em 0.5em 1.15em;
   }
 
   ul {
