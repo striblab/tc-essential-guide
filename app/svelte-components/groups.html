@@ -70,10 +70,12 @@
       </div>
 
       <div class="map-items">
-        {{#each allItems as i @airtableId}}
-          <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
-            display="map" view="{{ view }}" content="{{ content }}" />
-        {{/each}}
+        {{#if allItems}}
+          {{#each allItems as i @airtableId}}
+            <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
+              display="map" view="{{ view }}" content="{{ content }}" />
+          {{/each}}
+        {{/if}}
 
         <div class="ad ad-placeholder">
           Ad Placeholder
