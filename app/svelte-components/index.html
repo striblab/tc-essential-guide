@@ -1,4 +1,4 @@
-<div class="component component-index">
+<div class="component component-index {{ started ? 'is-started' : '' }}">
   <div class="splash">
     <div class="title-logo"></div>
 
@@ -81,6 +81,7 @@ export default {
         e.preventDefault();
       }
       let u = this.get('utils');
+      this.set({ started: true });
 
       // Yay, ads!
       if (u && this.REALLYINTHEWAY() && this.refs.INTHEWAY) {
@@ -111,7 +112,8 @@ export default {
 
   data() {
     return {
-      isBrowser: typeof window !== undefined
+      isBrowser: typeof window !== undefined,
+      started: false
     };
   }
 };
