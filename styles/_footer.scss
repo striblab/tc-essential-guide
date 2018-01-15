@@ -2,9 +2,9 @@
  * Styles for the site footer.
  */
 
-footer[role="contentinfo"] {
+footer[role='contentinfo'] {
   background-color: $color-muted-blue;
-  display: none;
+
   .layout-index & {
     margin-top: 0;
   }
