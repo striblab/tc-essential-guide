@@ -303,6 +303,17 @@ export default {
         o = o.concat(data.items);
       }
 
+      // Sort by name
+      o = o.sort((a, b) => {
+        let at = (a.title || a.name || 'zzzzzzz')
+          .toLowerCase()
+          .replace(/^(the|a|an)\s/, '');
+        let bt = (b.title || b.name || 'zzzzzzz')
+          .toLowerCase()
+          .replace(/^(the|a|an)\s/, '');
+        return at < bt ? -1 : at > bt ? 1 : 0;
+      });
+
       return o;
     }
   },
