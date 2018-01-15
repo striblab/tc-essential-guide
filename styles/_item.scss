@@ -94,6 +94,7 @@ article.item {
       border-bottom: 2px solid $highlight-yellow;
       border-radius: 0;
       padding: 0.05em;
+
       &:hover {
         background-color: $highlight-yellow;
         transition: 0.1s ease-in-out;
@@ -219,6 +220,19 @@ article.item {
       & {
         margin-right: 1rem;
         margin-left: 1rem;
+      }
+    }
+
+    .item-header,
+    .item-content {
+      max-width: 40em;
+      margin-left: auto;
+      margin-right: auto;
+
+      @include full-view {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
       }
     }
 
