@@ -63,6 +63,9 @@ class Util {
 
     // Attach for ease of use
     this.queryString = queryString;
+
+    // Do this up front since it can be an async test
+    this.checkGeolocate();
   }
 
   // Set view (make note)
@@ -136,15 +139,9 @@ class Util {
   checkGeolocate() {
     if (_.isUndefined(this.hasGeolocate)) {
       this.hasGeolocate = window.navigator && 'geolocation' in window.navigator;
-
-      // Double check as https is needed, but doesn't necessarily
-      // remove the API
-      try {
-        window.navigator.geolocation();
-      }
-      catch (e) {
-        this.hasGeolocate = false;
-      }
+      // Unfortunately HTTPS is needed, but in some browsers,
+      // the API is still available.  We could run the API, but then the user
+      // gets a dialog.  :(
     }
 
     return this.hasGeolocate;
@@ -163,6 +160,7 @@ class Util {
           });
         },
         () => {
+          this.hasGeolocate = false;
           done('Unable to find your position.');
         }
       );
