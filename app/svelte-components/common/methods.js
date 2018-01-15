@@ -2,6 +2,8 @@
  * Common, shared methods for Svelte components.
  */
 
+'use strict';
+
 module.exports = {
   // Wrapper around set to call preventDefault
   eventSet: function(e, properties) {
@@ -61,5 +63,71 @@ module.exports = {
       dist = dist * 0.8684;
     }
     return dist;
+  },
+
+  // A basic query router thing
+  startQueryRouter: function(fields = [], defaults = {}, url = '') {
+    let utils = this.get('utils');
+
+    // Load initial values
+    if (utils && utils.query) {
+      fields.forEach(f => {
+        if (utils.query[f]) {
+          this.set({ [f]: utils.query[f] });
+        }
+      });
+    }
+
+    // Change state if data changes
+    if (
+      this.get('isBrowser') &&
+      fields.length &&
+      utils &&
+      window &&
+      window.history
+    ) {
+      fields.forEach(f => {
+        this.observe(
+          f,
+          (n, o) => {
+            if (n !== o) {
+              let query = utils.query ? utils.deepClone(utils.query) : {};
+              if (n) {
+                query[f] = n;
+              }
+              else {
+                delete query[f];
+              }
+
+              window.history.pushState(
+                query,
+                null,
+                `${url}?${utils.queryString.stringify(query)}`
+              );
+            }
+          },
+          { init: false }
+        );
+      });
+    }
+
+    // Watch for popstate
+    if (window && window.history && utils) {
+      window.addEventListener('popstate', () => {
+        utils.parseQuery();
+        let found = {};
+
+        fields.forEach(f => {
+          if (utils.query && utils.query[f]) {
+            found[f] = utils.query[f];
+          }
+          else if (defaults && defaults[f]) {
+            found[f] = defaults[f];
+          }
+        });
+
+        this.set(found);
+      });
+    }
   }
 };

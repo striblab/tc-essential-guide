@@ -24,9 +24,9 @@
 
     {{#if hasLocations}}
       <ul class="cf">
-        <li><a href="#/featured" on:click="eventSet(event, { view: 'featured' })"
+        <li><a href="?view=featured" on:click="eventSet(event, { view: 'featured' })"
           class="featured {{ view === 'featured' ? 'active' : '' }}">Featured</a></li>
-        <li><a href="#/map" on:click="eventSet(event, { view: 'map' })"
+        <li><a href="?view=map" on:click="eventSet(event, { view: 'map' })"
           class="distance {{ view === 'map' ? 'active' : '' }}">Map</a></li>
       </ul>
     {{/if}}
@@ -100,6 +100,9 @@ export default {
   oncreate: function() {
     this.__intialized = false;
 
+    // Allow for linkable views
+    this.startQueryRouter(['view'], { view: 'featured' });
+
     // Make all items
     this.observe('data', n => {
       if (n && (n.items || n.lists)) {
@@ -167,6 +170,7 @@ export default {
   },
 
   methods: {
+    startQueryRouter: methods.startQueryRouter,
     eventSet: methods.eventSet,
     geolocate: methods.geolocate,
     distance: methods.distance,

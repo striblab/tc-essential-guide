@@ -60,6 +60,9 @@ class Util {
     if (window.objectFitImages) {
       window.objectFitImages();
     }
+
+    // Attach for ease of use
+    this.queryString = queryString;
   }
 
   // Set view (make note)
