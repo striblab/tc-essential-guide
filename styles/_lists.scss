@@ -38,12 +38,6 @@ nav.toggle-nav {
           color: $color-bg-gray;
         }
 
-        /*&:hover {
-          background-color: map-get($grays, 'light');
-          border-color: map-get($grays, 'light');
-          color: $color-forest-green;
-        }*/
-
         &.distance {
           border-radius: 0 1em 1em 0;
         }
@@ -62,6 +56,18 @@ nav.toggle-nav {
 
     @include full-view {
       display: block;
+    }
+  }
+
+  .content {
+    max-width: 40em;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include full-view {
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }
@@ -95,6 +101,11 @@ article.lists {
         margin-right: -1rem;
         margin-left: -1rem;
       }
+    }
+
+    @include medium-view {
+      margin-right: -6rem;
+      margin-left: -6rem;
     }
 
     @include full-view {

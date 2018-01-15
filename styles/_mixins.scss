@@ -13,6 +13,12 @@
   }
 }
 
+@mixin medium-view {
+  @media only screen and (min-width: map-get($breakpoints, 'md')) {
+    @content;
+  }
+}
+
 @mixin xlarge-view {
   @media only screen and (min-width: map-get($breakpoints, 'xl')) {
     @content;
