@@ -60,6 +60,12 @@ class Util {
     if (window.objectFitImages) {
       window.objectFitImages();
     }
+
+    // Attach for ease of use
+    this.queryString = queryString;
+
+    // Do this up front since it can be an async test
+    this.checkGeolocate();
   }
 
   // Set view (make note)
@@ -131,8 +137,11 @@ class Util {
 
   // Check for geolocation
   checkGeolocate() {
-    if (_.isUndefined(this.localStorage)) {
+    if (_.isUndefined(this.hasGeolocate)) {
       this.hasGeolocate = window.navigator && 'geolocation' in window.navigator;
+      // Unfortunately HTTPS is needed, but in some browsers,
+      // the API is still available.  We could run the API, but then the user
+      // gets a dialog.  :(
     }
 
     return this.hasGeolocate;
@@ -151,6 +160,7 @@ class Util {
           });
         },
         () => {
+          this.hasGeolocate = false;
           done('Unable to find your position.');
         }
       );

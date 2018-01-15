@@ -24,11 +24,11 @@
       <h1><a href="{{ data.basePath }}/{{ data.groups[0].filename }}">{{ data.groups[0].title }}</a></h1>
     {{/if}}
 
-    {{#if utils && utils.hasGeolocate && hasLocations}}
+    {{#if hasLocations}}
       <ul class="cf">
-        <li><a href="#/alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
+        <li><a href="?view=alpha" on:click="eventSet(event, { view: 'alpha' })" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
         <li>
-          <a href="#/distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
+          <a href="?view=distance" on:click="eventSet(event, { view: 'distance' })" class="distance {{ view === 'distance' ? 'active' : '' }}">
             Map
             {{#if isGeolocating}}
               <i class="fa fa-spinner fa-spin"></i>
@@ -67,9 +67,9 @@
     <nav class="toggle-nav">
       {{#if utils && utils.hasGeolocate }}
         <ul class="cf">
-          <li><a href="#/alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
+          <li><a href="?view=alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
           <li>
-            <a href="#/distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
+            <a href="?view=distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
               Near Me
               {{#if isGeolocating}}
                 <i class="fa fa-spinner fa-spin"></i>
@@ -111,6 +111,9 @@ export default {
   },
 
   oncreate() {
+    // Use query router for view
+    this.startQueryRouter(['view'], { view: 'alpha' });
+
     // In theory, we should be more specific and watch for any changes
     // in data.items, but this is a simple look to see if the length has
     // changed.
@@ -147,7 +150,21 @@ export default {
           data.items.forEach(i => {
             i.inView = i.id === n ? true : false;
           });
-          this.set({ data: data, locationsInView: [n] });
+          this.set({
+            data: data,
+            locationsInView: item.latitude && item.longitude ? [n] : []
+          });
+        }
+      }
+    });
+
+    // Handle view change
+    this.observe('view', (n, o) => {
+      if (n && n !== o) {
+        if (n === 'distance') {
+          this.sortDistance();
+        } else {
+          this.sortAlpha();
         }
       }
     });
@@ -161,8 +178,10 @@ export default {
   },
 
   methods: {
+    startQueryRouter: methods.startQueryRouter,
     distance: methods.distance,
     geolocate: methods.geolocate,
+    eventSet: methods.eventSet,
 
     // Handle when an item is observed
     observeItem: function(id) {
@@ -190,12 +209,7 @@ export default {
     },
 
     // Sort items by alpha
-    sortAlpha: function(e) {
-      if (e && e.preventDefault) {
-        e.preventDefault();
-      }
-
-      this.set({ view: 'alpha' });
+    sortAlpha: function() {
       let d = this.get('data');
       d.items = _.sortBy(d.items, i => {
         return i.title || i.name;
@@ -205,17 +219,12 @@ export default {
 
     // Sort items by distance
     sortDistance: function(e) {
-      if (e && e.preventDefault) {
-        e.preventDefault();
-      }
-
       // Since we depend on browers geolocation, check for browser
       if (!this.get('isBrowser')) {
         return;
       }
 
       // Geolocate and sort
-      this.set({ view: 'distance' });
       this.geolocate()
         .then(position => {
           let d = this.get('data');
