@@ -13,8 +13,15 @@ export default {
     // When locations are available add markers
     this.observe(
       'locations',
-      n => {
-        if (n && this.get('isBrowser')) {
+      (n, o) => {
+        // For some reason this is getting called too often, so
+        // we do a bit of hackery to check if the number of items has
+        // changed.
+        if (
+          this.get('isBrowser') &&
+          n &&
+          ((n && o && n.length !== o.length) || !o)
+        ) {
           this.addMarkers();
         }
       },
@@ -56,6 +63,8 @@ export default {
         map = new window.google.maps.Map(this.refs.map, {
           zoom: this.get('zoom'),
           center: this.get('center'),
+          minZoom: 9,
+          maxZoom: 17,
           zoomControl: true,
           mapTypeControl: false,
           scaleControl: false,
@@ -204,7 +213,8 @@ export default {
         positionMarker = new window.google.maps.Marker({
           position: position,
           title: 'Your location',
-          icon: this.userLocationIcon()
+          icon: this.userLocationIcon(),
+          zIndex: 999
         });
 
         // Add to map
@@ -268,10 +278,13 @@ export default {
       ) {
         map.setCenter({ lat: focus[0].lat, lng: focus[0].lng });
         map.setZoom(this.get('focusZoom'));
+        // Issue where markers disspear
+        map.panTo(map.getCenter());
       } else {
         // Set bounds
-        map.fitBounds(bounds, 30);
-        google.maps.event.trigger(map, 'resize');
+        map.fitBounds(bounds, map.getDiv().offsetWidth > 600 ? 100 : 20);
+        // Issue where markers disspear
+        map.panTo(map.getCenter());
       }
     }
   },
