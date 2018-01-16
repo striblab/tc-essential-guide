@@ -1,20 +1,30 @@
 .ios-homescreen {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
   padding: 0;
   margin: 0;
-  font-family: map-get($font-sets, 'benton-sans');
   z-index: 999999;
-  background-color: $highlight-yellow;
-  font-size: 0.85em;
-  max-height: 0;
-  transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+  display: none;
 
   &.show {
-    max-height: 10em;
+    display: block;
+  }
+
+  .ios-homescreen-inner {
+    font-family: map-get($font-sets, 'benton-sans');
+    background-color: $highlight-yellow;
+    font-size: 0.85em;
+    max-width: 40em;
     padding: 1rem 1.5rem;
+    margin: 0 auto;
+    max-height: 0;
+    transition: max-height 0.5s ease-in-out;
+  }
+
+  &.show .ios-homescreen-inner {
+    max-height: 10em;
   }
 
   h1 {

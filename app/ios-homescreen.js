@@ -6,8 +6,14 @@
 /* global $ */
 'use strict';
 
-module.exports = (utils, diff, hideAfter = 15000) => {
-  if (!utils.checkIOS()) {
+module.exports = (utils, diff, hideAfter = 15000, delayShow = 6000) => {
+  if (!utils) {
+    return;
+  }
+  else if (utils.query && utils.query.homescreen) {
+    // Keep going
+  }
+  else if (!utils.checkIOS()) {
     return;
   }
 
@@ -33,23 +39,25 @@ module.exports = (utils, diff, hideAfter = 15000) => {
     now - lastTime > diff ||
     (utils.query && utils.query.homescreen)
   ) {
-    let $note = $('.ios-homescreen');
-
-    // Save new time
-    window.localStorage.setItem('ios-homescreen-seen', now);
-
-    // Show
-    $note.addClass('show');
-
-    // Allow to close
-    $note.find('.close').on('click', e => {
-      e.preventDefault();
-      $note.removeClass('show');
-    });
-
-    // Hide after a certain amount of time
     setTimeout(() => {
-      $note.removeClass('show');
-    }, hideAfter);
+      let $note = $('.ios-homescreen');
+
+      // Save new time
+      window.localStorage.setItem('ios-homescreen-seen', now);
+
+      // Show
+      $note.addClass('show');
+
+      // Allow to close
+      $note.find('.close').on('click', e => {
+        e.preventDefault();
+        $note.removeClass('show');
+      });
+
+      // Hide after a certain amount of time
+      // setTimeout(() => {
+      //   $note.removeClass('show');
+      // }, hideAfter);
+    }, delayShow || 0);
   }
 };
