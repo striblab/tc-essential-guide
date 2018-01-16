@@ -108,7 +108,9 @@ helpers.smsURL = function(data, content) {
 
   return `sms:${helpers.isIOS() ? '&' : '?'}body=${encodeURIComponent(
     data.emailShare || data.twitterShare || content.emailShare
-  )}\n${encodeURIComponent(data.baseURL + data.filename)}`;
+  )}${encodeURIComponent(' \n')}${encodeURIComponent(
+    data.baseURL + data.filename
+  )}`;
 };
 
 helpers.phoneURL = function(phone) {

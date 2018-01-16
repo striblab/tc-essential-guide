@@ -19,6 +19,9 @@
         <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
           <span class="sr-only">Share via email</span>
         </a>
+        <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+          <span class="sr-only">Share via SMS</span>
+        </a>
       </div>
 
       <a href="#/menu" class="menu-logo {{ fullNavOpen ? 'menu-logo-close' : '' }}" title="Menu" on:click="toggleFullNav(event)">
@@ -74,6 +77,8 @@ export default {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
     emailURL: helpers.emailURL,
+    smsURL: helpers.smsURL,
+
     backURL: function(data) {
       // Groups go back to home page
       // Lists go back to group
