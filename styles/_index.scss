@@ -1,6 +1,7 @@
 /**
  * Styles for title page.
  */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -41,10 +42,14 @@
       height: 1.6em;
     }
     */
-  }
-
-  // Splash screen section
+  } // Splash screen section
   .splash {
+    opacity:0;
+    animation-name: fadeIn;
+    animation-duration: 4s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     height: 100vh;
     background-image: url('http://static.startribune.com/images/test-images/realphoto.jpg');
     background-repeat: no-repeat;
@@ -53,8 +58,6 @@
     color: $color-white;
     padding-top: 0.5em;
     text-align: center;
-    animation-delay: 2s;
-    animation: fadeIn 5s;
     position: relative;
     background-attachment: fixed;
 
@@ -62,142 +65,19 @@
       background-image: url('http://static.startribune.com/images/test-images/realphoto.jpg');
       background-position: 50% 30%;
     }
-
-    .title-logo {
-      position: absolute;
-      top: 3%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
-      vertical-align: middle;
-      display: block;
-      width: 11em;
-      height: 1.5em;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-      margin: 0 auto;
-    }
-
-    h1 {
-      margin: 0 auto;
-      font-family: map-get($font-sets, 'benton-sans');
-      font-size: 2.3em;
-      text-transform: uppercase;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-top: 5%;
-      display: block;
-      width: 10.5em;
-      margin-bottom: 10px;
-      text-align: center;
-      padding: 0.5em;
-      background-color: $color-default-black;
-      box-shadow: 5px 5px 0 0 rgba(248, 230, 28, 1);
-
-      span {
-        display: block;
-      }
-
-      @include full-view {
-        margin: 0 auto;
-        display: block;
-        width: 450px;
-        margin-bottom: 10px;
-        text-align: center;
-        padding: 0.5em;
-        background-color: $color-default-black;
-      }
-
-      img {
-        display: inline-block;
-        width: 85%;
-        max-width: 550px;
-        overflow: hidden;
-        height: auto;
-      }
-
-      @include full-view {
-        margin-top: 0%;
-        font-family: map-get($font-sets, 'benton-sans');
-        font-size: 2.5em;
-        text-transform: uppercase;
-        font-weight: bold;
-        letter-spacing: 2px;
-        margin-top: 0%;
-      }
-
-      #guide {
-        font-size: 0.5em;
-        font-weight: normal;
-        margin-top: 0;
-      }
-    }
-
-    .get-started {
-      display: inline-block;
-      background-color: $color-default-black;
-      color: $color-white;
-      padding: 1em;
-      position: absolute;
-      bottom: 5%;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-weight: bold;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-
-      /*box-shadow: 5px 5px 0px 0px rgba(248,230,28,1);*/
-
-      &:hover {
-        color: $color-default-black;
-        background-color: $highlight-yellow;
-        transition: all 0.2s ease-in-out;
-        border-bottom: 2px solid $color-default-black;
-      }
-
-      @include full-view {
-        margin-bottom: 0%;
-        margin-top: 10%;
-      }
-    }
-
-    .splash-footer {
-      font-size: 0.65em;
-      text-transform: uppercase;
-      display: none;
-
-      span {
-        display: block;
-      }
-    }
   }
-
-  // Group navigation section
-  .group-navigation {
-    height: 100vh;
-    background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-    overflow: hidden;
-    position: relative;
-    padding-top: 0.5em;
-    background-attachment: fixed;
-
-    @include full-view {
-      background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
-      background-position: 50% 30%;
-    }
-  }
-
   .title-logo {
+    opacity:0;
+    animation-name: fadeIn;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     position: absolute;
     top: 3%;
     left: 50%;
     transform: translateX(-50%);
-    background-image: url('./assets/images/strib/strib-name-star-white.svg');
+    background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
     vertical-align: middle;
     display: block;
     width: 11em;
@@ -208,146 +88,286 @@
     margin: 0 auto;
   }
 
-  .group-navigation h1 {
-    font-family: map-get($font-sets, 'benton-sans');
-    font-weight: bold;
-    font-size: 1.15em;
-    text-align: center;
-    text-transform: uppercase;
+  h1 {
+    opacity:0;
+    animation-name: fadeIn;
+    animation-duration: 4s;
+    animation-delay: 4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
     color: $color-white;
-    width: 67%;
-    min-width: 16em;
-    border-top: 2px solid $color-white;
-    margin: 0 auto 3em;
-    margin-top: 2.9em;
-
-    @include full-view {
-      width: 300px;
-    }
-  }
-
-  .groups {
-    width: 100%;
-    text-align: center;
     margin: 0 auto;
+    font-family: map-get($font-sets, 'benton-sans');
+    font-size: 2.3em;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: 5%;
+    display: block;
+    width: 10.5em;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 0.5em;
+    background-color: $color-default-black;
+    box-shadow: 5px 5px 0 0 rgba(248, 230, 28, 1);
+
+    span {
+      display: block;
+    }
 
     @include full-view {
-      width: 70%;
-      left: 0;
-      right: 0;
+      margin: 0 auto;
+      display: block;
+      width: 450px;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 0.5em;
+      background-color: $color-default-black;
     }
 
-    .group {
-      @include full-view {
-        width: 49.5%;
-        display: block;
-        padding: 0 2em;
-        float: left;
-      }
-
-      a {
-        font-size: 1.1em;
-        display: block;
-        width: 100%;
-        height: 7vh;
-        line-height: 7vh;
-        text-align: center;
-        font-weight: normal;
-        color: $color-white;
-        text-transform: uppercase;
-        text-decoration: none;
-
-        span {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: normal;
-        }
-
-        &:hover {
-          opacity: 0.5;
-
-          @include full-view {
-            // Use box-shadow to not affect height of element
-            border-bottom-color: transparent;
-            box-shadow: 0 -4px 0 0 $highlight-yellow inset;
-            opacity: 1;
-            font-weight: bold;
-            transition: all 0.2s ease-in-out;
-            color: $highlight-yellow;
-          }
-        }
-
-        @include full-view {
-          width: 100%;
-          display: block;
-          height: auto;
-          line-height: 1em;
-          border-bottom: 1px solid $color-white;
-          padding: 2em 1em;
-        }
-      }
+    img {
+      display: inline-block;
+      width: 85%;
+      max-width: 550px;
+      overflow: hidden;
+      height: auto;
     }
 
-    .sponsored-by {
-      display: none;
+    @include full-view {
+      margin-top: 0%;
+      font-family: map-get($font-sets, 'benton-sans');
+      font-size: 2.5em;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-top: 0%;
+    }
 
-      @include full-view {
-        display: block;
-      }
-
-      a {
-        font-size: 0.75em;
-        border-bottom: none;
-        padding-top: 2rem;
-
-        &:hover {
-          border-bottom: none;
-          box-shadow: none;
-          font-weight: normal;
-          color: $color-white;
-        }
-      }
-
-      img {
-        max-height: 1.5rem;
-        padding-top: 0.25em;
-        display: inline-block;
-      }
+    #guide {
+      font-size: 0.5em;
+      font-weight: normal;
+      margin-top: 0;
     }
   }
 
-  .in-the-way {
-    height: 100vh;
-    position: relative;
-    background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-    text-align: center;
+  .get-started {
+    opacity:0;
+    animation-name: fadeIn;
+    animation-duration: 4s;
+    animation-delay: 6s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    display: inline-block;
+    background-color: $color-default-black;
     color: $color-white;
-    display: block;
-    background-attachment: fixed;
+    padding: 1em;
+    position: absolute;
+    bottom: 5%;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 
-    @include full-view {
-      display: none;
+    /*box-shadow: 5px 5px 0px 0px rgba(248,230,28,1);*/
+    &:hover {
+      color: $color-default-black;
+      background-color: $highlight-yellow;
+      transition: all 0.2s ease-in-out;
+      border-bottom: 2px solid $color-default-black;
     }
 
-    .in-the-way-content-i-mean-ad {
-      width: 50%;
-      margin: 0 auto;
-      position: relative;
+    @include full-view {
+      margin-bottom: 0%;
+      margin-top: 10%;
+    }
+  }
+
+  .splash-footer {
+    font-size: 0.65em;
+    text-transform: uppercase;
+    display: none;
+
+    span {
+      display: block;
+    }
+  }
+}
+
+// Group navigation section
+.group-navigation {
+  height: 100vh;
+  background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  overflow: hidden;
+  position: relative;
+  padding-top: 0.5em;
+  background-attachment: fixed;
+
+  @include full-view {
+    background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
+    background-position: 50% 30%;
+  }
+}
+
+.title-logo {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('./assets/images/strib/strib-name-star-white.svg');
+  vertical-align: middle;
+  display: block;
+  width: 11em;
+  height: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.group-navigation h1 {
+  font-family: map-get($font-sets, 'benton-sans');
+  font-weight: bold;
+  font-size: 1.15em;
+  text-align: center;
+  text-transform: uppercase;
+  color: $color-white;
+  width: 67%;
+  min-width: 16em;
+  border-top: 2px solid $color-white;
+  margin: 0 auto 3em;
+  margin-top: 2.9em;
+
+  @include full-view {
+    width: 300px;
+  }
+}
+
+.groups {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+
+  @include full-view {
+    width: 70%;
+    left: 0;
+    right: 0;
+  }
+
+  .group {
+    @include full-view {
+      width: 49.5%;
+      display: block;
+      padding: 0 2em;
+      float: left;
+    }
+
+    a {
+      font-size: 1.1em;
+      display: block;
+      width: 100%;
+      height: 7vh;
+      line-height: 7vh;
+      text-align: center;
+      font-weight: normal;
+      color: $color-white;
+      text-transform: uppercase;
+      text-decoration: none;
 
       span {
-        display: block;
-        font-size: 0.9em;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        padding-bottom: 1.2em;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
       }
 
-      img {
-        height: 4.5em;
+      &:hover {
+        opacity: 0.5;
+
+        @include full-view {
+          // Use box-shadow to not affect height of element
+          border-bottom-color: transparent;
+          box-shadow: 0 -4px 0 0 $highlight-yellow inset;
+          opacity: 1;
+          font-weight: bold;
+          transition: all 0.2s ease-in-out;
+          color: $highlight-yellow;
+        }
       }
+
+      @include full-view {
+        width: 100%;
+        display: block;
+        height: auto;
+        line-height: 1em;
+        border-bottom: 1px solid $color-white;
+        padding: 2em 1em;
+      }
+    }
+  }
+
+  .sponsored-by {
+    display: none;
+
+    @include full-view {
+      display: block;
+    }
+
+    a {
+      font-size: 0.75em;
+      border-bottom: none;
+      padding-top: 2rem;
+
+      &:hover {
+        border-bottom: none;
+        box-shadow: none;
+        font-weight: normal;
+        color: $color-white;
+      }
+    }
+
+    img {
+      max-height: 1.5rem;
+      padding-top: 0.25em;
+      display: inline-block;
+    }
+  }
+}
+
+.in-the-way {
+  height: 100vh;
+  position: relative;
+  background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  text-align: center;
+  color: $color-white;
+  display: block;
+  background-attachment: fixed;
+
+  @include full-view {
+    display: none;
+  }
+
+  .in-the-way-content-i-mean-ad {
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+
+    span {
+      display: block;
+      font-size: 0.9em;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding-bottom: 1.2em;
+    }
+
+    img {
+      height: 4.5em;
     }
   }
 }
