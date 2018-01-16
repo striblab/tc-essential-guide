@@ -116,16 +116,6 @@
       display: block;
     }
 
-    @include full-view {
-      margin: 0 auto;
-      display: block;
-      width: 450px;
-      margin-bottom: 10px;
-      text-align: center;
-      padding: 0.5em;
-      background-color: $color-default-black;
-    }
-
     img {
       display: inline-block;
       width: 85%;
@@ -135,13 +125,12 @@
     }
 
     @include full-view {
-      margin-top: 0%;
       font-family: map-get($font-sets, 'benton-sans');
       font-size: 2.5em;
       text-transform: uppercase;
       font-weight: bold;
-      letter-spacing: 2px;
-      margin-top: 0%;
+      letter-spacing: 0px;
+      margin-top: 10%;
     }
 
     #guide {
@@ -167,17 +156,16 @@
     bottom: 10%;
     text-decoration: none;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: normal;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 
     /*box-shadow: 5px 5px 0px 0px rgba(248,230,28,1);*/
     &:hover {
-      color: $color-default-black;
-      background-color: $highlight-yellow;
+      color: $highlight-yellow;
+      background-color: $color-default-black;
       transition: all 0.2s ease-in-out;
-      border-bottom: 2px solid $color-default-black;
     }
 
     @include full-view {
