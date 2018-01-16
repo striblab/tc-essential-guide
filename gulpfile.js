@@ -286,9 +286,14 @@ gulp.task('sw:precache', done => {
 
   let config = {
     cacheId: require('./package.json').name,
-    // False for dev?
+    // False for dev so that caching wont get in the way,
+    // but this means that Chrome/Android won't think
+    // the site has offline capabilities, FYI
     handleFetch: argv.deploying || argv.production ? true : false,
     logger: gutil.log,
+    // Note that sw-precache will use cache version, unless specified
+    // here.  But, each time this is run, hashes are created, so,
+    // not sure if this is really necessary
     runtimeCaching: [
       {
         urlPattern: /.*/,
