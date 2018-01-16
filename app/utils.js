@@ -201,6 +201,47 @@ class Util {
       ? Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
       : value;
   }
+
+  // Test for ios
+  checkAndroid() {
+    if (!_.isBoolean(this.isAndroid)) {
+      this.isAndroid =
+        window.navigator &&
+        window.navigator.userAgent &&
+        window.navigator.userAgent.match(/android/i);
+    }
+
+    return this.isAndroid;
+  }
+
+  // Test for ios
+  checkIOS() {
+    if (!_.isBoolean(this.isIOS)) {
+      this.isIOS =
+        window.navigator &&
+        window.navigator.userAgent &&
+        window.navigator.userAgent.match(/iphone|ipad/i);
+    }
+
+    return this.isIOS;
+  }
+
+  // Test for windows phone
+  checkWindowsPhone() {
+    if (!_.isBoolean(this.isWindowsPhone)) {
+      this.isWindowsPhone =
+        window.navigator &&
+        window.navigator.userAgent &&
+        window.navigator.userAgent.match(/windows\sphone/i);
+    }
+
+    return this.isWindowsPhone;
+  }
+
+  // Check basic mobile (assume ios or android)
+  checkMobile() {
+    return this.checkAndroid() && this.checkIOS() && this.checkWindowsPhone();
+  }
 }
 
 // Export a generator for the class.

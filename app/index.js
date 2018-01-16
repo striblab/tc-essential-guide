@@ -8,6 +8,7 @@
 
 // Dependencies
 import utilsFn from './utils.js';
+import iosHomescreen from './ios-homescreen.js';
 
 // Since we can't do dynamic imports
 import Header from './svelte-components/header.html';
@@ -111,3 +112,6 @@ if (window.navigator) {
     });
   });
 }
+
+// Handle ioshomescreen
+iosHomescreen(utils);
