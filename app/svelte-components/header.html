@@ -1,6 +1,6 @@
 <nav>
   <div class="top-nav-section">
-  	<a href="{{ data.basePath || '.' }}/" class="back-logo" title="Go back a page" on:click="goBack(event)">
+  	<a href="{{ backURL(data) }}" class="back-logo" title="Go back a page" on:click="goBack(event)">
       <span class="sr-only">Back</span>
     </a>
 
@@ -73,7 +73,21 @@ export default {
   helpers: {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
-    emailURL: helpers.emailURL
+    emailURL: helpers.emailURL,
+    backURL: function(data) {
+      // Groups go back to home page
+      // Lists go back to group
+      // Items go to either list or groups
+      return data.dataset === 'groups'
+        ? '../'
+        : data.dataset === 'lists' && data.groups && data.groups[0]
+          ? data.basePath + '/' + data.groups[0].filename
+          : data.dataset === 'items' && data.lists && data.lists[0]
+            ? data.basePath + '/' + data.lists[0].filename
+            : data.dataset === 'items' && data.groups && data.groups[0]
+              ? data.basePath + '/' + data.groups[0].filename
+              : data.basePath;
+    }
   },
 
   data() {

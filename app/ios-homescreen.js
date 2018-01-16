@@ -55,9 +55,9 @@ module.exports = (utils, diff, hideAfter = 15000, delayShow = 6000) => {
       });
 
       // Hide after a certain amount of time
-      // setTimeout(() => {
-      //   $note.removeClass('show');
-      // }, hideAfter);
+      setTimeout(() => {
+        $note.removeClass('show');
+      }, hideAfter);
     }, delayShow || 0);
   }
 };
