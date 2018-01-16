@@ -50,6 +50,11 @@ article.item {
   a[href^='tel:']::after {
     content: '\260e';
     margin-left: 0.5em;
+
+    @include full-view {
+      content: '';
+      margin-left: 0;
+    }
   }
 
   .near-me {
@@ -79,8 +84,6 @@ article.item {
     text-decoration: none;
     color: $color-default-black;
     border-radius: 0.5em;
-
-    /*background-color: $highlight-yellow;*/
 
     @include full-view {
       font-size: 0.8em;
@@ -154,6 +157,12 @@ article.item {
     display: block;
   }
 
+  p a {
+    text-decoration: none;
+    color: $color-default-black;
+    border-bottom: 1px solid $color-emerald-green;
+  }
+
   dd span {
     border: 1px solid transparent;
     padding-bottom: 0;
@@ -162,7 +171,12 @@ article.item {
     &.linkable {
       border-bottom: 2px solid $highlight-yellow;
 
-      /*background-color: $highlight-yellow;*/
+      @include full-view {
+        &.phone-link {
+          border-bottom: none;
+        }
+      }
+
       &:hover {
         background-color: $highlight-yellow;
         transition: all 0.2s ease-in-out;
@@ -173,12 +187,6 @@ article.item {
       text-decoration: none;
       color: $color-default-black;
     }
-  }
-
-  p a {
-    text-decoration: none;
-    color: $color-default-black;
-    border-bottom: 1px solid $color-emerald-green;
   }
 
   .related {

@@ -65,6 +65,16 @@ module.exports = {
     return dist;
   },
 
+  // Go to an element
+  goTo: function(id) {
+    let utils = this.get('utils');
+    let el = document.querySelector(`[data-id=${id}]`);
+
+    if (utils && el) {
+      utils.goTo(el);
+    }
+  },
+
   // A basic query router thing
   startQueryRouter: function(fields = [], defaults = {}, url = '') {
     let utils = this.get('utils');
