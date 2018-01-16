@@ -23,6 +23,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const a11y = require('gulp-a11y');
 const responsive = require('gulp-responsive');
 const ejs = require('gulp-ejs');
+const gutil = require('gulp-util');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
@@ -30,6 +31,7 @@ const webpackStream = require('webpack-stream');
 const argv = require('yargs').argv;
 const webpackConfig = require('./webpack.config.js');
 const del = require('del');
+const swprecache = require('sw-precache');
 const gulpContent = require('./lib/gulp-content.js');
 const gulpPublish = require('./lib/gulp-publish.js');
 const jest = require('./lib/gulp-jest.js');
@@ -261,7 +263,7 @@ gulp.task('server', ['build'], () => {
 
 // Watch for building
 gulp.task('watch', () => {
-  gulp.watch(['styles/**/*.scss'], ['styles']);
+  gulp.watch(['styles/**/*.scss'], ['styles', 'sw:precache']);
   gulp.watch(
     [
       'templates/**/*',
@@ -271,11 +273,44 @@ gulp.task('watch', () => {
       'content.json',
       'app/svelte-components/**/*'
     ],
-    ['html']
+    ['html', 'sw:precache']
   );
-  gulp.watch(['app/**/*', 'config.json'], ['js']);
+  gulp.watch(['app/**/*', 'config.json'], ['js', 'sw:precache']);
   gulp.watch(['assets/**/*'], ['assets']);
-  gulp.watch(['config.*json'], ['publish:build']);
+  gulp.watch(['config.*json'], ['publish:build-config']);
+});
+
+// Make precache service worker file
+gulp.task('sw:precache', done => {
+  let location = 'build';
+
+  let config = {
+    cacheId: require('./package.json').name,
+    // False for dev?
+    handleFetch: argv.deploying || argv.production ? true : false,
+    logger: gutil.log,
+    runtimeCaching: [
+      {
+        urlPattern: /.*/,
+        handler: 'networkFirst'
+      }
+    ],
+    staticFileGlobs: [
+      location + '/**/*.{js,json,html,css,svg}',
+      location + '/assets/images/favicons/**/*',
+      location + '/assets/images/icons/**/*',
+      location + '/assets/images/airtable/**/*-600*jpg',
+      location + '/responsive/**/*-600*jpg'
+    ],
+    stripPrefix: location + '/'
+    //verbose: true
+  };
+
+  swprecache.write(
+    path.join(__dirname, location, 'sw-precache-service-worker.js'),
+    config,
+    done
+  );
 });
 
 // Publishing
@@ -285,17 +320,22 @@ gulp.task(
   gulpPublish.publish(gulp)
 );
 gulp.task('publish:token', gulpPublish.createToken(gulp));
-gulp.task('publish:build', gulpPublish.buildConfig(gulp));
+gulp.task('publish:build-config', gulpPublish.buildConfig(gulp));
 gulp.task('publish:confirm', gulpPublish.confirmToken(gulp));
 gulp.task('publish:open', gulpPublish.openURL(gulp));
 
 // Short build and full build
-gulp.task('build', ['assets', 'html:data', 'styles', 'js']);
-gulp.task('build:full', ['assets', 'html:full', 'styles', 'js']);
+gulp.task('build', done => {
+  runSequence(['assets', 'html:data', 'styles', 'js'], 'sw:precache', done);
+});
+gulp.task('build:full', done => {
+  runSequence(['assets', 'html:full', 'styles', 'js'], 'sw:precache', done);
+});
 gulp.task('default', ['build:full']);
 
 // Deploy (build and publish)
 gulp.task('deploy', done => {
+  argv.deploying = true;
   return runSequence('clean', 'build:full', 'publish', done);
 });
 gulp.task('deploy:open', ['publish:open']);

@@ -69,6 +69,7 @@
     "stylelint-scss": "^2.2.0",
     "svelte": "^1.49.3",
     "svelte-loader": "^2.3.2",
+    "sw-precache": "^5.2.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "underscore": "^1.8.3",
     "webpack": "^3.1.0",

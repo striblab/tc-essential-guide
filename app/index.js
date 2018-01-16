@@ -3,7 +3,7 @@
  */
 
 // Define globals that are added through the config.json file, here like this:
-/* global $ */
+/* global $, _ */
 'use strict';
 
 // Dependencies
@@ -33,7 +33,8 @@ let utils = utilsFn({
 let store = {
   error: false,
   errorMessage: null,
-  location: null
+  location: null,
+  offline: false
 };
 
 // Create components.  Get page data.
@@ -60,6 +61,14 @@ if (dataFile) {
           }
         });
       });
+
+      // Precache (offline) service worker.  Do it here, so that we know
+      // the base path
+      if ('serviceWorker' in window.navigator) {
+        window.navigator.serviceWorker.register(
+          (data.basePath || '.') + '/sw-precache-service-worker.js'
+        );
+      }
     })
     .catch(console.error);
 }
@@ -83,3 +92,22 @@ function adjustFixedElements() {
   });
 }
 $(document).ready(adjustFixedElements);
+
+// Let the app know about online or offline
+if (window.navigator) {
+  if (_.isBoolean(window.navigator.onLine)) {
+    store.offline = !window.navigator.onLine;
+    $('body').toggleClass('offline', store.offline);
+  }
+
+  window.addEventListener('load', () => {
+    window.addEventListener('online', () => {
+      store.offline = false;
+      $('body').toggleClass('offline', store.offline);
+    });
+    window.addEventListener('offline', () => {
+      store.offline = true;
+      $('body').toggleClass('offline', store.offline);
+    });
+  });
+}
