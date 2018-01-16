@@ -177,15 +177,31 @@ export default {
     },
 
     // Make map icon
-    mapIcon: function(color = '#C5C5C5') {
+    mapIcon: function(state = 'inactive') {
+      let activeColor = '#2E3574';
+      let inActiveColor = '#C5C5C5';
+      let mobileSize = 0.65;
+      let desktopSize = 0.9;
+      let activeScale = 1;
+      let inActiveScale = 0.75;
+
       return {
         path:
           'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
-        scale: this.get('map')
-          ? this.get('map').getDiv().offsetWidth > 600 ? 0.9 : 0.65
-          : 0.65,
+        scale:
+          (this.get('map')
+            ? this.get('map').getDiv().offsetWidth > 600
+              ? desktopSize
+              : mobileSize
+            : mobileSize) *
+          (state === 'active'
+            ? activeScale
+            : state === 'inactive' ? inActiveScale : inActiveScale),
         anchor: new google.maps.Point(45.8 / 2, 66.7),
-        fillColor: color === 'active' ? '#2E3574' : color ? color : '#C5C5C5',
+        fillColor:
+          state === 'active'
+            ? activeColor
+            : state === 'inactive' ? inActiveColor : inActiveColor,
         fillOpacity: 0.95,
         strokeWeight: 0
       };
