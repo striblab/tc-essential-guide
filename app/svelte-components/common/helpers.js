@@ -35,10 +35,10 @@ helpers.fullByline = function(data) {
 // Simple, hacky way to determine ios
 helpers.isIOS = function() {
   return typeof window !== 'undefined' &&
-    navigator &&
-    navigator.platform &&
-    navigator.platform.match &&
-    navigator.platform.match(/iphone|ipad/i)
+    window.navigator &&
+    window.navigator.userAgent &&
+    window.navigator.userAgent.match &&
+    window.navigator.userAgent.match(/iphone|ipad/i)
     ? true
     : false;
 };
