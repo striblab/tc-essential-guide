@@ -152,9 +152,13 @@ export default {
         icon: this.mapIcon()
       });
 
-      // Click even
-      marker.addListener('click', function() {
-        infowindow.open(this.get('map'), marker);
+      // Click event
+      marker.addListener('click', () => {
+        if (this.root && this.root.goTo) {
+          this.root.goTo(location.id);
+        } else {
+          infowindow.open(this.get('map'), marker);
+        }
       });
 
       // Add to map
