@@ -209,6 +209,8 @@ header[role='banner'] {
           line-height: 1em;
           border-bottom: 1px solid $color-white;
           padding: 2em 1em;
+
+
         }
 
         span {
@@ -219,6 +221,16 @@ header[role='banner'] {
 
         &:hover {
           opacity: 0.5;
+
+          @include full-view {
+            // Use box-shadow to not affect height of element
+            border-bottom-color: transparent;
+            box-shadow: 0 -4px 0 0 $highlight-yellow inset;
+            opacity: 1;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+            color: $highlight-yellow;
+          }
         }
       }
 
