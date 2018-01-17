@@ -64,7 +64,6 @@
 
 <script>
 import helpers from './common/helpers.js';
-
 export default {
   methods: {
     // Toggle the full nav
@@ -72,10 +71,8 @@ export default {
       if (e && e.preventDefault) {
         e.preventDefault();
       }
-
       this.set({ fullNavOpen: !this.get('fullNavOpen') });
     },
-
     // Go back using browser.  If different domain, then go to root
     // of guide
     goBack: function(e) {
@@ -85,20 +82,16 @@ export default {
       } else if (!sameDomain) {
         return;
       }
-
       if (window.history) {
         window.history.back(-1);
       }
     }
   },
-
   helpers: {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
-    emailURL: helpers.emailURL
     emailURL: helpers.emailURL,
     smsURL: helpers.smsURL,
-
     backURL: function(data) {
       // Groups go back to home page
       // Lists go back to group
@@ -114,7 +107,6 @@ export default {
               : data.basePath;
     }
   },
-
   data() {
     return {
       isBrowser: typeof window !== undefined,
