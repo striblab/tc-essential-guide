@@ -52,7 +52,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     height: 100vh;
-    background-image: url('http://static.startribune.com/images/test-images/realphoto-mobile.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/finalphoto-mobile.jpg?cache=trash34234');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
@@ -63,7 +63,7 @@
     background-attachment: fixed;
 
     @include full-view {
-      background-image: url('http://static.startribune.com/images/test-images/realphoto.jpg');
+      background-image: url('http://static.startribune.com/images/test-images/finalphoto.jpg');
       background-position: 50% 30%;
     }
   }
@@ -188,7 +188,7 @@
 // Group navigation section
 .group-navigation {
   height: 100vh;
-  background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg?cache=trash');
+  background-image: url('http://static.startribune.com/images/test-images/finalphoto-mobile-darkblur.jpg?cache=trash34234');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -198,7 +198,7 @@
   background-attachment: fixed;
 
   @include full-view {
-    background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/finalphoto-darkblur.jpg');
     background-position: 50% 30%;
   }
 
@@ -343,7 +343,7 @@
 .in-the-way {
   height: 100vh;
   position: relative;
-  background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg?cache=trash');
+  background-image: url('http://static.startribune.com/images/test-images/finalphoto-mobile-darkblur.jpg?cache=trash34234');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
