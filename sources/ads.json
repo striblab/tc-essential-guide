@@ -1,0 +1,50 @@
+{
+  "food": {
+    "slot": "/7932/website/web_twin_cities_guide/web_twin_cities_guide_food",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-6402108-1"
+  },
+  "drink": {
+    "slot": "/7932/website/web_twin_cities_guide/web_twin_cities_guide_drink",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-9462369-1"
+  },
+  "events": {
+    "slot": "/7932/website/web_twin_cities_guide/web_twin_cities_guide_events",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-7635822-1"
+  },
+  "attractions": {
+    "slot":
+      "/7932/website/web_twin_cities_guide/web_twin_cities_guide_attractions",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-6212440-1"
+  },
+  "shopping": {
+    "slot":
+      "/7932/website/web_twin_cities_guide/web_twin_cities_guide_shopping",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-3553580-1"
+  },
+  "tours": {
+    "slot": "/7932/website/web_twin_cities_guide/web_twin_cities_guide_tours",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-8686422-1"
+  },
+  "transit": {
+    "slot": "/7932/website/web_twin_cities_guide/web_twin_cities_guide_transit",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-3530738-1"
+  },
+  "recreation": {
+    "slot":
+      "/7932/website/web_twin_cities_guide/web_twin_cities_guide_recreation",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-2684275-1"
+  },
+  "true-minnesota": {
+    "slot": "/7932/website/web_twin_cities_guide/web_twin_cities_guide_truemn",
+    "sizes": "[[300, 250]]",
+    "id": "div-gpt-ad-5673495-1"
+  }
+}

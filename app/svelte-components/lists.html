@@ -94,9 +94,9 @@
       <div><em>This list should have items.</em></div>
     {{/if}}
 
-    <div class="ad ad-placeholder">
-      Ad Placeholder
-    </div>
+    {{#if data.ad}}
+      <Ad ad="{{ data.ad }}" />
+    {{/if}}
   </article>
 </div>
 
@@ -106,11 +106,13 @@ import methods from './common/methods.js';
 import observe from '../observe.js';
 import Item from './items.html';
 import Map from './map.html';
+import Ad from './ad.html';
 
 export default {
   components: {
     Item,
-    Map
+    Map,
+    Ad
   },
 
   oncreate() {

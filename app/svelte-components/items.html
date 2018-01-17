@@ -147,6 +147,12 @@
           </div>
         {{/if}}
       {{/if}}
+
+      {{#if display === 'full'}}
+        {{#if data.ad}}
+          <Ad ad="{{ data.ad }}" />
+        {{/if}}
+      {{/if}}
     </div>
   </article>
 </div>
@@ -154,8 +160,13 @@
 <script>
 import helpers from './common/helpers.js';
 import methods from './common/methods.js';
+import Ad from './ad.html';
 
 export default {
+  components: {
+    Ad
+  },
+
   oncreate: function() {
     // Watch store for location
     this.observe('store', n => {

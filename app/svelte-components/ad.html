@@ -1,0 +1,36 @@
+{{#if ad && ad.id}}
+  <div class="ad">
+    <div id="{{ ad.id }}" class="ad-content"></div>
+  </div>
+{{/if}}
+
+<script>
+export default {
+  oncreate() {
+    this.observe(
+      'ad',
+      n => {
+        if (
+          !this.__servedAd &&
+          n &&
+          this.get('isBrowser') &&
+          window &&
+          window.googletag
+        ) {
+          window.googletag.cmd.push(() => {
+            window.googletag.display(n.id);
+          });
+          this.__servedAd = true;
+        }
+      },
+      { defer: true }
+    );
+  },
+
+  data() {
+    return {
+      isBrowser: typeof window !== undefined
+    };
+  }
+};
+</script>

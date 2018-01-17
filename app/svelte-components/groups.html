@@ -37,7 +37,7 @@
       {{#each allListsItems as i @airtableId}}
         <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }} {{ i.inFocus ? 'in-focus' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
-            {{#if i.mainImage && i.mainImage[0] }}
+            {{#if i.mainImageLocal }}
               <picture>
                 <source
                   type="image/webp"
@@ -58,9 +58,9 @@
       {{/each}}
     </ul>
 
-    <div class="ad ad-placeholder">
-      Ad Placeholder
-    </div>
+    {{#if data.ad}}
+      <Ad ad="{{ data.ad }}" />
+    {{/if}}
   {{/if}}
 
   {{#if view === 'map'}}
@@ -77,9 +77,9 @@
           {{/each}}
         {{/if}}
 
-        <div class="ad ad-placeholder">
-          Ad Placeholder
-        </div>
+        {{#if data.ad}}
+          <Ad ad="{{ data.ad }}" />
+        {{/if}}
       </div>
     </div>
   {{/if}}
@@ -92,11 +92,13 @@ import observe from '../observe.js';
 import mapStyles from '../map-styles.js';
 import Item from './items.html';
 import Map from './map.html';
+import Ad from './ad.html';
 
 export default {
   components: {
     Item,
-    Map
+    Map,
+    Ad
   },
 
   oncreate: function() {

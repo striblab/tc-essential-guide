@@ -3,23 +3,31 @@
  */
 
 .ad {
-  margin: 2em 1em;
+  display: block;
+  margin: 0 auto 2rem;
+  padding-top: 2rem;
 
-  &.ad-placeholder {
+  .ad-content {
+    text-align: center;
+    background-color: #FDFDFD;
+    color: #FDFDFD;
     margin: 0 auto;
-    min-height: 6em;
-    line-height: 6em;
+    height: auto;
+
+    &.testing {
+      height: 250px;
+      width: 300px;
+      line-height: 200px;
+    }
+  }
+
+  .ad-placeholder {
     text-align: center;
     background-color: #BABABF;
     color: #111111;
     height: 250px;
     width: 300px;
-    margin-top: 2em;
-    margin-bottom: 2em;
-
-    @include full-view {
-      margin: 0 auto;
-      margin-top: 50px;
-    }
+    line-height: 200px;
+    margin: 0 auto;
   }
 }

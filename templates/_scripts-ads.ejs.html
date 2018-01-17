@@ -1,0 +1,27 @@
+
+<% if (data && data.ad) { %>
+  <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+  <script>
+  var gptadslots = [];
+var googletag = googletag || { cmd: [] };
+</script>
+  <script>
+  googletag.cmd.push(function() {
+    gptadslots.push(
+      googletag
+        .defineSlot(
+          '<%= jsString(data.ad.slot) %>',
+          <%= data.ad.sizes %>,
+          '<%= jsString(data.ad.id) %>'
+        )
+        .setTargeting('pos', ['1'])
+        .setTargeting('ct', ['a'])
+        .addService(googletag.pubads())
+    );
+
+    googletag.pubads().collapseEmptyDivs();
+    googletag.pubads().setCentering(true);
+    googletag.enableServices();
+  });
+  </script>
+<% } %>

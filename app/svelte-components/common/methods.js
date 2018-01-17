@@ -139,5 +139,25 @@ module.exports = {
         this.set(found);
       });
     }
+  },
+
+  // Yay ads
+  yesToAds: function() {
+    let data = this.get('data');
+
+    if (
+      !this.__servedAd &&
+      data &&
+      data.ad &&
+      this.get('isBrowser') &&
+      window &&
+      window.googletag
+    ) {
+      console.log(data.ad.id);
+      window.googletag.cmd.push(() => {
+        window.googletag.display(data.ad.id);
+      });
+      this.__servedAd = true;
+    }
   }
 };
