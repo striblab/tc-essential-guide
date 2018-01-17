@@ -22,28 +22,9 @@
 
   header[role='banner'] {
     display: none;
+  }
 
-    /*
-    background-color: rgba(0,0,0,0);
-    animation-delay: 5s;
-    animation: fadeIn 3s;
-    background-color: rgba(0, 0, 0, 0);
-
-    .top-nav-left {
-      display: none;
-    }
-
-    .back-logo {
-      display: none;
-    }
-
-    .middle-logo {
-      background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg');
-      height: 1.6em;
-    }
-    */
-  } // Splash screen section
-
+  // Splash screen section
   .splash {
     opacity: 0;
     animation-name: fadeIn;
@@ -52,7 +33,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     height: 100vh;
-    background-image: url('http://static.startribune.com/images/test-images/realphoto-mobile.jpg');
+    background-image: url('./assets/images/responsive/stadium-portrait.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
@@ -63,7 +44,7 @@
     background-attachment: fixed;
 
     @include full-view {
-      background-image: url('http://static.startribune.com/images/test-images/realphoto.jpg');
+      background-image: url('./assets/images/responsive/stadium-landscape.jpg');
       background-position: 50% 30%;
     }
   }
@@ -79,7 +60,7 @@
     top: 3%;
     left: 50%;
     transform: translateX(-50%);
-    background-image: url('http://static.startribune.com.s3.amazonaws.com/images/icons/startribune-logo-black.svg?cache=trash');
+    background-image: url('./assets/images/strib/strib-name-star-black.svg');
     vertical-align: middle;
     display: block;
     width: 11em;
@@ -103,7 +84,7 @@
     font-size: 2.3em;
     text-transform: uppercase;
     font-weight: bold;
-    letter-spacing: 0px;
+    letter-spacing: 0;
     margin-top: 40%;
     display: block;
     margin-bottom: 10px;
@@ -129,7 +110,7 @@
       font-size: 2.5em;
       text-transform: uppercase;
       font-weight: bold;
-      letter-spacing: 0px;
+      letter-spacing: 0;
       margin-top: 10%;
     }
 
@@ -188,7 +169,7 @@
 // Group navigation section
 .group-navigation {
   height: 100vh;
-  background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg?cache=trash');
+  background-image: url('./assets/images/responsive/stadium-blur-portrait.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -198,7 +179,7 @@
   background-attachment: fixed;
 
   @include full-view {
-    background-image: url('http://static.startribune.com/images/test-images/realphoto-darkblur.jpg');
+    background-image: url('./assets/images/responsive/stadium-blur-landscape.jpg');
     background-position: 50% 30%;
   }
 
@@ -233,11 +214,11 @@
     margin-top: 2.9em;
     letter-spacing: 0.5px;
     text-align: center;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     box-shadow: none;
     padding: 0;
     padding-top: 0.3em;
-    opacity:1;
+    opacity: 1;
     animation-name: none;
     position: absolute;
     top: 0.5%;
@@ -343,7 +324,7 @@
 .in-the-way {
   height: 100vh;
   position: relative;
-  background-image: url('http://static.startribune.com/images/test-images/realphotodarkblur-mobile.jpg?cache=trash');
+  background-image: url('./assets/images/responsive/stadium-blur-portrait.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;

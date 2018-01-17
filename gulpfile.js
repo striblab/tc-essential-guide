@@ -199,7 +199,7 @@ gulp.task('assets', () => {
 // Responsive images.  This is an expensive task.
 gulp.task('assets:responsive:airtable', () => {
   return gulp
-    .src(['assets/images/airtable/*.{jpg,png}'])
+    .src(['assets/images/airtable/**/*.{jpg,png}'])
     .pipe(
       responsive(
         responsiveConfig(responsive).sizes,
@@ -210,10 +210,7 @@ gulp.task('assets:responsive:airtable', () => {
 });
 gulp.task('assets:responsive:images', () => {
   return gulp
-    .src([
-      'assets/images/*newtwincities*',
-      'assets/images/*desktopillustration*'
-    ])
+    .src(['assets/images/responsive/**/*.{jpg,png}'])
     .pipe(
       responsive(
         responsiveConfig(responsive).sizes,
