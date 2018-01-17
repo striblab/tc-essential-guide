@@ -6,11 +6,6 @@ article.item {
   margin-top: 1.5em;
   padding-bottom: 3em;
 
-  @include full-view {
-    max-width: none;
-    margin: 5em 3.7em 5em 3.7em;
-  }
-
   .item-header {
     display: flex;
     justify-content: space-between;
@@ -229,8 +224,9 @@ article.item {
     margin: 3rem 2rem;
     padding-bottom: 0;
 
+
     @include full-view {
-      margin: 3rem 2rem 1em;
+      margin: 5em 3.7em 5em 3.7em;
     }
 
     @media screen and (max-width: 300px) {
