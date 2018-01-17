@@ -1,6 +1,6 @@
 <nav>
   <div class="top-nav-section">
-  	<a href="{{ data.basePath || '.' }}/" class="back-logo" title="Go back a page" on:click="goBack(event)">
+  	<a href="{{ backURL(data) }}" class="back-logo" title="Go back a page">
       <span class="sr-only">Back</span>
     </a>
 
@@ -73,6 +73,7 @@ export default {
       }
       this.set({ fullNavOpen: !this.get('fullNavOpen') });
     },
+
     // Go back using browser.  If different domain, then go to root
     // of guide
     goBack: function(e) {
