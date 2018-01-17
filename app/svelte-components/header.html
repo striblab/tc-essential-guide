@@ -1,6 +1,6 @@
 <nav>
   <div class="top-nav-section">
-  	<a href="{{ backURL(data) }}" class="back-logo" title="Go back a page" on:click="goBack(event)">
+  	<a href="{{ data.basePath || '.' }}/" class="back-logo" title="Go back a page" on:click="goBack(event)">
       <span class="sr-only">Back</span>
     </a>
 
@@ -26,17 +26,36 @@
       </a>
     </div>
 
-    <h1 >{{ data.name || data.title || content.title }}</h1>
+    <h1 class="sr-only">{{ data.name || data.title || content.title }}</h1>
   </div>
 
   <div class="full-nav {{ fullNavOpen ? 'full-nav-open' : '' }}">
     <div class="vertical-center">
+      <h1><span>Essential Twin Cities Guide</span></h1>
       <ul>
         {{#each groups as g}}
           <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
         {{/each}}
+        <li>
+          <div class="social-buttons">
+            <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
+              <span class="sr-only">Share on Facebook</span>
+            </a>
+            <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
+              <span class="sr-only">Share on Twitter</span>
+            </a>
+            <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
+              <span class="sr-only">Share via email</span>
+            </a>
+          </div>
+        </li>
       </ul>
     </div>
+    <div class="sponsored-by">
+      <a href="https://www.cub.com/" rel="noopener" target="_blank">
+         <span>Sponsored by</span>
+        <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
+      </a>
   </div>
 </nav>
 
@@ -73,21 +92,7 @@ export default {
   helpers: {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
-    emailURL: helpers.emailURL,
-    backURL: function(data) {
-      // Groups go back to home page
-      // Lists go back to group
-      // Items go to either list or groups
-      return data.dataset === 'groups'
-        ? '../'
-        : data.dataset === 'lists' && data.groups && data.groups[0]
-          ? data.basePath + '/' + data.groups[0].filename
-          : data.dataset === 'items' && data.lists && data.lists[0]
-            ? data.basePath + '/' + data.lists[0].filename
-            : data.dataset === 'items' && data.groups && data.groups[0]
-              ? data.basePath + '/' + data.groups[0].filename
-              : data.basePath;
-    }
+    emailURL: helpers.emailURL
   },
 
   data() {

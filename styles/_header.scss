@@ -36,6 +36,12 @@ header[role='banner'] {
     background-size: cover;
     margin: 0 auto;
 
+    @include full-view {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
     &:hover {
       opacity: 0.85;
     }
@@ -120,6 +126,28 @@ header[role='banner'] {
       display: block;
     }
 
+    h1 {
+      font-family: Benton Sans;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-transform: uppercase;
+      vertical-align: bottom;
+      position: absolute;
+      top: -21%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      width: 100%;
+      span {
+        border-top: 2px solid white;
+        padding-top: 0.3em;
+      }
+
+      @include full-view {
+        top: -45%;
+      }
+    }
+
     ul,
     li {
       margin: 0;
@@ -130,28 +158,106 @@ header[role='banner'] {
     ul {
       // Offsets the vertical centering
       padding-bottom: 5%;
+      @include full-view {
+        width: 70%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
     }
 
-    ul li a {
-      display: block;
-      width: 100%;
-      height: 7vh;
-      line-height: 7vh;
-      vertical-align: middle;
-      text-align: center;
-      font-weight: normal;
-      color: $color-white;
-      text-transform: uppercase;
-      text-decoration: none;
-
-      span {
-        display: inline-block;
+    ul li {
+      @include full-view {
+        width: 49.5%;
+        display: block;
+        padding: 0 2em;
+        float: left;
+      }
+      a {
+        display: block;
+        width: 100%;
+        height: 6vh;
+        line-height: 6vh;
+        font-size: 1.2em;
         vertical-align: middle;
-        line-height: normal;
+        text-align: center;
+        font-weight: normal;
+        color: $color-white;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        @include full-view {
+          width: 100%;
+          display: block;
+          height: auto;
+          line-height: 1em;
+          border-bottom: 1px solid $color-white;
+          padding: 2em 1em;
+        }
+
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: normal;
+        }
+
+        &:hover {
+          opacity: 0.5;
+        }
       }
 
-      &:hover {
-        opacity: 0.5;
+
+
+      .social-buttons {
+        text-align: center;
+        display: block;
+        height: 6vh;
+        margin-top: 1em;
+        margin-left: 2em;
+        @include full-view {
+          display: none;
+        }
+
+        a {
+          display: inline-block;
+          width: 3em;
+          height: 3em;
+          margin-right: 0.1em;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+
+          &:hover {
+            opacity: 0.85;
+
+            @include full-view {
+              border-bottom-color: transparent;
+              box-shadow: 0 -4px 0 0 $color-white;
+              opacity: 1;
+              font-weight: bold;
+              transition: all 0.2s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+
+    .sponsored-by {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      span {
+        font-size: 1em;
+        font-family: map-get($font-sets, 'benton-sans');
+        color: $color-white;
+        font-weight: bold;
+      }
+      img {
+        display: inline;
+        height: 1.5em;
+        padding-left: 0.2em;
       }
     }
   }
