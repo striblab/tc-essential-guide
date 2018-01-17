@@ -85,6 +85,22 @@ header[role='banner'] {
     }
   }
 
+  .menu-logo-close {
+    vertical-align: middle;
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    background-image: url('./assets/images/icons/close-menu.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    text-align: right;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
   .social-buttons {
     display: none;
     vertical-align: middle;
