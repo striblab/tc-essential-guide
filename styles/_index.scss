@@ -33,7 +33,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     height: 100vh;
-    background-image: url('./assets/images/responsive/stadium-portrait.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/finalphoto-mobile.jpg?cache=trash34234');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
@@ -44,7 +44,7 @@
     background-attachment: fixed;
 
     @include full-view {
-      background-image: url('./assets/images/responsive/stadium-landscape.jpg');
+      background-image: url('http://static.startribune.com/images/test-images/finalphoto.jpg');
       background-position: 50% 30%;
     }
   }
@@ -169,7 +169,7 @@
 // Group navigation section
 .group-navigation {
   height: 100vh;
-  background-image: url('./assets/images/responsive/stadium-blur-portrait.jpg');
+  background-image: url('http://static.startribune.com/images/test-images/finalphoto-mobile-darkblur.jpg?cache=trash34234');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -179,7 +179,7 @@
   background-attachment: fixed;
 
   @include full-view {
-    background-image: url('./assets/images/responsive/stadium-blur-landscape.jpg');
+    background-image: url('http://static.startribune.com/images/test-images/finalphoto-darkblur.jpg');
     background-position: 50% 30%;
   }
 
@@ -324,7 +324,7 @@
 .in-the-way {
   height: 100vh;
   position: relative;
-  background-image: url('./assets/images/responsive/stadium-blur-portrait.jpg');
+  background-image: url('http://static.startribune.com/images/test-images/finalphoto-mobile-darkblur.jpg?cache=trash34234');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;

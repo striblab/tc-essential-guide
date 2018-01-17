@@ -6,6 +6,11 @@ article.item {
   margin-top: 1.5em;
   padding-bottom: 3em;
 
+  @include full-view {
+    max-width: none;
+    margin: 5em 3.7em 5em 3.7em;
+  }
+
   .item-header {
     display: flex;
     justify-content: space-between;
@@ -160,7 +165,11 @@ article.item {
   p a {
     text-decoration: none;
     color: $color-default-black;
-    border-bottom: 1px solid $color-emerald-green;
+    border-bottom: 2px solid $highlight-yellow;
+    &:hover {
+        background-color: $highlight-yellow;
+        transition: all 0.2s ease-in-out;
+      }
   }
 
   dd span {
