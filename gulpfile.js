@@ -23,6 +23,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const a11y = require('gulp-a11y');
 const responsive = require('gulp-responsive');
 const ejs = require('gulp-ejs');
+const imagemin = require('gulp-imagemin');
 const gutil = require('gulp-util');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
@@ -104,10 +105,6 @@ gulp.task('html:lint:details', ['html'], () => {
 gulp.task('html:data', done => {
   runSequence('source:data', 'html:lint:details', done);
 });
-// Wrapper for data, images, and html
-gulp.task('html:full', done => {
-  runSequence('source:data', 'assets:responsive', 'html:lint:details', done);
-});
 
 // Content tasks
 gulp.task('content', gulpContent.getContent(gulp, config));
@@ -170,7 +167,7 @@ gulp.task('js', ['js:lint', 'js:test'], () => {
     .pipe(gulp.dest('build'));
 });
 
-// Assets
+// Assets copy
 gulp.task('assets', () => {
   let pkg = require('./package.json');
   let settings = exists('sources/guide-settings.json')
@@ -196,6 +193,14 @@ gulp.task('assets', () => {
   return gulp.src('assets/**/*').pipe(gulp.dest('build/assets'));
 });
 
+// Optimize images
+gulp.task('assets:imagemin', () => {
+  return gulp
+    .src('build/assets/images/**/*')
+    .pipe(imagemin())
+    .pipe(gulp.dest('build/assets/images/'));
+});
+
 // Responsive images.  This is an expensive task.
 gulp.task('assets:responsive:airtable', () => {
   return gulp
@@ -217,7 +222,7 @@ gulp.task('assets:responsive:images', () => {
         responsiveConfig(responsive).options
       )
     )
-    .pipe(gulp.dest('build/assets/images'));
+    .pipe(gulp.dest('build/assets/images/responsive'));
 });
 gulp.task('assets:responsive', [
   'assets:responsive:images',
@@ -260,7 +265,7 @@ gulp.task('server', ['build'], () => {
 
 // Watch for building
 gulp.task('watch', () => {
-  gulp.watch(['styles/**/*.scss'], ['styles', 'sw:precache']);
+  gulp.watch(['styles/**/*.scss'], ['styles']);
   gulp.watch(
     [
       'templates/**/*',
@@ -270,9 +275,9 @@ gulp.task('watch', () => {
       'content.json',
       'app/svelte-components/**/*'
     ],
-    ['html', 'sw:precache']
+    ['html']
   );
-  gulp.watch(['app/**/*', 'config.json'], ['js', 'sw:precache']);
+  gulp.watch(['app/**/*', 'config.json'], ['js']);
   gulp.watch(['assets/**/*'], ['assets']);
   gulp.watch(['config.*json'], ['publish:build-config']);
 });
@@ -328,10 +333,23 @@ gulp.task('publish:open', gulpPublish.openURL(gulp));
 
 // Short build and full build
 gulp.task('build', done => {
-  runSequence(['assets', 'html:data', 'styles', 'js'], 'sw:precache', done);
+  runSequence(
+    'source:data',
+    'assets',
+    ['html:lint:details', 'styles', 'js'],
+    'sw:precache',
+    done
+  );
 });
 gulp.task('build:full', done => {
-  runSequence(['assets', 'html:full', 'styles', 'js'], 'sw:precache', done);
+  runSequence(
+    'source:data',
+    ['assets', 'assets:responsive'],
+    'assets:imagemin',
+    ['html:lint:details', 'styles', 'js'],
+    'sw:precache',
+    done
+  );
 });
 gulp.task('default', ['build:full']);
 
