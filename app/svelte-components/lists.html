@@ -60,6 +60,9 @@
       <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
         <span class="sr-only">Share via email</span>
       </a>
+      <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+        <span class="sr-only">Share via SMS</span>
+      </a>
     </div>
 
     <div class="article-description">{{{ data.description }}}</div>
@@ -246,7 +249,8 @@ export default {
     fullByline: helpers.fullByline,
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
-    emailURL: helpers.emailURL
+    emailURL: helpers.emailURL,
+    smsURL: helpers.smsURL
   },
 
   computed: {

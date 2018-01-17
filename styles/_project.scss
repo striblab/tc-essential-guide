@@ -150,6 +150,19 @@ p {
 
   .email-button {
     background-image: url('./assets/images/social/broadcast-white.svg');
+    display: none;
+
+    @include full-view {
+      display: inline-block;
+    }
+  }
+
+  .sms-button {
+    background-image: url('./assets/images/social/message-white.svg');
+
+    @include full-view {
+      display: none;
+    }
   }
 
   &.social-buttons-gray {
@@ -163,6 +176,10 @@ p {
 
     .email-button {
       background-image: url('./assets/images/social/broadcast-gray.svg');
+    }
+
+    .sms-button {
+      background-image: url('./assets/images/social/message-gray.svg');
     }
   }
 }

@@ -19,6 +19,9 @@
         <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
           <span class="sr-only">Share via email</span>
         </a>
+        <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+          <span class="sr-only">Share via SMS</span>
+        </a>
       </div>
 
       <a href="#/menu" class="menu-logo {{ fullNavOpen ? 'menu-logo-close' : '' }}" title="Menu" on:click="toggleFullNav(event)">
@@ -93,6 +96,23 @@ export default {
     facebookURL: helpers.facebookURL,
     twitterURL: helpers.twitterURL,
     emailURL: helpers.emailURL
+    emailURL: helpers.emailURL,
+    smsURL: helpers.smsURL,
+
+    backURL: function(data) {
+      // Groups go back to home page
+      // Lists go back to group
+      // Items go to either list or groups
+      return data.dataset === 'groups'
+        ? '../'
+        : data.dataset === 'lists' && data.groups && data.groups[0]
+          ? data.basePath + '/' + data.groups[0].filename
+          : data.dataset === 'items' && data.lists && data.lists[0]
+            ? data.basePath + '/' + data.lists[0].filename
+            : data.dataset === 'items' && data.groups && data.groups[0]
+              ? data.basePath + '/' + data.groups[0].filename
+              : data.basePath;
+    }
   },
 
   data() {
