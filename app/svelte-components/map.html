@@ -119,10 +119,7 @@ export default {
       });
 
       // Update map view
-      map.fitBounds(
-        this.get('bounds'),
-        map.getDiv().offsetWidth > 600 ? 100 : 20
-      );
+      map.fitBounds(this.get('bounds'), this.boundsPadding());
     },
 
     // Add a marker
@@ -184,16 +181,13 @@ export default {
       let desktopSize = 0.9;
       let activeScale = 1;
       let inActiveScale = 0.75;
+      let mobileish = this.isMobileIsh();
 
       return {
         path:
           'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
         scale:
-          (this.get('map')
-            ? this.get('map').getDiv().offsetWidth > 600
-              ? desktopSize
-              : mobileSize
-            : mobileSize) *
+          (mobileish ? mobileSize : desktopSize) *
           (state === 'active'
             ? activeScale
             : state === 'inactive' ? inActiveScale : inActiveScale),
@@ -209,12 +203,14 @@ export default {
 
     // Person icon for user location
     userLocationIcon: function(color = '#222222') {
+      let mobileish = this.isMobileIsh();
+      let mobileSize = 0.55;
+      let desktopSize = 0.4;
+
       return {
         path:
           'M24.7,17.4L24.7,17.4h-5.3c3-1.5,5.1-4.6,5.1-8.2c0-5.1-4.1-9.2-9.2-9.2S6.1,4.1,6.1,9.2c0,3.6,2.1,6.7,5.1,8.2H5.9 c-3.3,0-5.9,2.7-5.9,5.9v21.4c0,3.3,2.7,5.9,5.9,5.9h1.3v31.2c0,2.5,2,4.6,4.6,4.6h6.9c2.5,0,4.6-2,4.6-4.6V50.6h1.4 c3.3,0,5.9-2.7,5.9-5.9V23.3C30.6,20,27.9,17.4,24.7,17.4z',
-        scale: this.get('map')
-          ? this.get('map').getDiv().offsetWidth > 600 ? 0.55 : 0.4
-          : 0.4,
+        scale: mobileish ? mobileSize : desktopSize,
         anchor: new google.maps.Point(30.6 / 2, 86.4),
         fillColor: color,
         fillOpacity: 0.95,
@@ -293,10 +289,7 @@ export default {
 
       // If non focused, then focus to original bounds
       if ((!focus || !focus.length) && this.get('bounds')) {
-        map.fitBounds(
-          this.get('bounds'),
-          map.getDiv().offsetWidth > 600 ? 100 : 20
-        );
+        map.fitBounds(this.get('bounds'), this.boundsPadding());
 
         // Issue where markers disspear
         map.panTo(map.getCenter());
@@ -319,10 +312,28 @@ export default {
         map.panTo(map.getCenter());
       } else {
         // Set bounds
-        map.fitBounds(bounds, map.getDiv().offsetWidth > 600 ? 100 : 20);
+        map.fitBounds(bounds, this.boundsPadding());
         // Issue where markers disspear
         map.panTo(map.getCenter());
       }
+    },
+
+    // A simple, hackish way to determine view.  Assumes mobile.
+    isMobileIsh: function() {
+      let widthTest = 600;
+      let map = this.get('map');
+      return map &&
+        _.isFunction(map.getDiv) &&
+        _.isObject(map.getDiv()) &&
+        map.getDiv().offsetWidth &&
+        map.getDiv().offsetWidth > widthTest
+        ? false
+        : true;
+    },
+
+    // Get padding for get bounds
+    boundsPadding: function() {
+      return this.isMobileIsh() ? 10 : 100;
     }
   },
 

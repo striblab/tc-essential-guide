@@ -14,12 +14,12 @@
   },
   "js": {
     "globals": [
-      "//static.startribune.com/assets/libs/omniture-strib/H.20.3/omniture-strib.min.js",
-      "//cdn.polyfill.io/v2/polyfill.min.js",
+      "//cdn.polyfill.io/v2/polyfill.min.js?features=default,IntersectionObserver",
       "//static.startribune.com/assets/libs/object-fit-images/3.2.3/ofi.min.js",
       "//static.startribune.com/assets/libs/lodash/4.17.4/lodash.min.js",
       "//static.startribune.com/assets/libs/jquery/3.2.1/jquery.slim.min.js",
-      "//maps.googleapis.com/maps/api/js?key=AIzaSyBN1TbeUQKZhhulEsc24KlJzskpNpBUAUI"
+      "//maps.googleapis.com/maps/api/js?key=AIzaSyBN1TbeUQKZhhulEsc24KlJzskpNpBUAUI",
+      "//static.startribune.com/assets/libs/omniture-strib/H.20.3/omniture-strib.min.js"
     ]
   },
   "content": {},
