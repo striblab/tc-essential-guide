@@ -49,7 +49,7 @@
         </div>
 
         {{#if data.latitude && data.longitude}}
-          <a href="{{ directionsURL(data, store) }}" target="_blank" rel="noopener" class="directions">Directions</a>
+          <a href="{{ directionsURL(data, store) }}" target="_blank" class="directions">Directions</a>
         {{/if}}
       </div>
     </div>
@@ -110,7 +110,7 @@
             {{#if data.phone}}
               <dt><span>Phone</span></dt>
               <dd><span class="linkable phone-link">
-                <a href="{{ phoneURL(data.phone) }}" target="_blank" rel="noopener">{{ data.phone }}</a>
+                <a href="{{ phoneURL(data.phone) }}">{{ data.phone }}</a>
               </span></dd>
             {{/if}}
 
@@ -124,16 +124,16 @@
         {{/if}}
 
         <div class="social-buttons social-buttons-gray">
-          <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
+          <a href="{{ facebookURL(data, content) }}" target="_blank" class="facebook-button">
             <span class="sr-only">Share on Facebook</span>
           </a>
-          <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
+          <a href="{{ twitterURL(data, content) }}" target="_blank" class="twitter-button">
             <span class="sr-only">Share on Twitter</span>
           </a>
-          <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
+          <a href="{{ emailURL(data, content) }}" target="_blank" class="email-button">
             <span class="sr-only">Share via email</span>
           </a>
-          <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+          <a href="{{ smsURL(data, content) }}" class="sms-button">
             <span class="sr-only">Share via SMS</span>
           </a>
         </div>

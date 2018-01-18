@@ -114,7 +114,7 @@ helpers.smsURL = function(data, content) {
 };
 
 helpers.phoneURL = function(phone) {
-  return phone ? `tel:${phone.replace(/[^0-9]+/g, '')}` : '';
+  return phone ? `tel:1${phone.replace(/[^0-9]+/g, '')}` : '';
 };
 
 helpers.urlLink = function(url) {
