@@ -1,0 +1,112 @@
+/**
+ * Shared parts of main nav
+ */
+
+.main-nav-heading {
+  font-family: map-get($font-sets, 'benton-sans');
+  font-weight: bold;
+  font-size: 1.15em;
+  text-align: center;
+  text-transform: uppercase;
+  color: $color-white;
+  margin: -0.9em auto 0;
+  max-width: 71.3%;
+  min-width: 16em;
+  border-top: 2px solid $color-white;
+  letter-spacing: 0.5px;
+  padding: 0.3em 0 0;
+
+  @include full-view {
+    max-width: 20em;
+  }
+}
+
+.main-nav-groups {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+
+  @include full-view {
+    width: 70%;
+    left: 0;
+    right: 0;
+  }
+
+  .group {
+    @include full-view {
+      width: 49.5%;
+      display: block;
+      padding: 0 2em;
+      float: left;
+    }
+
+    a {
+      font-size: 1.1em;
+      display: block;
+      width: 100%;
+      height: 7vh;
+      line-height: 7vh;
+      text-align: center;
+      font-weight: normal;
+      color: $color-white;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+      }
+
+      &:hover {
+        opacity: 0.5;
+
+        @include full-view {
+          // Use box-shadow to not affect height of element
+          border-bottom-color: transparent;
+          box-shadow: 0 -4px 0 0 $highlight-yellow inset;
+          opacity: 1;
+          font-weight: bold;
+          transition: all 0.2s ease-in-out;
+          color: $highlight-yellow;
+        }
+      }
+
+      @include full-view {
+        width: 100%;
+        display: block;
+        height: auto;
+        line-height: 1em;
+        border-bottom: 1px solid $color-white;
+        padding: 5vh 2.5vh;
+      }
+    }
+
+    &.sponsored-by {
+      display: none;
+
+      @include full-view {
+        display: block;
+      }
+
+      a {
+        font-size: 0.75em;
+        border-bottom: none;
+        padding-top: 5vh;
+
+        &:hover {
+          border-bottom: none;
+          box-shadow: none;
+          font-weight: normal;
+          color: $color-white;
+        }
+      }
+
+      img {
+        max-height: 1.5rem;
+        padding-top: 0.25em;
+        display: inline-block;
+      }
+    }
+  }
+}

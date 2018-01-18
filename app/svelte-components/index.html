@@ -1,67 +1,88 @@
 <div class="component component-index {{ started ? 'is-started' : '' }}">
-  <div class="splash">
-    <div class="title-logo"></div>
+  <section class="splash index-section">
+    <div class="index-section-inner">
+      <div class="index-section-background"></div>
 
-    <div class="vertical-center">
-      <h1>
-        <span id="essential">Super Bowl LII</span>
-        <span id="guide">Essential Twin Cities Guide</span>
-      </h1>
+      <div class="title-logo">
+        <img src="./assets/images/strib/strib-name-star-black.svg" alt="Star Tribune logo">
+        <span class="sr-only">Star Tribune</span>
+      </div>
+
+      <div class="vertical-center">
+        <h1>
+          <span class="super-bowl">Super Bowl LII</span>
+          <span class="guide">Essential Twin Cities Guide</span>
+        </h1>
+      </div>
+
+      <div class="vertical-bottom">
+        <a href="#group-navigation-anchor" class="get-started" on:click="goToGroups(event)" id="start-button">Get started</a>
+      </div>
     </div>
-    <a href="#group-navigation-anchor" class="get-started" on:click="goToGroups(event)" id="start-button">Get started</a>
+  </section>
 
-  </div>
+  <section class="in-the-way index-section" ref:INTHEWAY>
+    <div class="index-section-inner">
+      <div class="index-section-background"></div>
 
-  <div class="in-the-way" ref:INTHEWAY>
-    <div class="in-the-way-content-i-mean-ad vertical-center">
-      <span>Sponsored by</span>
+      <div class="in-the-way-content-i-mean-ad vertical-center">
+        <span>Sponsored by</span>
 
-      <a href="https://ad.doubleclick.net/ddm/clk/412263939;213124867;i" rel="noopener" target="_blank">
-        <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
-      </a>
-
-      <img class="ad-tracker-image" src="https://ad.doubleclick.net/ddm/ad/N3175.132427STARTRIBUNEMEDIACOMP/B20669916.213124867;sz=1x1;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
-    </div>
-  </div>
-
-  <div id="group-navigation-anchor" class="group-navigation" ref:groupNavigation>
-    <div class="title-logo"></div>
-    <h1>{{ data.title }}</h1>
-
-    <div class="vertical-center groups cf">
-      {{#each data.groups as g}}
-        <div class="group">
-          <a href="{{ data.basePath }}/{{ g.filename }}"><span>{{ g.title }}</span></a>
-        </div>
-      {{/each}}
-
-      <div class="group sponsored-by">
         <a href="https://ad.doubleclick.net/ddm/clk/412263939;213124867;i" rel="noopener" target="_blank">
-          Sponsored by<br>
           <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
         </a>
 
         <img class="ad-tracker-image" src="https://ad.doubleclick.net/ddm/ad/N3175.132427STARTRIBUNEMEDIACOMP/B20669916.213124867;sz=1x1;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
       </div>
     </div>
+  </section>
 
-    <div class="vertical-bottom">
-      <div class="social-buttons">
-        <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
-          <span class="sr-only">Share on Facebook</span>
-        </a>
-        <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
-          <span class="sr-only">Share on Twitter</span>
-        </a>
-        <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
-          <span class="sr-only">Share via email</span>
-        </a>
-        <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
-          <span class="sr-only">Share via SMS</span>
-        </a>
+  <section id="group-navigation-anchor" class="group-navigation index-section" ref:groupNavigation>
+    <div class="index-section-inner">
+      <div class="index-section-background"></div>
+
+      <div class="title-logo">
+        <img src="./assets/images/strib/strib-name-star-white.svg" alt="Star Tribune logo">
+        <span class="sr-only">Star Tribune</span>
+      </div>
+
+      <h1 class="main-nav-heading">{{ data.title }}</h1>
+
+      <div class="vertical-center main-nav-groups cf">
+        {{#each data.groups as g}}
+          <div class="group">
+            <a href="{{ data.basePath }}/{{ g.filename }}"><span>{{ g.title }}</span></a>
+          </div>
+        {{/each}}
+
+        <div class="group sponsored-by">
+          <a href="https://ad.doubleclick.net/ddm/clk/412263939;213124867;i" rel="noopener" target="_blank">
+            Sponsored by<br>
+            <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
+          </a>
+
+          <img class="ad-tracker-image" src="https://ad.doubleclick.net/ddm/ad/N3175.132427STARTRIBUNEMEDIACOMP/B20669916.213124867;sz=1x1;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+        </div>
+      </div>
+
+      <div class="vertical-bottom">
+        <div class="social-buttons">
+          <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
+            <span class="sr-only">Share on Facebook</span>
+          </a>
+          <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
+            <span class="sr-only">Share on Twitter</span>
+          </a>
+          <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
+            <span class="sr-only">Share via email</span>
+          </a>
+          <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+            <span class="sr-only">Share via SMS</span>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 <script>
