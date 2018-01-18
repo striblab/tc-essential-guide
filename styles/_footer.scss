@@ -3,9 +3,6 @@
  */
 
 footer[role='contentinfo'] {
-  background-color: $color-muted-blue;
-
-  .layout-index & {
-    margin-top: 0;
-  }
+  background-color: $color-white;
+  color: $color-black;
 }

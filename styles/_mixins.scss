@@ -37,3 +37,43 @@
     @content;
   }
 }
+
+// Attempt to make responsive images.  Use double images so that there is at least
+// a low res image close to load.
+@mixin responsive-image($base, $extension: 'jpg', $sizes: 300 600 900 1200 2000, $default-low: 600, $default-high: 900) {
+  @each $s in $sizes {
+    $si: index($sizes, $s);
+    $prev-s: false;
+
+    @if $si > 1 {
+      $prev-s: nth($sizes, $si - 1);
+    }
+    $next-s: false;
+
+    @if $si < length($sizes) {
+      $next-s: nth($sizes, $si + 1);
+    }
+
+    // Default
+    background-image: url('#{$base}-#{$default-high}px.#{$extension}');
+    background-image: url('#{$base}-#{$default-high}px.#{$extension}'),
+      url('#{$base}-#{$default-low}px.#{$extension}');
+
+    // Use slightly larger image
+    @if $next-s {
+      @media only screen and (min-width: #{$s}px) {
+        background-image: url('#{$base}-#{$next-s}px.#{$extension}');
+        background-image: url('#{$base}-#{$next-s}px.#{$extension}'),
+          url('#{$base}-#{$default-low}px.#{$extension}');
+      }
+    }
+
+    @else {
+      @media only screen and (min-width: #{$s}px) {
+        background-image: url('#{$base}-#{$s}px.#{$extension}');
+        background-image: url('#{$base}-#{$s}px.#{$extension}'),
+          url('#{$base}-#{$default-low}px.#{$extension}');
+      }
+    }
+  }
+}

@@ -54,7 +54,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    background-image: url('./assets/images/responsive/stadium-portrait.jpg');
   }
 
   .title-logo {
@@ -82,10 +81,11 @@
     z-index: 10;
 
     .index-section-background {
-      background-image: url('./assets/images/responsive/stadium-portrait.jpg');
+      @include responsive-image('./assets/images/responsive/stadium-portrait');
 
       @include full-view {
-        background-image: url('./assets/images/responsive/stadium-landscape.jpg');
+        @include responsive-image('./assets/images/responsive/stadium-landscape', $default-high: 2000);
+
         background-position: 50% 30%;
       }
     }
@@ -185,12 +185,7 @@
     }
 
     .index-section-background {
-      background-image: url('./assets/images/responsive/stadium-blur-portrait.jpg');
-
-      @include full-view {
-        background-image: url('./assets/images/responsive/stadium-blur-landscape.jpg');
-        background-position: 50% 30%;
-      }
+      @include responsive-image('./assets/images/responsive/stadium-blur-portrait');
     }
 
     .in-the-way-content-i-mean-ad {
@@ -219,10 +214,11 @@
     color: $color-white;
 
     .index-section-background {
-      background-image: url('./assets/images/responsive/stadium-blur-portrait.jpg');
+      @include responsive-image('./assets/images/responsive/stadium-blur-portrait');
 
       @include full-view {
-        background-image: url('./assets/images/responsive/stadium-blur-landscape.jpg');
+        @include responsive-image('./assets/images/responsive/stadium-blur-landscape', $default-high: 2000);
+
         background-position: 50% 30%;
       }
     }
