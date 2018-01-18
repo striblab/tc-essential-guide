@@ -70,6 +70,11 @@ if (dataFile) {
           (data.basePath || '.') + '/sw-precache-service-worker.js'
         );
       }
+
+      // Handle ioshomescreen, but not on home page
+      if (data && data.dataset && data.dataset !== 'index') {
+        iosHomescreen(utils);
+      }
     })
     .catch(console.error);
 }
@@ -112,6 +117,3 @@ if (window.navigator) {
     });
   });
 }
-
-// Handle ioshomescreen
-iosHomescreen(utils);
