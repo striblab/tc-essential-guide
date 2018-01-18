@@ -1,19 +1,27 @@
+<:Window bind:online="online" />
+
 {{#if display === 'full'}}
   <div class="main-visual">
     {{#if data.mainImageLocal}}
-      <picture>
-        <source
-          type="image/webp"
-          srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
-          sizes="100vw">
-        <source
-          type="image/jpeg"
-          srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
-          sizes="100vw">
+      {{#if isBrowser && ((store && store.offline) || !online)}}
         <img
           alt="{{ data.mainImageDescription }}"
-          src="{{ data.basePath }}/{{ data.mainImageLocal }}">
-      </picture>
+          src="{{ data.basePath }}/{{ data.mainImageLocal.replace('.jpg', '-600px.jpg') }}">
+      {{else}}
+        <picture>
+          <source
+            type="image/webp"
+            srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
+            sizes="100vw">
+          <source
+            type="image/jpeg"
+            srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
+            sizes="100vw">
+          <img
+            alt="{{ data.mainImageDescription }}"
+            src="{{ data.basePath }}/{{ data.mainImageLocal }}">
+        </picture>
+      {{/if}}
     {{/if}}
   </div>
 {{/if}}
@@ -58,19 +66,25 @@
       <div class="item-image">
         <figure>
           <a href="{{ data.basePath }}/{{ data.filename }}">
-            <picture>
-              <source
-                type="image/webp"
-                srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
-                sizes="100vw">
-              <source
-                type="image/jpeg"
-                srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
-                sizes="100vw">
+            {{#if isBrowser && ((store && store.offline) || !online)}}
               <img
-                alt="Main image for '{{ data.name }}'"
-                src="{{ data.basePath }}/{{ data.mainImageLocal }}">
-            </picture>
+                alt="{{ data.mainImageDescription }}"
+                src="{{ data.basePath }}/{{ data.mainImageLocal.replace('.jpg', '-600px.jpg') }}">
+            {{else}}
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="{{ srcset(data.basePath, data.mainImageLocal, 'webp') }}"
+                  sizes="100vw">
+                <source
+                  type="image/jpeg"
+                  srcset="{{ srcset(data.basePath, data.mainImageLocal) }}"
+                  sizes="100vw">
+                <img
+                  alt="Main image for '{{ data.name }}'"
+                  src="{{ data.basePath }}/{{ data.mainImageLocal }}">
+              </picture>
+            {{/if}}
           </a>
 
           <cite>{{ data.imageCredit}}</cite>

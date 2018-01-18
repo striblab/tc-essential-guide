@@ -303,13 +303,13 @@ gulp.task('sw:precache', done => {
     //   }
     // ],
     staticFileGlobs: [
-      location + '/**/*.{js,json,html,css,svg}',
+      location + '/**/*.{js,json,html,css,svg,ico}',
       location + '/assets/images/favicons/**/*',
       location + '/assets/images/icons/**/*',
       // Default offline image
       location + '/assets/images/airtable/**/*-600*jpg',
       // All homepage images
-      location + '/responsive/**/*-*px*jpg'
+      location + '/assets/images/responsive/**/*-*px.jpg'
     ],
     stripPrefix: location + '/'
     //verbose: true

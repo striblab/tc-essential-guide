@@ -1,20 +1,28 @@
+<:Window bind:online="online" />
+
 <div class="main-visual">
   {{#if view === 'distance'}}
     <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.2" />
   {{elseif data.mainVisual}}
-    <picture>
-      <source
-        type="image/webp"
-        srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
-        sizes="100vw">
-      <source
-        type="image/jpeg"
-        srcset="{{ srcset(data.basePath, data.mainVisual) }}"
-        sizes="100vw">
+    {{#if isBrowser && ((store && store.offline) || !online)}}
       <img
         alt="{{ data.mainVisualDescription }}"
-        src="{{ data.basePath }}/{{ data.mainVisual }}">
-    </picture>
+        src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
+    {{else}}
+      <picture>
+        <source
+          type="image/webp"
+          srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
+          sizes="100vw">
+        <source
+          type="image/jpeg"
+          srcset="{{ srcset(data.basePath, data.mainVisual) }}"
+          sizes="100vw">
+        <img
+          alt="{{ data.mainVisualDescription }}"
+          src="{{ data.basePath }}/{{ data.mainVisual }}">
+      </picture>
+    {{/if}}
   {{/if}}
 </div>
 

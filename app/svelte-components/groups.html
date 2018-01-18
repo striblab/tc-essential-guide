@@ -1,20 +1,28 @@
+<:Window bind:online="online" />
+
 <div class="main-visual">
   {{#if view === 'map'}}
     <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.6" />
   {{elseif data.mainVisual}}
-    <picture>
-      <source
-        type="image/webp"
-        srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
-        sizes="100vw">
-      <source
-        type="image/jpeg"
-        srcset="{{ srcset(data.basePath, data.mainVisual) }}"
-        sizes="100vw">
+    {{#if isBrowser && ((store && store.offline) || !online)}}
       <img
         alt="{{ data.mainVisualDescription }}"
-        src="{{ data.basePath }}/{{ data.mainVisual }}">
-    </picture>
+        src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
+    {{else}}
+      <picture>
+        <source
+          type="image/webp"
+          srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
+          sizes="100vw">
+        <source
+          type="image/jpeg"
+          srcset="{{ srcset(data.basePath, data.mainVisual) }}"
+          sizes="100vw">
+        <img
+          alt="{{ data.mainVisualDescription }}"
+          src="{{ data.basePath }}/{{ data.mainVisual }}">
+      </picture>
+    {{/if}}
   {{/if}}
 </div>
 
@@ -45,20 +53,27 @@
         <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }} {{ i.inFocus ? 'in-focus' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImageLocal }}
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset="{{ srcset(data.basePath, i.mainImageLocal, 'webp') }}"
-                  sizes="100vw">
-                <source
-                  type="image/jpeg"
-                  srcset="{{ srcset(data.basePath, i.mainImageLocal) }}"
-                  sizes="100vw">
+              {{#if isBrowser && ((store && store.offline) || !online)}}
                 <img
-                  alt="Main image for '{{ i.title }}'"
-                  src="{{ data.basePath }}/{{ i.mainImageLocal }}">
-              </picture>
+                  alt="{{ i.mainVisualDescription }}"
+                  src="{{ data.basePath }}/{{ i.mainVisual.replace('.jpg', '-600px.jpg') }}">
+              {{else}}
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="{{ srcset(data.basePath, i.mainImageLocal, 'webp') }}"
+                    sizes="100vw">
+                  <source
+                    type="image/jpeg"
+                    srcset="{{ srcset(data.basePath, i.mainImageLocal) }}"
+                    sizes="100vw">
+                  <img
+                    alt="{{ i.mainImageDescription }}"
+                    src="{{ data.basePath }}/{{ i.mainImageLocal }}">
+                </picture>
+              {{/if}}
             {{/if}}
+
             <span>{{ i.title || i.name }}</span>
           </a>
         </li>
