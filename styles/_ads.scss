@@ -31,3 +31,14 @@
     margin: 0 auto;
   }
 }
+
+.ad-tracker-image {
+  border: none;
+  display: inline-block;
+  visibility: hidden;
+  height: 1px;
+  width: 1px;
+  opacity: 0;
+  position: absolute;
+  z-index: -9999;
+}
