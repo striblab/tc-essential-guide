@@ -2,12 +2,11 @@
  * Utility functions.
  */
 
-/* global window, document, pym, _ */
+/* global window, document, pym, _, $ */
 'use strict';
 
 // Dependencies
 import queryString from 'query-string';
-import smoothscroll from 'smoothscroll-polyfill';
 
 // Util class
 class Util {
@@ -39,9 +38,6 @@ class Util {
 
     // Set the view
     this.setView();
-
-    // Smoothscroll polyyfill
-    //smoothscroll.polyfill();
 
     // Enable pym
     if (this.options.pym) {
@@ -178,10 +174,15 @@ class Util {
   }
 
   // Scroll to id
-  goTo(id) {
+  // Note scrollIntoView is a native API but it is
+  // not widely supported and not good polyfills exists,
+  // specifically ones that can offset.
+  goTo(id, parent, scrollToOptions = {}) {
     const el = _.isElement(id)
       ? id
       : id[0] && _.isElement(id[0]) ? id[0] : document.getElementById(id);
+    let $parent = _.isUndefined(parent) ? $(window) : $(parent);
+    scrollToOptions.duration = scrollToOptions.duration || 1250;
 
     if (!el) {
       return;
@@ -190,8 +191,8 @@ class Util {
     if (this.isEmbedded() && this.pym) {
       this.pym.scrollParentToChildEl(el);
     }
-    else if (el.scrollIntoView) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    else {
+      $parent.scrollTo($(el), scrollToOptions);
     }
   }
 

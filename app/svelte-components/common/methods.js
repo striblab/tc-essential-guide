@@ -66,12 +66,12 @@ module.exports = {
   },
 
   // Go to an element
-  goTo: function(id) {
+  goTo: function(id, parent, scrollToOptions) {
     let utils = this.get('utils');
     let el = document.querySelector(`[data-id=${id}]`);
 
     if (utils && el) {
-      utils.goTo(el);
+      utils.goTo(el, parent, scrollToOptions);
     }
   },
 
@@ -153,7 +153,6 @@ module.exports = {
       window &&
       window.googletag
     ) {
-      console.log(data.ad.id);
       window.googletag.cmd.push(() => {
         window.googletag.display(data.ad.id);
       });

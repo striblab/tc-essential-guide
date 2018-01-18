@@ -1,6 +1,6 @@
 <div class="main-visual">
   {{#if view === 'distance'}}
-    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" />
+    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.2" />
   {{elseif data.mainVisual}}
     <picture>
       <source

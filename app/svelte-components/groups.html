@@ -1,6 +1,6 @@
 <div class="main-visual">
   {{#if view === 'map'}}
-    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" />
+    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.6" />
   {{elseif data.mainVisual}}
     <picture>
       <source
@@ -73,7 +73,7 @@
   {{#if view === 'map'}}
     <div class="map-items-container">
       <div class="map-wrapper">
-        <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="11" focusUserPosition="{{ false }}">
+        <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="11" focusUserPosition="{{ false }}" itemContainer=".map-items" goToOffset="-0.2">
       </div>
 
       <div class="map-items">
