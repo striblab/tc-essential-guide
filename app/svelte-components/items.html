@@ -48,7 +48,7 @@
           {{/if}}
         </div>
 
-        {{#if data.latitude && data.longitude}}
+        {{#if (data.latitude && data.longitude) || data.directionsAddress}}
           <a href="{{ directionsURL(data, store) }}" target="_blank" class="directions">Directions</a>
         {{/if}}
       </div>
