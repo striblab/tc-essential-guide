@@ -25,9 +25,12 @@ header[role='banner'] {
     justify-content: space-between;
   }
 
+  // Flex space-between doesn't center elements without some
+  // hackery
   .middle-logo {
     vertical-align: middle;
     display: block;
+    flex: none;
     width: 11em;
     height: 1.5em;
     background-image: url('./assets/images/strib/strib-name-star-white.svg');
@@ -35,12 +38,11 @@ header[role='banner'] {
     background-position: center center;
     background-size: cover;
     margin: 0 auto;
+    position: absolute;
+    transform: translateX(-50%);
 
-    @include full-view {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+    // Adjust centering as star visually uncenters
+    left: 49.1%;
 
     &:hover {
       opacity: 0.85;
@@ -126,10 +128,13 @@ header[role='banner'] {
     .main-nav-heading {
       margin-top: -0.8em;
       padding-top: 0.2em;
+      min-width: 10em;
+      max-width: 16em;
 
       @include full-view {
         margin-top: -0.9em;
         padding-top: 0.45em;
+        min-width: 16em;
       }
     }
 
