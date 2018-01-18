@@ -26,8 +26,15 @@
       <ul class="cf">
         <li><a href="?view=featured" on:click="eventSet(event, { view: 'featured' })"
           class="featured {{ view === 'featured' ? 'active' : '' }}">Featured</a></li>
-        <li><a href="?view=map" on:click="eventSet(event, { view: 'map' })"
-          class="distance {{ view === 'map' ? 'active' : '' }}">Map</a></li>
+        <li>
+          <a href="?view=map" on:click="eventSet(event, { view: 'map' })"
+          class="distance {{ view === 'map' ? 'active' : '' }}">
+            Map
+            {{#if isGeolocating}}
+              <img class="loading-icon" src="{{ data.basePath }}/assets/images/icons/loading.svg" alt="Loading icon">
+            {{/if}}
+          </a>
+        </li>
       </ul>
     {{/if}}
   </nav>

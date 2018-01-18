@@ -31,7 +31,7 @@
           <a href="?view=distance" on:click="eventSet(event, { view: 'distance' })" class="distance {{ view === 'distance' ? 'active' : '' }}">
             Map
             {{#if isGeolocating}}
-              <i class="fa fa-spinner fa-spin"></i>
+              <img class="loading-icon" src="{{ data.basePath }}/assets/images/icons/loading.svg" alt="Loading icon">
             {{/if}}
           </a>
         </li>
