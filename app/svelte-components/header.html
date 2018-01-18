@@ -33,32 +33,27 @@
   </div>
 
   <div class="full-nav {{ fullNavOpen ? 'full-nav-open' : '' }}">
+    <h1 class="main-nav-heading">Essential Twin Cities Guide</h1>
+
     <div class="vertical-center">
-      <h1><span>Essential Twin Cities Guide</span></h1>
-      <ul>
+      <ul class="main-nav-groups cf">
         {{#each groups as g}}
-          <li><a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a></li>
+          <li class="group">
+            <a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a>
+          </li>
         {{/each}}
-        <li>
-          <div class="social-buttons">
-            <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
-              <span class="sr-only">Share on Facebook</span>
-            </a>
-            <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
-              <span class="sr-only">Share on Twitter</span>
-            </a>
-            <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
-              <span class="sr-only">Share via email</span>
-            </a>
-          </div>
-        </li>
       </ul>
     </div>
-    <div class="sponsored-by">
-      <a href="https://www.cub.com/" rel="noopener" target="_blank">
-         <span>Sponsored by</span>
-        <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
-      </a>
+
+
+    <div class="vertical-bottom">
+      <div class="sponsored-by">
+        <a href="https://www.cub.com/" rel="noopener" target="_blank">
+          <span>Sponsored by</span>
+          <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
+        </a>
+      </div>
+    </div>
   </div>
 </nav>
 

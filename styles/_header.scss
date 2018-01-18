@@ -114,178 +114,55 @@ header[role='banner'] {
     }
   }
 
-  h1 {
-    font-family: Benton Sans;
-    font-weight: bold;
-    font-size: 1.1em;
-    text-transform: uppercase;
-    vertical-align: bottom;
-    padding-top: 0.6em;
-    position: absolute;
-    top: 3.1em;
-    left: 10%;
-    color: $color-forest-green;
-    display: none;
-  }
-
   .full-nav {
     width: 100%;
     // Note that this will go over the height of the page,
     // but, since this is fixed, its kind of ok
     height: 100vh;
     font-size: 1.1em;
-    padding: 1em 0 2em;
     z-index: 1000;
     display: none;
+
+    .main-nav-heading {
+      margin-top: -0.8em;
+      padding-top: 0.2em;
+
+      @include full-view {
+        margin-top: -0.9em;
+        padding-top: 0.45em;
+      }
+    }
 
     &.full-nav-open {
       display: block;
     }
 
-    h1 {
-      font-family: Benton Sans;
-      font-weight: bold;
-      font-size: 1.1em;
-      text-transform: uppercase;
-      vertical-align: bottom;
-      position: absolute;
-      top: -21%;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #fff;
-      width: 100%;
-      span {
-        border-top: 2px solid white;
-        padding-top: 0.3em;
-      }
-
-      @include full-view {
-        top: -45%;
-      }
-    }
-
-    ul,
-    li {
+    ul li {
       margin: 0;
-      padding: 0;
-      display: block;
     }
 
     ul {
       // Offsets the vertical centering
-      padding-bottom: 5%;
-      @include full-view {
-        width: 70%;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-      }
-    }
-
-    ul li {
-      @include full-view {
-        width: 49.5%;
-        display: block;
-        padding: 0 2em;
-        float: left;
-      }
-      a {
-        display: block;
-        width: 100%;
-        height: 6vh;
-        line-height: 6vh;
-        font-size: 1.2em;
-        vertical-align: middle;
-        text-align: center;
-        font-weight: normal;
-        color: $color-white;
-        text-transform: uppercase;
-        text-decoration: none;
-
-        @include full-view {
-          width: 100%;
-          display: block;
-          height: auto;
-          line-height: 1em;
-          border-bottom: 1px solid $color-white;
-          padding: 2em 1em;
-
-
-        }
-
-        span {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: normal;
-        }
-
-        &:hover {
-          opacity: 0.5;
-
-          @include full-view {
-            // Use box-shadow to not affect height of element
-            border-bottom-color: transparent;
-            box-shadow: 0 -4px 0 0 $highlight-yellow inset;
-            opacity: 1;
-            font-weight: bold;
-            transition: all 0.2s ease-in-out;
-            color: $highlight-yellow;
-          }
-        }
-      }
-
-
-
-      .social-buttons {
-        text-align: center;
-        display: block;
-        height: 6vh;
-        margin-top: 1em;
-        margin-left: 2em;
-        @include full-view {
-          display: none;
-        }
-
-        a {
-          display: inline-block;
-          width: 3em;
-          height: 3em;
-          margin-right: 0.1em;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-size: cover;
-
-          &:hover {
-            opacity: 0.85;
-
-            @include full-view {
-              border-bottom-color: transparent;
-              box-shadow: 0 -4px 0 0 $color-white;
-              opacity: 1;
-              font-weight: bold;
-              transition: all 0.2s ease-in-out;
-            }
-          }
-        }
-      }
+      padding-bottom: 10vh;
     }
 
     .sponsored-by {
-      position: absolute;
-      bottom: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      span {
+      text-align: center;
+
+      // Offsets the vertical centering
+      padding-bottom: 9vh;
+
+      a {
         font-size: 1em;
         font-family: map-get($font-sets, 'benton-sans');
         color: $color-white;
-        font-weight: bold;
-      }
-      img {
-        display: inline;
-        height: 1.5em;
-        padding-left: 0.2em;
+
+        img {
+          display: inline;
+          height: 1.5em;
+          padding-left: 0.2em;
+          vertical-align: middle;
+        }
       }
     }
   }

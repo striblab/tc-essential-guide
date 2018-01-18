@@ -33,6 +33,8 @@
   }
 
   .group {
+    display: block;
+
     @include full-view {
       width: 49.5%;
       display: block;
