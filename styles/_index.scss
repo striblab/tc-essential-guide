@@ -175,6 +175,29 @@
     }
   }
 
+  // Repeat visits (faster)
+  &.visits-repeat {
+    .splash {
+      animation-duration: 2s;
+      animation-delay: 0.5s;
+
+      .title-logo {
+        animation-duration: 2s;
+        animation-delay: 1s;
+      }
+
+      h1 {
+        animation-duration: 2s;
+        animation-delay: 1.5s;
+      }
+
+      .get-started {
+        animation-duration: 2s;
+        animation-delay: 2s;
+      }
+    }
+  }
+
   // Sponsored by section
   .in-the-way {
     z-index: 10;

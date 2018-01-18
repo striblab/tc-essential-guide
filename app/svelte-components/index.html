@@ -91,16 +91,24 @@ import methods from './common/methods.js';
 
 export default {
   oncreate() {
-    this.observe('data', n => {
-      // Default sort
-      if (n && n.groups && n.groups.length) {
-        n.groups = n.groups.sort((a, b) => {
-          return b.order - a.order;
-        });
-
-        this.set('data', n);
-      }
-    });
+    // // If counts are above (10) put user at nav screen
+    // this.observe(
+    //   'store',
+    //   (n, o) => {
+    //     if (
+    //       n &&
+    //       n !== o &&
+    //       n.visits &&
+    //       n.visits.count &&
+    //       (!o || n.visits.count !== o.visits.count)
+    //     ) {
+    //       if (n.visits.count > 10) {
+    //         this.goToGroups();
+    //       }
+    //     }
+    //   },
+    //   { init: true, defer: true }
+    // );
   },
 
   methods: {
