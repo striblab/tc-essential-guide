@@ -75,7 +75,7 @@
             <a href="?view=distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
               Near Me
               {{#if isGeolocating}}
-                <i class="fa fa-spinner fa-spin"></i>
+                <img class="loading-icon loading-image-small" src="{{ data.basePath }}/assets/images/icons/loading-white.svg" alt="Loading icon">
               {{/if}}
             </a>
           </li>
