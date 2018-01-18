@@ -117,3 +117,26 @@ if (window.navigator) {
     });
   });
 }
+
+// Keep track of visits (mostly for front page)
+if (utils.checkLocalStorage()) {
+  let visits = window.localStorage.getItem('tc-guide-visits');
+  visits = visits ? parseInt(visits, 10) : 0;
+  visits = visits + 1;
+
+  // Arbitrary points
+  if (visits > 2) {
+    $('body').addClass('visits-repeat');
+    store.visitsRepeat = true;
+  }
+  else if (visits > 50) {
+    visits = 0;
+  }
+
+  // Add to store
+  store.visits = store.visits || {};
+  store.visits.count = visits;
+
+  // Save
+  window.localStorage.setItem('tc-guide-visits', visits);
+}

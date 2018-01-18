@@ -152,7 +152,9 @@ export default {
       // Click event
       marker.addListener('click', () => {
         if (this.root && this.root.goTo) {
-          this.root.goTo(location.id);
+          this.root.goTo(location.id, this.get('itemContainer'), {
+            over: { top: parseFloat(this.get('goToOffset')) || -0.2 }
+          });
         } else {
           infowindow.open(this.get('map'), marker);
         }

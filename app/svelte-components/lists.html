@@ -1,20 +1,28 @@
+<:Window bind:online="online" />
+
 <div class="main-visual">
   {{#if view === 'distance'}}
-    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" />
+    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.2" />
   {{elseif data.mainVisual}}
-    <picture>
-      <source
-        type="image/webp"
-        srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
-        sizes="100vw">
-      <source
-        type="image/jpeg"
-        srcset="{{ srcset(data.basePath, data.mainVisual) }}"
-        sizes="100vw">
+    {{#if isBrowser && ((store && store.offline) || !online)}}
       <img
         alt="{{ data.mainVisualDescription }}"
-        src="{{ data.basePath }}/{{ data.mainVisual }}">
-    </picture>
+        src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
+    {{else}}
+      <picture>
+        <source
+          type="image/webp"
+          srcset="{{ srcset(data.basePath, data.mainVisual, 'webp') }}"
+          sizes="100vw">
+        <source
+          type="image/jpeg"
+          srcset="{{ srcset(data.basePath, data.mainVisual) }}"
+          sizes="100vw">
+        <img
+          alt="{{ data.mainVisualDescription }}"
+          src="{{ data.basePath }}/{{ data.mainVisual }}">
+      </picture>
+    {{/if}}
   {{/if}}
 </div>
 
@@ -51,16 +59,16 @@
     </div>
 
     <div class="social-buttons social-buttons-gray">
-      <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
+      <a href="{{ facebookURL(data, content) }}" target="_blank" class="facebook-button">
         <span class="sr-only">Share on Facebook</span>
       </a>
-      <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
+      <a href="{{ twitterURL(data, content) }}" target="_blank" class="twitter-button">
         <span class="sr-only">Share on Twitter</span>
       </a>
-      <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
+      <a href="{{ emailURL(data, content) }}" target="_blank" class="email-button">
         <span class="sr-only">Share via email</span>
       </a>
-      <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+      <a href="{{ smsURL(data, content) }}" target="_blank" class="sms-button">
         <span class="sr-only">Share via SMS</span>
       </a>
     </div>
@@ -75,7 +83,7 @@
             <a href="?view=distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
               Near Me
               {{#if isGeolocating}}
-                <i class="fa fa-spinner fa-spin"></i>
+                <img class="loading-icon loading-image-small" src="{{ data.basePath }}/assets/images/icons/loading-white.svg" alt="Loading icon">
               {{/if}}
             </a>
           </li>

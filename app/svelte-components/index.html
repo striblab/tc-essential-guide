@@ -67,16 +67,16 @@
 
       <div class="vertical-bottom">
         <div class="social-buttons">
-          <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
+          <a href="{{ facebookURL(data, content) }}" target="_blank" class="facebook-button">
             <span class="sr-only">Share on Facebook</span>
           </a>
-          <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
+          <a href="{{ twitterURL(data, content) }}" target="_blank" class="twitter-button">
             <span class="sr-only">Share on Twitter</span>
           </a>
-          <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
+          <a href="{{ emailURL(data, content) }}" target="_blank" class="email-button">
             <span class="sr-only">Share via email</span>
           </a>
-          <a href="{{ smsURL(data, content) }}" target="_blank" rel="noopener" class="sms-button">
+          <a href="{{ smsURL(data, content) }}" target="_blank" class="sms-button">
             <span class="sr-only">Share via SMS</span>
           </a>
         </div>
@@ -91,16 +91,24 @@ import methods from './common/methods.js';
 
 export default {
   oncreate() {
-    this.observe('data', n => {
-      // Default sort
-      if (n && n.groups && n.groups.length) {
-        n.groups = n.groups.sort((a, b) => {
-          return b.order - a.order;
-        });
-
-        this.set('data', n);
-      }
-    });
+    // // If counts are above (10) put user at nav screen
+    // this.observe(
+    //   'store',
+    //   (n, o) => {
+    //     if (
+    //       n &&
+    //       n !== o &&
+    //       n.visits &&
+    //       n.visits.count &&
+    //       (!o || n.visits.count !== o.visits.count)
+    //     ) {
+    //       if (n.visits.count > 10) {
+    //         this.goToGroups();
+    //       }
+    //     }
+    //   },
+    //   { init: true, defer: true }
+    // );
   },
 
   methods: {

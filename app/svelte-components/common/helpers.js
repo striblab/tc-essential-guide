@@ -43,8 +43,9 @@ helpers.isIOS = function() {
     : false;
 };
 
-// URL for directions via Google or Apple on iOS.  TODO: Is there a way to specify
-// the position and a name?
+// URL for directions via Google or Apple on iOS.  Ideally we would have a name
+// with the searching, but this is hard to do.  Google Maps has place IDs,
+// but I don't think that translates to Apple maps.
 // https://developers.google.com/maps/documentation/urls/guide#directions-action
 helpers.directionsURL = function(data, store) {
   let location =
@@ -55,14 +56,18 @@ helpers.directionsURL = function(data, store) {
   return helpers.isIOS()
     ? `https://maps.apple.com/?api=x${
       location ? '&saddr=' + encodeURIComponent(location) : ''
-    }&daddr=${encodeURIComponent(data.latitude)},${encodeURIComponent(
-      data.longitude
-    )}`
+    }&daddr=${
+      data.directionsAddress
+        ? encodeURIComponent(data.directionsAddress)
+        : encodeURIComponent(data.latitude + ',' + data.longitude)
+    }`
     : `https://www.google.com/maps/dir/?api=1${
       location ? '&origin=' + encodeURIComponent(location) : ''
-    }&destination=${encodeURIComponent(data.latitude)},${encodeURIComponent(
-      data.longitude
-    )}`;
+    }&destination=${
+      data.directionsAddress
+        ? encodeURIComponent(data.directionsAddress)
+        : encodeURIComponent(data.latitude + ',' + data.longitude)
+    }`;
 };
 
 // URL for facebook link
@@ -114,7 +119,7 @@ helpers.smsURL = function(data, content) {
 };
 
 helpers.phoneURL = function(phone) {
-  return phone ? `tel:${phone.replace(/[^0-9]+/g, '')}` : '';
+  return phone ? `tel:1${phone.replace(/[^0-9]+/g, '')}` : '';
 };
 
 helpers.urlLink = function(url) {
