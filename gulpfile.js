@@ -295,19 +295,21 @@ gulp.task('sw:precache', done => {
     logger: gutil.log,
     // Note that sw-precache will use cache version, unless specified
     // here.  But, each time this is run, hashes are created, so,
-    // not sure if this is really necessary
-    runtimeCaching: [
-      {
-        urlPattern: /.*/,
-        handler: 'networkFirst'
-      }
-    ],
+    // we don't use this (unless some problems arise :)
+    // runtimeCaching: [
+    //   {
+    //     urlPattern: /.*/,
+    //     handler: 'networkFirst'
+    //   }
+    // ],
     staticFileGlobs: [
       location + '/**/*.{js,json,html,css,svg}',
       location + '/assets/images/favicons/**/*',
       location + '/assets/images/icons/**/*',
+      // Default offline image
       location + '/assets/images/airtable/**/*-600*jpg',
-      location + '/responsive/**/*-600*jpg'
+      // All homepage images
+      location + '/responsive/**/*-*px*jpg'
     ],
     stripPrefix: location + '/'
     //verbose: true
