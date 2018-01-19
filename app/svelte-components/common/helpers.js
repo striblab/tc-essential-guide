@@ -104,8 +104,12 @@ helpers.emailURL = function(data, content) {
     return '';
   }
 
+  let defaultShare = content.twitterShareDefault
+    ? content.twitterShareDefault.replace('[[NAME]]', data.title || data.name)
+    : '';
+
   return `mailto:?subject=${encodeURIComponent(
-    data.emailShare || data.twitterShare || content.emailShare
+    data.emailShare || data.twitterShare || defaultShare || content.emailShare
   )}&body=${encodeURIComponent(data.baseURL + data.filename)}`;
 };
 
@@ -115,8 +119,12 @@ helpers.smsURL = function(data, content) {
     return '';
   }
 
+  let defaultShare = content.twitterShareDefault
+    ? content.twitterShareDefault.replace('[[NAME]]', data.title || data.name)
+    : '';
+
   return `sms:${helpers.isIOS() ? '&' : '?'}body=${encodeURIComponent(
-    data.emailShare || data.twitterShare || content.emailShare
+    data.emailShare || data.twitterShare || defaultShare || content.emailShare
   )}${encodeURIComponent(' \n')}${encodeURIComponent(
     data.baseURL + data.filename
   )}`;
