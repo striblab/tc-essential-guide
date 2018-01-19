@@ -303,7 +303,7 @@ gulp.task('sw:precache', done => {
     //   }
     // ],
     staticFileGlobs: [
-      location + '/**/*.{js,json,html,css,svg,ico}',
+      location + '/**/*.{js,json,html,css,svg,ico,ttf,eot,woff}',
       location + '/assets/images/favicons/**/*',
       location + '/assets/images/icons/**/*',
       // Default offline image

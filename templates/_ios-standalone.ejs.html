@@ -1,0 +1,40 @@
+<script>
+(function(document, navigator, standalone) {
+  // iOS Standalone web apps treat any https links
+  // as an app protocol and take you outside
+
+  // https://gist.github.com/kylebarrow/1042026
+  // prevents links from apps from oppening in mobile safari
+  // this javascript must be the first script in your <head>
+  if (standalone in navigator && navigator[standalone]) {
+    var curnode;
+    var location = document.location;
+    var stop = /^(a|html)$/i;
+    console.log('Standalone iOS');
+
+    document.addEventListener(
+      'click',
+      function(e) {
+        curnode = e.target;
+        while (!stop.test(curnode.nodeName)) {
+          curnode = curnode.parentNode;
+        }
+
+        // Condidions to do this only on links to your own app
+        // if you want all links, use if('href' in curnode) instead.
+        if (
+          'href' in curnode &&
+          curnode.href.replace(location.href, '').indexOf('#') &&
+          (!/^[a-z+.-]+:/i.test(curnode.href) ||
+            curnode.href.indexOf(location.protocol + '//' + location.host) ===
+              0)
+        ) {
+          e.preventDefault();
+          location.href = curnode.href;
+        }
+      },
+      false
+    );
+  }
+})(document, window.navigator, 'standalone');
+</script>

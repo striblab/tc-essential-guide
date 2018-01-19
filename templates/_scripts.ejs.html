@@ -4,6 +4,13 @@
   <script src="<%= s %>"></script>
 <% }); } %>
 
+<!-- Local libs (better offline support) -->
+<script src="<%= data.basePath || '.' %>/assets/js/object-fit-images/3.2.3/ofi.min.js"></script>
+<script src="<%= data.basePath || '.' %>/assets/js/lodash/4.17.4/lodash.min.js"></script>
+<script src="<%= data.basePath || '.' %>/assets/js/jquery/3.2.1/jquery.min.js"></script>
+<script src="<%= data.basePath || '.' %>/assets/js/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+<script src="<%= data.basePath || '.' %>/assets/js/omniture-strib/H.20.3/omniture-strib.min.js"></script>
+
 <!-- Scripts -->
 <script src="<%= data.basePath || '.' %>/app.bundle.js"></script>
 

@@ -53,6 +53,9 @@
 <!-- Add to home screen for Android -->
 <meta name="mobile-web-app-capable" content="yes">
 
+<!-- Handle standlone ios app -->
+@@include('./_ios-standalone.ejs.html')
+
 <!-- Global/external styles -->
 <% if (config.styles && config.styles.globals) { config.styles.globals.forEach(function(s) { %>
   <link href="<%= s %>" rel="stylesheet" type="text/css">
