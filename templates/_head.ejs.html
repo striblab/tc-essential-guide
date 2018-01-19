@@ -4,8 +4,17 @@
   var metaAuthor = data.metaAuthor || data.byline || content.metaAuthor || 'Star Tribune Visuals';
   var metaDescription = data.metaDescription || data.description || content.metaDescription;
   var metaKeywords = data.metaKeywords || content.metaKeywords;
+
   var metaImage600 = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-600px.jpg').replace('.png', '-600px.png') : config.publish.production.url + config.social.image;
   var metaImage900 = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-900px.jpg').replace('.png', '-900px.png') : config.publish.production.url + config.social.image;
+
+  var twitterShare = data.twitterShare || (content.twitterShareDefault ? content.twitterShareDefault.replace('[[NAME]]', data.title || data.name) : '');
+
+  var twitterTitle = data.twitterTitle || twitterShare || metaTitle;
+  var twitterDescription = data.twitterDescription || metaDescription;
+
+  var ogTitle = data.facebookTitle || twitterShare || metaTitle;
+  var ogDescription = data.facebookDescription || metaDescription;
 %>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -72,8 +81,8 @@
 <% } %>
 
 <meta property="og:url" content="<%= data.filePath ? config.publish.production.url + data.filePath : config.publish.production.url %>">
-<meta property="og:title" content="<%= htmlAttribute(metaTitle) %>">
-<meta property="og:description" content="<%= htmlAttribute(metaDescription) %>">
+<meta property="og:title" content="<%= htmlAttribute(ogTitle) %>">
+<meta property="og:description" content="<%= htmlAttribute(ogDescription) %>">
 <meta property="og:site_name" content="<%= htmlAttribute(content.title) %>">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="<%= metaImage900 %>">
@@ -83,12 +92,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="<%= content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:creator" content="<%= data.twitterAccount || content.twitterAccount || '@StarTribune' %>">
-<meta name="twitter:title" content="<%= htmlAttribute(metaTitle) %>">
-<meta name="twitter:description" content="<%= htmlAttribute(metaDescription) %>">
+<meta name="twitter:title" content="<%= htmlAttribute(twitterTitle) %>">
+<meta name="twitter:description" content="<%= htmlAttribute(twitterDescription) %>">
 <meta name="twitter:image" content="<%= metaImage900 %>">
 
 <% if (data && data.dataset !== 'index') { %>
-  <meta property="article:published_time" content="<%= (new Date()).toISOString() %>">
+  <meta property="article:published_time" content="2018-01-22T12:00:00.000Z">
   <meta property="article:modified_time" content="<%= (new Date()).toISOString() %>">
   <meta property="article:publisher" content="<%= config.publish.production.url %>">
   <meta property="article:author" content="<%= htmlAttribute(metaAuthor) %>">
@@ -105,7 +114,7 @@
     },
     "headline": "<%= jsString(metaTitle, true) %>",
     "description": "<%= jsString(metaDescription, true) %>",
-    "datePublished": "<%= (new Date()).toISOString() %>",
+    "datePublished": "2018-01-22T12:00:00.000Z",
     "dateModified": "<%= (new Date()).toISOString() %>",
     "image": {
       "@type": "ImageObject",

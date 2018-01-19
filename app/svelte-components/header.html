@@ -20,7 +20,9 @@
   </div>
 
   <div class="full-nav {{ fullNavOpen ? 'full-nav-open' : '' }}">
-    <h1 class="main-nav-heading"><span>Essential Twin Cities Guide</span></h1>
+    <h1 class="main-nav-heading">
+      <span>Essential Twin Cities Guide</span>
+    </h1>
 
     <div class="vertical-center">
       <ul class="main-nav-groups cf">
@@ -29,25 +31,35 @@
             <a href="{{ data.basePath }}/{{ g.filename }}">{{ g.title }}</a>
           </li>
         {{/each}}
+
+        <li class="group sponsored-by">
+          <a href="https://ad.doubleclick.net/ddm/clk/412263939;213124867;i" rel="noopener" target="_blank">
+            Sponsored by<br>
+            <img src="{{ data.basePath }}/assets/images/ads/ads-logo-cub.svg" alt="Cub Foods logo">
+          </a>
+
+          <img class="ad-tracker-image" src="https://ad.doubleclick.net/ddm/ad/N3175.132427STARTRIBUNEMEDIACOMP/B20669916.213124867;sz=1x1;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+        </li>
       </ul>
     </div>
 
     <div class="vertical-bottom">
-      <div class="vertical-bottom">
-        <div class="social-buttons">
-          <a href="{{ facebookURL(data, content) }}" target="_blank" class="facebook-button">
-            <span class="sr-only">Share on Facebook</span>
-          </a>
-          <a href="{{ twitterURL(data, content) }}" target="_blank" class="twitter-button">
-            <span class="sr-only">Share on Twitter</span>
-          </a>
-          <a href="{{ emailURL(data, content) }}" target="_blank" class="email-button">
-            <span class="sr-only">Share via email</span>
-          </a>
-          <a href="{{ smsURL(data, content) }}" target="_blank" class="sms-button">
-            <span class="sr-only">Share via SMS</span>
-          </a>
-        </div>
+      <div class="social-buttons">
+        <a href="{{ facebookURL(data, content) }}" target="_blank" class="facebook-button">
+          <span class="sr-only">Share on Facebook</span>
+        </a>
+
+        <a href="{{ twitterURL(data, content) }}" target="_blank" class="twitter-button">
+          <span class="sr-only">Share on Twitter</span>
+        </a>
+
+        <a href="{{ emailURL(data, content) }}" target="_blank" class="email-button">
+          <span class="sr-only">Share via email</span>
+        </a>
+
+        <a href="{{ smsURL(data, content) }}" target="_blank" class="sms-button">
+          <span class="sr-only">Share via SMS</span>
+        </a>
       </div>
     </div>
   </div>

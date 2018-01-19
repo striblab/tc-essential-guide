@@ -69,6 +69,7 @@ header[role='banner'] {
   .top-nav-left {
     margin-left: auto;
     vertical-align: middle;
+
     .secondary-head {
       display: none;
 
@@ -169,26 +170,10 @@ header[role='banner'] {
     }
 
     .vertical-bottom {
-      bottom: 10%;
-    }
+      bottom: 12%;
 
-    .sponsored-by {
-      text-align: center;
-
-      // Offsets the vertical centering
-      padding-bottom: 9vh;
-
-      a {
-        font-size: 1em;
-        font-family: map-get($font-sets, 'benton-sans');
-        color: $color-white;
-
-        img {
-          display: inline;
-          height: 1.5em;
-          padding-left: 0.2em;
-          vertical-align: middle;
-        }
+      .social-buttons {
+        margin-right: 0;
       }
     }
   }

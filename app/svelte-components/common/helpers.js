@@ -87,8 +87,12 @@ helpers.twitterURL = function(data, content) {
     return '';
   }
 
+  let defaultShare = content.twitterShareDefault
+    ? content.twitterShareDefault.replace('[[NAME]]', data.title || data.name)
+    : '';
+
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    data.twitterShare || content.twitterShare
+    data.twitterShare || defaultShare || content.twitterShare
   )}&url=${encodeURIComponent(
     data.baseURL + data.filename
   )}&via=${encodeURIComponent(content.twitterAccount)}`;
