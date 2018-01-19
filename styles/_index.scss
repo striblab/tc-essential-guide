@@ -93,7 +93,7 @@
     .title-logo {
       opacity: 0;
       animation-name: fadeIn;
-      animation-duration: 4s;
+      animation-duration: 3s;
       animation-delay: 2s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
@@ -102,8 +102,8 @@
     h1 {
       opacity: 0;
       animation-name: fadeIn;
-      animation-duration: 4s;
-      animation-delay: 4s;
+      animation-duration: 3s;
+      animation-delay: 3s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
       color: $color-white;
@@ -148,8 +148,8 @@
     .get-started {
       opacity: 0;
       animation-name: fadeIn;
-      animation-duration: 4s;
-      animation-delay: 6s;
+      animation-duration: 3s;
+      animation-delay: 4s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
       display: inline-block;
