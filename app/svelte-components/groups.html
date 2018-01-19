@@ -1,10 +1,8 @@
-<:Window bind:online="online" />
-
 <div class="main-visual">
   {{#if view === 'map'}}
-    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.6" />
+    <Map locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.6" />
   {{elseif data.mainVisual}}
-    {{#if isBrowser && ((store && store.offline) || !online)}}
+    {{#if $isBrowser && $offline}}
       <img
         alt="{{ data.mainVisualDescription }}"
         src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
@@ -38,7 +36,7 @@
           <a href="?view=map" on:click="eventSet(event, { view: 'map' })"
           class="distance {{ view === 'map' ? 'active' : '' }}">
             Map
-            {{#if isGeolocating}}
+            {{#if $isGeolocating}}
               <img class="loading-icon" src="{{ data.basePath }}/assets/images/icons/loading.svg" alt="Loading icon">
             {{/if}}
           </a>
@@ -53,7 +51,7 @@
         <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }} {{ i.inFocus ? 'in-focus' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImageLocal }}
-              {{#if isBrowser && ((store && store.offline) || !online)}}
+              {{#if $isBrowser && $offline}}
                 <img
                   alt="{{ i.mainVisualDescription }}"
                   src="{{ data.basePath }}/{{ i.mainVisual.replace('.jpg', '-600px.jpg') }}">
@@ -88,13 +86,13 @@
   {{#if view === 'map'}}
     <div class="map-items-container">
       <div class="map-wrapper">
-        <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="11" focusUserPosition="{{ false }}" itemContainer=".map-items" goToOffset="-0.2">
+        <Map locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="11" focusUserPosition="{{ false }}" itemContainer=".map-items" goToOffset="-0.2">
       </div>
 
       <div class="map-items">
         {{#if allItems}}
           {{#each allItems as i @airtableId}}
-            <Item data="{{ i }}" utils="{{ utils }}" store="{{ store }}"
+            <Item data="{{ i }}" utils="{{ utils }}"
               display="map" view="{{ view }}" content="{{ content }}" />
           {{/each}}
         {{/if}}
@@ -183,11 +181,13 @@ export default {
             }
 
             // Geolocate
-            this.geolocate().catch(error => {
-              // TODO: Do something in the interface about this
-              // error.
-              console.error(error);
-            });
+            if (this.store) {
+              this.store.geolocate().catch(error => {
+                // TODO: Do something in the interface about this
+                // error.
+                console.error(error);
+              });
+            }
           }
         }
       },
@@ -205,8 +205,6 @@ export default {
   methods: {
     startQueryRouter: methods.startQueryRouter,
     eventSet: methods.eventSet,
-    geolocate: methods.geolocate,
-    distance: methods.distance,
     goTo: methods.goTo,
 
     // Find item by ID

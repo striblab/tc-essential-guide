@@ -28,7 +28,8 @@ module.exports = {
         use: {
           loader: 'svelte-loader',
           options: {
-            hydratable: true
+            hydratable: true,
+            store: true
           }
         }
       }

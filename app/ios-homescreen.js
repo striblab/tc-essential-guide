@@ -6,7 +6,7 @@
 /* global $ */
 'use strict';
 
-module.exports = (utils, diff, hideAfter = 15000, delayShow = 6000) => {
+module.exports = (utils, diff, hideAfter = 15000, delayShow = 3000) => {
   if (!utils) {
     return;
   }
@@ -14,6 +14,14 @@ module.exports = (utils, diff, hideAfter = 15000, delayShow = 6000) => {
     // Keep going
   }
   else if (!utils.checkIOS()) {
+    return;
+  }
+  else if (
+    window.navigator &&
+    'standalone' in window.navigator &&
+    window.navigator.standalone
+  ) {
+    // Check that we are not in "web app" standalone
     return;
   }
 

@@ -1,9 +1,7 @@
-<:Window bind:online="online" />
-
 {{#if display === 'full'}}
   <div class="main-visual">
     {{#if data.mainImageLocal}}
-      {{#if isBrowser && ((store && store.offline) || !online)}}
+      {{#if $isBrowser && $offline}}
         <img
           alt="{{ data.mainImageDescription }}"
           src="{{ data.basePath }}/{{ data.mainImageLocal.replace('.jpg', '-600px.jpg') }}">
@@ -66,7 +64,7 @@
       <div class="item-image">
         <figure>
           <a href="{{ data.basePath }}/{{ data.filename }}">
-            {{#if isBrowser && ((store && store.offline) || !online)}}
+            {{#if $isBrowser && $offline}}
               <img
                 alt="{{ data.mainImageDescription }}"
                 src="{{ data.basePath }}/{{ data.mainImageLocal.replace('.jpg', '-600px.jpg') }}">
@@ -183,20 +181,22 @@ export default {
 
   oncreate: function() {
     // Watch store for location
-    this.observe('store', n => {
-      if (n && n.location && n.location.lat && n.location.lng) {
-        let data = this.get('data');
-        if (data.latitude && data.longitude) {
-          data.distance = this.distance(
-            data.latitude,
-            data.longitude,
-            n.location.lat,
-            n.location.lng
-          );
-          this.set({ data: data });
+    if (this.store) {
+      this.store.observe('location', n => {
+        if (n && n.lat && n.lng) {
+          let data = this.get('data');
+          if (data.latitude && data.longitude) {
+            data.distance = this.distance(
+              data.latitude,
+              data.longitude,
+              n.lat,
+              n.lng
+            );
+            this.set({ data: data });
+          }
         }
-      }
-    });
+      });
+    }
   },
 
   methods: {
