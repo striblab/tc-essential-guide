@@ -1,9 +1,7 @@
-<:Window bind:online="online" />
-
 {{#if display === 'full'}}
   <div class="main-visual">
     {{#if data.mainImageLocal}}
-      {{#if isBrowser && ((store && store.offline) || !online)}}
+      {{#if isBrowser && offline}}
         <img
           alt="{{ data.mainImageDescription }}"
           src="{{ data.basePath }}/{{ data.mainImageLocal.replace('.jpg', '-600px.jpg') }}">
@@ -66,7 +64,7 @@
       <div class="item-image">
         <figure>
           <a href="{{ data.basePath }}/{{ data.filename }}">
-            {{#if isBrowser && ((store && store.offline) || !online)}}
+            {{#if isBrowser && offline}}
               <img
                 alt="{{ data.mainImageDescription }}"
                 src="{{ data.basePath }}/{{ data.mainImageLocal.replace('.jpg', '-600px.jpg') }}">

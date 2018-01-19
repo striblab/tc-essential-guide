@@ -1,10 +1,8 @@
-<:Window bind:online="online" />
-
 <div class="main-visual">
   {{#if view === 'distance'}}
     <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.2" />
   {{elseif data.mainVisual}}
-    {{#if isBrowser && ((store && store.offline) || !online)}}
+    {{#if isBrowser && offline}}
       <img
         alt="{{ data.mainVisualDescription }}"
         src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">

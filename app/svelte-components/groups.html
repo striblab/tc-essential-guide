@@ -1,10 +1,8 @@
-<:Window bind:online="online" />
-
 <div class="main-visual">
   {{#if view === 'map'}}
     <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.6" />
   {{elseif data.mainVisual}}
-    {{#if isBrowser && ((store && store.offline) || !online)}}
+    {{#if isBrowser && offline}}
       <img
         alt="{{ data.mainVisualDescription }}"
         src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
@@ -53,7 +51,7 @@
         <li on:mouseover="hoverItem(event, i)" data-id="{{ i.id }}" class="{{ i.inView ? 'in-view' : '' }} {{ i.inFocus ? 'in-focus' : '' }}">
           <a href="{{ data.basePath }}/{{ i.filename }}">
             {{#if i.mainImageLocal }}
-              {{#if isBrowser && ((store && store.offline) || !online)}}
+              {{#if isBrowser && offline}}
                 <img
                   alt="{{ i.mainVisualDescription }}"
                   src="{{ data.basePath }}/{{ i.mainVisual.replace('.jpg', '-600px.jpg') }}">
