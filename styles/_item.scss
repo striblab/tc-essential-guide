@@ -47,7 +47,7 @@ article.item {
   }
 
   // Phone icon for phone links
-  a[href^='tel:']::after {
+/*  a[href^='tel:']::after {
     content: '\260e';
     margin-left: 0.5em;
 
@@ -55,7 +55,7 @@ article.item {
       content: '';
       margin-left: 0;
     }
-  }
+  }*/
 
   .near-me {
     text-align: right;
