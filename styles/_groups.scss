@@ -187,12 +187,13 @@ ul.groups-items {
       }
 
       &::after {
-        content: '... Read more';
+        content: '...';
         display: inline;
         line-height: 1.5em;
         letter-spacing: 0;
         font-weight: bold;
         position: absolute;
+        width: 4em;
         right: 0;
         bottom: 0;
         background-color: $color-white;
