@@ -155,9 +155,9 @@ class Util {
             lng: position.coords.longitude
           });
         },
-        () => {
+        error => {
           this.hasGeolocate = false;
-          done('Unable to find your position.');
+          done(error ? error : 'Unable to find your position.');
         }
       );
     }
