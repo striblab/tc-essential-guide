@@ -285,6 +285,8 @@ gulp.task('watch', () => {
 // Make precache service worker file
 gulp.task('sw:precache', done => {
   let location = 'build';
+  let handleFetch = argv.deploying || argv.production ? true : false;
+  gutil.log(`sw:precache handling fetch: ${handleFetch}`);
 
   let config = {
     cacheId: require('./package.json').name,
@@ -295,13 +297,17 @@ gulp.task('sw:precache', done => {
     logger: gutil.log,
     // Note that sw-precache will use cache version, unless specified
     // here.  But, each time this is run, hashes are created, so,
-    // we don't use this (unless some problems arise :)
-    // runtimeCaching: [
-    //   {
-    //     urlPattern: /.*/,
-    //     handler: 'networkFirst'
-    //   }
-    // ],
+    // in theory this is just in the hands of http caching.
+    // But, to me a little cause, we exclude certain files
+    //
+    // About service worker caching:
+    // https://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours
+    runtimeCaching: [
+      {
+        urlPattern: /^(.*\.html|.*sw-precache-service-worker\.js.*)$/,
+        handler: 'networkFirst'
+      }
+    ],
     staticFileGlobs: [
       location + '/**/*.{js,json,html,css,svg,ico,ttf,eot,woff}',
       location + '/assets/images/favicons/**/*',
