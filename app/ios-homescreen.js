@@ -16,6 +16,14 @@ module.exports = (utils, diff, hideAfter = 15000, delayShow = 6000) => {
   else if (!utils.checkIOS()) {
     return;
   }
+  else if (
+    window.navigator &&
+    'standalone' in window.navigator &&
+    window.navigator.standalone
+  ) {
+    // Check that we are not in "web app" standalone
+    return;
+  }
 
   // Since we don't want to do this unless we can track how
   // often it happens, then we need to check storage capabilities
