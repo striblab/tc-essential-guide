@@ -63,14 +63,6 @@ if (dataFile) {
         });
       });
 
-      // Precache (offline) service worker.  Do it here, so that we know
-      // the base path
-      if ('serviceWorker' in window.navigator) {
-        window.navigator.serviceWorker.register(
-          (data.basePath || '.') + '/sw-precache-service-worker.js'
-        );
-      }
-
       // Handle ioshomescreen, but not on home page
       if (data && data.dataset && data.dataset !== 'index') {
         iosHomescreen(utils);

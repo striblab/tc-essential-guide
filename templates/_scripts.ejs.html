@@ -14,5 +14,14 @@
 <!-- Scripts -->
 <script src="<%= data.basePath || '.' %>/app.bundle.js"></script>
 
+<!-- Service worker -->
+<script>
+if ('serviceWorker' in window.navigator) {
+  window.navigator.serviceWorker.register(
+    '<%= data.basePath %>/sw-precache-service-worker.js?cache=<%= (new Date()).getTime() %>'
+  );
+}
+</script>
+
 <!-- Include Omniture parts -->
 @@include('./_omniture.ejs.html')

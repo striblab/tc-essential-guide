@@ -26,6 +26,29 @@ ul.groups-items {
       min-height: 10em;
       background-color: map-get($grays, 'light');
 
+      // Hack to get a specific aspect ratio going, since the image
+      // is a specific aspect ration 4:3
+      // https://keithjgrant.com/posts/2017/03/aspect-ratios/
+      &::before {
+        content: '';
+        float: left;
+        padding-bottom: 75%;
+
+        @include full-view {
+          display: none;
+        }
+      }
+
+      &::after {
+        clear: left;
+        content: ' ';
+        display: table;
+
+        @include full-view {
+          display: none;
+        }
+      }
+
       @include full-view {
         margin: 0 0 0;
         min-height: auto;
