@@ -78,12 +78,12 @@
     <nav class="toggle-nav">
       {{#if utils && utils.hasGeolocate }}
         <ul class="cf">
-          <li><a href="?view=alpha" on:click="sortAlpha(event)" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
+          <li><a href="?view=alpha" on:click="eventSet(event, { view: 'alpha' })" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
           <li>
-            <a href="?view=distance" on:click="sortDistance(event)" class="distance {{ view === 'distance' ? 'active' : '' }}">
+            <a href="?view=distance" on:click="eventSet(event, { view: 'distance' })" class="distance {{ view === 'distance' ? 'active' : '' }}">
               Near Me
               {{#if isGeolocating}}
-                <img class="loading-icon loading-image-small" src="{{ data.basePath }}/assets/images/icons/loading-white.svg" alt="Loading icon">
+                <img class="loading-icon loading-image-small" src="{{ data.basePath }}{{ view === 'distance' ? '/assets/images/icons/loading-white.svg' : '/assets/images/icons/loading.svg' }}" alt="Loading icon">
               {{/if}}
             </a>
           </li>
@@ -232,7 +232,7 @@ export default {
     },
 
     // Sort items by distance
-    sortDistance: function(e) {
+    sortDistance: function() {
       // Since we depend on browers geolocation, check for browser
       if (!this.get('isBrowser')) {
         return;
