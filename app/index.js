@@ -58,8 +58,15 @@ if (dataFile) {
         });
       });
 
-      // Handle ioshomescreen, but not on home page
-      if (data && data.dataset && data.dataset !== 'index') {
+      // Handle ios homescreen, only when same referrer, or been on the site
+      // a few times
+      let visits = store.get('visits') ? store.get('visits').count : 0;
+      if (
+        data &&
+        data.dataset &&
+        data.dataset === 'index' &&
+        (store.get('sameReferrer') || visits > 3)
+      ) {
         iosHomescreen(utils);
       }
     })

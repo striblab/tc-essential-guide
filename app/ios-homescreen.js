@@ -6,7 +6,7 @@
 /* global $ */
 'use strict';
 
-module.exports = (utils, diff, hideAfter = 15000, delayShow = 6000) => {
+module.exports = (utils, diff, hideAfter = 15000, delayShow = 3000) => {
   if (!utils) {
     return;
   }
