@@ -42,7 +42,7 @@ header[role='banner'] {
     transform: translateX(-50%);
 
     // Adjust centering as star visually uncenters
-    left: 49.1%;
+    left: 50%;
 
     &:hover {
       opacity: 0.85;
@@ -69,6 +69,20 @@ header[role='banner'] {
   .top-nav-left {
     margin-left: auto;
     vertical-align: middle;
+    .secondary-head {
+      display: none;
+
+      @include full-view {
+        display: inline-block;
+        font-size: 1em;
+        font-family: map-get($font-sets, 'benton-sans');
+        color: $color-white;
+        text-transform: uppercase;
+        font-weight: bold;
+        vertical-align: middle;
+        padding-top: 0.3em;
+      }
+    }
   }
 
   .menu-logo {
@@ -137,10 +151,7 @@ header[role='banner'] {
       letter-spacing: 0.5px;
 
       @include full-view {
-        margin-top: -0.9em;
-        padding-top: 0.6em;
-        min-width: 16em;
-        font-size: 1em;
+        display: none;
       }
     }
 
@@ -154,7 +165,11 @@ header[role='banner'] {
 
     ul {
       // Offsets the vertical centering
-      padding-bottom: 10vh;
+      padding-bottom: 15vh;
+    }
+
+    .vertical-bottom {
+      bottom: 10%;
     }
 
     .sponsored-by {
