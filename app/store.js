@@ -17,6 +17,20 @@ class AppStore extends Store {
 
     // Setup offline
     this.offlineWatching();
+
+    // Once utils are add
+    this.observe('utils', () => {
+      this.trackVisits();
+    });
+
+    // Referrer
+    this.set({
+      sameReferrer:
+        document.referrer &&
+        window.location &&
+        window.location.hostname &&
+        !!~document.referrer.indexOf(window.location.hostname)
+    });
   }
 
   // Watch offline events, be conservative
@@ -40,6 +54,40 @@ class AppStore extends Store {
     }
   }
 
+  // Track visits to alter interface
+  trackVisits() {
+    let utils = this.get('utils');
+    let visits = this.get('visits');
+
+    // Don't need to do more than once.
+    if (!utils || visits) {
+      return;
+    }
+
+    if (utils && utils.checkLocalStorage()) {
+      let visitCount = window.localStorage.getItem('tc-guide-visit-count');
+      visitCount = visitCount ? parseInt(visitCount, 10) : 0;
+      visitCount = visitCount + 1;
+      visits = {};
+
+      // Arbitrary points
+      if (visitCount > 2) {
+        visits.repeat = true;
+      }
+      else if (visitCount > 50) {
+        visitCount = 0;
+      }
+
+      // Add to store
+      visits.count = visitCount;
+      this.set({ visits: visits });
+
+      // Save
+      window.localStorage.setItem('tc-guide-visit-count', visitCount);
+    }
+  }
+
+  // Geolocate user
   geolocate() {
     return _.bind(methods.geolocate, this)(...arguments);
   }

@@ -1,4 +1,4 @@
-<div class="component component-index {{ started ? 'is-started' : '' }}">
+<div class="component component-index {{ started ? 'is-started' : '' }} {{ $sameReferrer && $visits && $visits.repeat ? 'repeat-visitor' : '' }}">
   <section class="splash index-section">
     <div class="index-section-inner">
       <div class="index-section-background"></div>
