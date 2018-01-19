@@ -126,15 +126,21 @@ header[role='banner'] {
     display: none;
 
     .main-nav-heading {
-      margin-top: -0.8em;
-      padding-top: 0.2em;
-      min-width: 10em;
-      max-width: 16em;
+      font-family: map-get($font-sets, 'benton-sans');
+      font-weight: bold;
+      font-size: 0.9em;
+      text-align: center;
+      text-transform: uppercase;
+      color: $color-white;
+      margin: -0.8em auto 0;
+      width: 100%;
+      letter-spacing: 0.5px;
 
       @include full-view {
         margin-top: -0.9em;
-        padding-top: 0.45em;
+        padding-top: 0.6em;
         min-width: 16em;
+        font-size: 1em;
       }
     }
 
