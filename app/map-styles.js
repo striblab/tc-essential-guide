@@ -112,7 +112,7 @@ let mapStyles = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#ffffff'
+        color: '#e6e6e6'
       }
     ]
   },
