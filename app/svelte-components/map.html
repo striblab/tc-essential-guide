@@ -29,17 +29,13 @@ export default {
     );
 
     // Watch store for user location
-    this.observe('store', n => {
-      if (
-        n &&
-        n.location &&
-        n.location.lat &&
-        n.location.lng &&
-        this.get('isBrowser')
-      ) {
-        this.updateUserPosition();
-      }
-    });
+    if (this.store) {
+      this.store.observe('location', n => {
+        if (n && n.lat && n.lng && this.store.get('isBrowser')) {
+          this.updateUserPosition();
+        }
+      });
+    }
 
     // Watch for locations in view (which should be an array of IDs)
     this.observe('inView', n => {
@@ -222,13 +218,9 @@ export default {
 
     // Handle user position
     updateUserPosition: function() {
-      let s = this.get('store');
+      let location = this.store ? this.store.get('location') : undefined;
       let positionMarker = this.get('positionMarker');
-      let position =
-        s && s.location && s.location.lat && s.location.lng
-          ? s.location
-          : undefined;
-      if (!position) {
+      if (!location || !location.lat || !location.lng) {
         return;
       }
 
@@ -236,7 +228,7 @@ export default {
       if (!positionMarker) {
         // Make marker
         positionMarker = new window.google.maps.Marker({
-          position: position,
+          position: location,
           title: 'Your location',
           icon: this.userLocationIcon(),
           zIndex: google.maps.Marker.MAX_ZINDEX + 999
@@ -248,17 +240,18 @@ export default {
         // Add to collection
         this.set({ positionMarker: positionMarker });
       } else {
-        positionMarker.setPosition(position);
+        positionMarker.setPosition(location);
       }
     },
 
     // Center on locations
     focusLocations: function(focus) {
       focus = _.isString(focus) ? [focus] : _.isArray(focus) ? focus : [];
-      let s = this.get('store');
       let userPosition =
-        s && s.location && s.location.lat && s.location.lng
-          ? s.location
+        this.store &&
+        this.store.get('location') &&
+        this.store.get('location').lat
+          ? this.store.get('location')
           : undefined;
       let map = this.get('map');
       let locations = this.get('locations');

@@ -2,13 +2,14 @@
  * Main JS file for project.
  */
 
-// Define globals that are added through the config.json file, here like this:
+// Define globals
 /* global $, _ */
 'use strict';
 
 // Dependencies
 import utilsFn from './utils.js';
 import iosHomescreen from './ios-homescreen.js';
+import store from './store.js';
 
 // Since we can't do dynamic imports
 import Header from './svelte-components/header.html';
@@ -29,14 +30,8 @@ let utils = utilsFn({
   useView: false
 });
 
-// Object for global store across components.  In theory, the svelte
-// store shoudl work, but was unable to get this to work
-let store = {
-  error: false,
-  errorMessage: null,
-  location: null,
-  offline: false
-};
+// Attach to store
+store.set({ utils: utils });
 
 // Create components.  Get page data.
 let dataFile = $('body').attr('data-page-data');
@@ -57,9 +52,9 @@ if (dataFile) {
               ? window.__startribune.contentSettings
               : {},
             groups: window.__startribune ? window.__startribune.groups : {},
-            utils: utils,
-            store: store
-          }
+            utils: utils
+          },
+          store: store
         });
       });
 

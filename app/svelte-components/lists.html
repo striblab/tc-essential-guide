@@ -1,8 +1,8 @@
 <div class="main-visual">
   {{#if view === 'distance'}}
-    <Map store="{{ store }}" locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.2" />
+    <Map locations="{{ mapLocations }}" inView="{{ locationsInView }}" zoom="10" goToOffset="-0.2" />
   {{elseif data.mainVisual}}
-    {{#if isBrowser && offline}}
+    {{#if $isBrowser && $offline}}
       <img
         alt="{{ data.mainVisualDescription }}"
         src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
@@ -36,7 +36,7 @@
         <li>
           <a href="?view=distance" on:click="eventSet(event, { view: 'distance' })" class="distance {{ view === 'distance' ? 'active' : '' }}">
             Map
-            {{#if isGeolocating}}
+            {{#if $isGeolocating}}
               <img class="loading-icon" src="{{ data.basePath }}/assets/images/icons/loading.svg" alt="Loading icon">
             {{/if}}
           </a>
@@ -80,7 +80,7 @@
           <li>
             <a href="?view=distance" on:click="eventSet(event, { view: 'distance' })" class="distance {{ view === 'distance' ? 'active' : '' }}">
               Near Me
-              {{#if isGeolocating}}
+              {{#if $isGeolocating}}
                 <img class="loading-icon loading-image-small" src="{{ data.basePath }}{{ view === 'distance' ? '/assets/images/icons/loading-white.svg' : '/assets/images/icons/loading.svg' }}" alt="Loading icon">
               {{/if}}
             </a>
@@ -92,7 +92,7 @@
     {{#if data.items}}
       <div class="item-list">
         {{#each data.items as p @id}}
-          <Item data="{{ p }}" utils="{{ utils }}" store="{{ store }}"
+          <Item data="{{ p }}" utils="{{ utils }}"
             display="list" view="{{ view }}" content="{{ content }}" />
         {{/each}}
       </div>
@@ -190,8 +190,6 @@ export default {
 
   methods: {
     startQueryRouter: methods.startQueryRouter,
-    distance: methods.distance,
-    geolocate: methods.geolocate,
     eventSet: methods.eventSet,
     goTo: methods.goTo,
 
@@ -237,7 +235,8 @@ export default {
       }
 
       // Geolocate and sort
-      this.geolocate()
+      this.store
+        .geolocate()
         .then(position => {
           let d = this.get('data');
           d.items = _.sortBy(d.items, i => i.distance || 99999);

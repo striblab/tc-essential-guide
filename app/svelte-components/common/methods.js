@@ -17,14 +17,14 @@ module.exports = {
   // Geolocate user and set to "store"
   geolocate: function() {
     return new Promise((resolve, reject) => {
-      let u = this.get('utils');
-      if (u && u.hasGeolocate) {
+      let u = this.utils || this.get('utils');
+      if (u && u.checkGeolocate()) {
         this.set({ isGeolocating: true });
 
         // Check if we have a location, use that, but still update
-        let store = this.get('store');
-        if (store && store.location && store.location.lat) {
-          resolve(store.location);
+        let location = this.get('location');
+        if (location && location.lat && location.lng) {
+          resolve(location);
         }
 
         // Geolocate
@@ -35,7 +35,7 @@ module.exports = {
             return reject(error);
           }
           else if (position) {
-            this.set({ store: { location: position } });
+            this.set({ location: position });
             resolve(position);
           }
         });
