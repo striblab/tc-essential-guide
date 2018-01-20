@@ -10,10 +10,10 @@
 
   var twitterShare = data.twitterShare || (content.twitterShareDefault ? content.twitterShareDefault.replace('[[NAME]]', data.title || data.name) : '');
 
-  var twitterTitle = data.twitterTitle || twitterShare || metaTitle;
+  var twitterTitle = data.twitterTitle || metaTitle;
   var twitterDescription = data.twitterDescription || metaDescription;
 
-  var ogTitle = data.facebookTitle || twitterShare || metaTitle;
+  var ogTitle = data.facebookTitle || metaTitle;
   var ogDescription = data.facebookDescription || metaDescription;
 %>
 
