@@ -60,7 +60,9 @@ class Observer {
         this.options.elements = elements;
       }
 
-      elements.forEach(e => {
+      // NodeList iteration is not widely supported
+      // https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/
+      [].forEach.call(elements, e => {
         this.observer.observe(e);
       });
     }
