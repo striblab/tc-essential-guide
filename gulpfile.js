@@ -284,12 +284,13 @@ gulp.task('watch', () => {
 
 // Make precache service worker file
 gulp.task('sw:precache', done => {
+  let pkg = require('./package.json');
   let location = 'build';
   let handleFetch = argv.deploying || argv.production ? true : false;
   gutil.log(`sw:precache handling fetch: ${handleFetch}`);
 
   let config = {
-    cacheId: require('./package.json').name,
+    cacheId: pkg.name,
     // False for dev so that caching wont get in the way,
     // but this means that Chrome/Android won't think
     // the site has offline capabilities, FYI
@@ -298,7 +299,7 @@ gulp.task('sw:precache', done => {
     // Note that sw-precache will use cache version, unless specified
     // here.  But, each time this is run, hashes are created, so,
     // in theory this is just in the hands of http caching.
-    // But, to me a little cause, we exclude certain files
+    // But, to me a little conservative, we exclude certain files
     //
     // About service worker caching:
     // https://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours
@@ -306,12 +307,44 @@ gulp.task('sw:precache', done => {
       {
         urlPattern: /^(.*\.html|.*sw-precache-service-worker\.js.*)$/,
         handler: 'networkFirst'
+      },
+      // Some external resources
+      {
+        urlPattern: /^https:\/\/cdn\.polyfill\.io\/.*$/,
+        handler: 'networkFirst',
+        options: {
+          cache: {
+            name: pkg.name + '-polyfill-api'
+          }
+        }
+      },
+      {
+        urlPattern: /^https:\/\/maps.googleapis.com\/.*\.js(.*|$)/,
+        handler: 'networkFirst',
+        options: {
+          cache: {
+            name: pkg.name + '-google-maps-api'
+          }
+        }
       }
+      // Does not seem to work
+      // {
+      //   urlPattern: /^https:\/\/maps.googleapis.com\/maps\/vt\?.*/,
+      //   handler: 'networkFirst',
+      //   options: {
+      //     cache: {
+      //       maxEntries: 100,
+      //       name: pkg.name + '-google-maps-tiles'
+      //     }
+      //   }
+      // }
     ],
+    // Ignore the view pages
+    ignoreUrlParametersMatching: [/^utm_/, /^view$/],
     staticFileGlobs: [
       location + '/**/*.{js,json,html,css,svg,ico,ttf,eot,woff}',
-      location + '/assets/images/favicons/**/*',
-      location + '/assets/images/icons/**/*',
+      location + '/assets/images/favicons/**/*.*',
+      location + '/assets/images/icons/**/*.*',
       // Default offline image
       location + '/assets/images/airtable/**/*-600*jpg',
       // All homepage images
