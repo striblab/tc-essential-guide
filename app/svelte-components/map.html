@@ -142,7 +142,8 @@ export default {
       let marker = new window.google.maps.Marker({
         position: p,
         title: location.content,
-        icon: this.mapIcon()
+        icon: this.mapIcon(),
+        zIndex: this.getAndAddZIndex()
       });
 
       // Click event
@@ -231,7 +232,7 @@ export default {
           position: location,
           title: 'Your location',
           icon: this.userLocationIcon(),
-          zIndex: google.maps.Marker.MAX_ZINDEX + 999
+          zIndex: this.getAndAddZIndex()
         });
 
         // Add to map
@@ -275,7 +276,7 @@ export default {
       _.each(locations, l => {
         if (_.find(focus, { id: l.id })) {
           markers[l.id].setIcon(this.mapIcon('active'));
-          markers[l.id].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+          markers[l.id].setZIndex(this.getAndAddZIndex());
           bounds.extend({ lat: l.lat, lng: l.lng });
         } else if (markers[l.id]) {
           markers[l.id].setIcon(this.mapIcon());
@@ -329,6 +330,13 @@ export default {
     // Get padding for get bounds
     boundsPadding: function() {
       return this.isMobileIsh() ? 10 : 100;
+    },
+
+    // Get and set zindex
+    getAndAddZIndex() {
+      let z = this.get('zindex') + 1;
+      this.set({ zindex: z });
+      return z;
     }
   },
 
@@ -345,7 +353,8 @@ export default {
       },
       zoom: 11,
       focusZoom: 15,
-      focusUserPosition: true
+      focusUserPosition: true,
+      zindex: 10
     };
   }
 };
