@@ -12,7 +12,7 @@
   },
   "js": {
     "globals": [
-      "//cdn.polyfill.io/v2/polyfill.min.js?features=default,IntersectionObserver",
+      "//cdn.polyfill.io/v2/polyfill.js?features=IntersectionObserver,es2015,es6,es2017,default",
       "//maps.googleapis.com/maps/api/js?key=AIzaSyBN1TbeUQKZhhulEsc24KlJzskpNpBUAUI"
     ]
   },
