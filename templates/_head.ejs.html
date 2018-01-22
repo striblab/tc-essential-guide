@@ -33,8 +33,9 @@
 <meta name="robots" content="index, follow">
 <meta name="rating" content="General">
 
+<link rel="canonical" href="<%= data.filename ? config.publish.production.url + data.filename : config.publish.production.url %>" />
 <link rel="index" href="<%= config.publish.production.url %>">
-<link rel="dns-prefetch" href="//startribune.com">
+<link rel="dns-prefetch" href="http://startribune.com">
 
 <% if (data.latitude && data.longitude) { %>
   <!-- Geo tags -->
