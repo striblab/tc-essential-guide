@@ -138,6 +138,10 @@ ul.groups-items {
     position: relative;
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
 
+    @media only screen and (max-width: map-get($breakpoints, 'xxs')) {
+      height: 40%
+    }
+
     @include full-view {
       display: none;
     }
@@ -158,6 +162,10 @@ ul.groups-items {
     overflow-y: scroll;
     background-color: $color-bg-gray;
 
+    @media only screen and (max-width: map-get($breakpoints, 'xxs')) {
+      height: 60%
+    }
+
     @include full-view {
       height: auto;
       overflow-y: auto;
@@ -175,6 +183,10 @@ ul.groups-items {
     background-color: $color-white;
     opacity: 0.4;
     transition: opacity 0.2s;
+
+    @media only screen and (max-width: map-get($breakpoints, 'xxs')) {
+      font-size: 0.85em;
+    }
 
     .item-header {
       margin-bottom: 0.5em;
