@@ -1,0 +1,11 @@
+<script>
+// Ideally this happens on the server/CDN level, but just to make sure
+if (
+  window.location &&
+  window.location.protocol != 'https:' &&
+  window.location.hostname !== 'localhost'
+) {
+  window.location.href =
+    'https:' + window.location.href.substring(window.location.protocol.length);
+}
+</script>
