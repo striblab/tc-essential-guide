@@ -166,7 +166,11 @@ header[role='banner'] {
 
     ul {
       // Offsets the vertical centering
-      padding-bottom: 15vh;
+      padding-bottom: 10vh;
+
+      @include full-view {
+        padding-bottom: 15vh;
+      }
     }
 
     .vertical-bottom {
