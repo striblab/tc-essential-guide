@@ -139,7 +139,7 @@ ul.groups-items {
     box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
 
     @media only screen and (max-width: map-get($breakpoints, 'xxs')) {
-      height: 40%
+      height: 40%;
     }
 
     @include full-view {
@@ -163,7 +163,7 @@ ul.groups-items {
     background-color: $color-bg-gray;
 
     @media only screen and (max-width: map-get($breakpoints, 'xxs')) {
-      height: 60%
+      height: 60%;
     }
 
     @include full-view {
