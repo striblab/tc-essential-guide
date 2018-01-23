@@ -73,8 +73,8 @@
 
     <div class="article-description">{{{ data.description }}}</div>
 
-    <nav class="toggle-nav">
-      {{#if utils && utils.hasGeolocate }}
+    {{#if utils && utils.hasGeolocate && !geoloationError }}
+      <nav class="toggle-nav">
         <ul class="cf">
           <li><a href="?view=alpha" on:click="eventSet(event, { view: 'alpha' })" class="alphabetical {{ view === 'alpha' ? 'active' : '' }}">Alphabetical</a></li>
           <li>
@@ -86,8 +86,12 @@
             </a>
           </li>
         </ul>
-      {{/if}}
-    </nav>
+      </nav>
+    {{elseif geoloationError}}
+      <div class="geolocation-error">
+        There was an issue trying to find your location, make sure your location services are turned on, and try again.
+      </div>
+    {{/if}}
 
     {{#if data.items}}
       <div class="item-list">
@@ -240,11 +244,10 @@ export default {
         .then(position => {
           let d = this.get('data');
           d.items = _.sortBy(d.items, i => i.distance || 99999);
-          this.set({ data: d });
+          this.set({ data: d, geoloationError: false });
         })
         .catch(error => {
-          // TODO: Do something in the interface about this
-          // error.
+          this.set({ geoloationError: true });
           console.error(error);
         });
     }
