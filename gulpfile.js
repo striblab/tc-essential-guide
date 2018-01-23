@@ -25,6 +25,7 @@ const responsive = require('gulp-responsive');
 const ejs = require('gulp-ejs');
 const imagemin = require('gulp-imagemin');
 const gutil = require('gulp-util');
+const gulpEach = require('gulp-each');
 const runSequence = require('run-sequence');
 const browserSync = require('browser-sync').create();
 const webpack = require('webpack');
@@ -358,6 +359,28 @@ gulp.task('sw:precache', done => {
     path.join(__dirname, location, 'sw-precache-service-worker.js'),
     config,
     done
+  );
+});
+
+// Mostly for FB, create a list of HTML files for
+// re-scraping
+gulp.task('html:list', () => {
+  console.error();
+  let count = 1;
+
+  return gulp.src('build/**/*.html').pipe(
+    gulpEach((contents, file, done) => {
+      console.error(
+        count % 50 === 0
+          ? '\n'
+          : '' +
+            config.publish.production.url +
+            file.path.replace(file.base, '')
+      );
+
+      count++;
+      done();
+    })
   );
 });
 
