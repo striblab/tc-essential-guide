@@ -4,7 +4,7 @@
   {{elseif data.mainVisual}}
     {{#if $isBrowser && $offline}}
       <img
-        alt="{{ data.mainVisualDescription }}"
+        alt="{{ data.mainVisualDescription ? data.mainVisualDescription : '' }}"
         src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
     {{else}}
       <picture>
@@ -17,7 +17,7 @@
           srcset="{{ srcset(data.basePath, data.mainVisual) }}"
           sizes="100vw">
         <img
-          alt="{{ data.mainVisualDescription }}"
+          alt="{{ data.mainVisualDescription ? data.mainVisualDescription : '' }}"
           src="{{ data.basePath }}/{{ data.mainVisual }}">
       </picture>
     {{/if}}

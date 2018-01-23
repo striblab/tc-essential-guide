@@ -4,7 +4,7 @@
   {{elseif data.mainVisual}}
     {{#if $isBrowser && $offline}}
       <img
-        alt="{{ data.mainVisualDescription }}"
+        alt="{{ data.mainVisualDescription ? data.mainVisualDescription : '' }}"
         src="{{ data.basePath }}/{{ data.mainVisual.replace('.jpg', '-600px.jpg') }}">
     {{else}}
       <picture>
@@ -17,7 +17,7 @@
           srcset="{{ srcset(data.basePath, data.mainVisual) }}"
           sizes="100vw">
         <img
-          alt="{{ data.mainVisualDescription }}"
+          alt="{{ data.mainVisualDescription ? data.mainVisualDescription : '' }}"
           src="{{ data.basePath }}/{{ data.mainVisual }}">
       </picture>
     {{/if}}
@@ -53,7 +53,7 @@
             {{#if i.mainImageLocal }}
               {{#if $isBrowser && $offline}}
                 <img
-                  alt="{{ i.mainVisualDescription }}"
+                  alt="{{ i.mainVisualDescription ? i.mainVisualDescription : '' }}"
                   src="{{ data.basePath }}/{{ i.mainVisual.replace('.jpg', '-600px.jpg') }}">
               {{else}}
                 <picture>
@@ -66,7 +66,7 @@
                     srcset="{{ srcset(data.basePath, i.mainImageLocal) }}"
                     sizes="100vw">
                   <img
-                    alt="{{ i.mainImageDescription }}"
+                    alt="{{ i.mainImageDescription ? i.mainImageDescription : '' }}"
                     src="{{ data.basePath }}/{{ i.mainImageLocal }}">
                 </picture>
               {{/if}}
