@@ -53,7 +53,7 @@
             {{#if i.mainImageLocal }}
               {{#if $isBrowser && $offline}}
                 <img
-                  alt="{{ i.mainVisualDescription ? i.mainVisualDescription : '' }}"
+                  alt="{{ i.imageDescription ? i.imageDescription : '' }}"
                   src="{{ data.basePath }}/{{ i.mainVisual.replace('.jpg', '-600px.jpg') }}">
               {{else}}
                 <picture>
@@ -66,7 +66,7 @@
                     srcset="{{ srcset(data.basePath, i.mainImageLocal) }}"
                     sizes="100vw">
                   <img
-                    alt="{{ i.mainImageDescription ? i.mainImageDescription : '' }}"
+                    alt="{{ i.imageDescription ? i.imageDescription : '' }}"
                     src="{{ data.basePath }}/{{ i.mainImageLocal }}">
                 </picture>
               {{/if}}
@@ -297,8 +297,8 @@ export default {
       // Set main visual to hover item
       let data = this.get('data');
       data.mainVisual = item.mainImageLocal ? item.mainImageLocal : undefined;
-      data.mainVisualDescription = item.mainImageDescription
-        ? item.mainImageDescription
+      data.mainVisualDescription = item.imageDescription
+        ? item.imageDescription
         : undefined;
 
       // Since we want a default state and a more stiky state
