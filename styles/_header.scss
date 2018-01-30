@@ -180,5 +180,18 @@ header[role='banner'] {
         margin-right: 0;
       }
     }
+
+    .main-nav-groups {
+      padding-bottom: 6vh;
+    }
+
+    .group.sponsored-by {
+      display: block;
+
+      a {
+        padding-top: 4vh;
+        line-height: 1.75em;
+      }
+    }
   }
 }

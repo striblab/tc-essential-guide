@@ -179,18 +179,18 @@ helpers.formatDate = function(date, format = 'Month Date, Year') {
     'December'
   ];
   let monthShort = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
+    'Jan.',
+    'Feb.',
+    'Mar.',
+    'Apr.',
     'May',
     'June',
     'July',
-    'Aug',
-    'Sept',
-    'Oct',
-    'Nov',
-    'Dec'
+    'Aug.',
+    'Sep.',
+    'Oct.',
+    'Nov.',
+    'Dec.'
   ];
 
   let d = helpers.parseDate(date);

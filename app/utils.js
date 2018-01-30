@@ -146,6 +146,15 @@ class Util {
   // Basic geolocation function
   geolocate(done, watch = false) {
     if (this.checkGeolocate()) {
+      // iphone acts weird sometimes about this.  This is some hacky way
+      // to ensure it works ok, but who knows.
+      // https://stackoverflow.com/questions/3397585/navigator-geolocation-getcurrentposition-sometimes-works-sometimes-doesnt
+      window.navigator.geolocation.getCurrentPosition(
+        function() {},
+        function() {},
+        {}
+      );
+
       this.geolocateWatchID = window.navigator.geolocation[
         watch ? 'watchPosition' : 'getCurrentPosition'
       ](
@@ -158,7 +167,8 @@ class Util {
         error => {
           this.hasGeolocate = false;
           done(error ? error : 'Unable to find your position.');
-        }
+        },
+        { maximumAge: 5000, timeout: 50000, enableHighAccuracy: true }
       );
     }
     else {

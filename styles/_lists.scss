@@ -50,6 +50,12 @@ nav.toggle-nav {
   }
 }
 
+.geolocation-error {
+  font-size: 0.85em;
+  padding: 1em;
+  background-color: map-get($grays, 'light');
+}
+
 .layout-lists {
   .minor-navigation ul {
     display: none;
