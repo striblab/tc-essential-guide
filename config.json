@@ -1,7 +1,6 @@
 {
-  "about this file":
-    "This document defines configuration for this project that is not content or copy.",
-  "projectIdentifier": "super-bowl-guide",
+  "about this file": "This document defines configuration for this project that is not content or copy.",
+  "projectIdentifier": "tc-essential-guide",
   "social": {
     "image": "assets/images/strib/strib-logo-name-social-card.png",
     "width": 1680,
@@ -20,9 +19,8 @@
   "publish": {
     "default": {
       "bucket": "static.startribune.com",
-      "path": "news/projects-staging/all/super-bowl-guide",
-      "url":
-        "https://static.startribune.com/news/projects-staging/all/super-bowl-guide/",
+      "path": "news/projects-staging/all/tc-essential-guide",
+      "url": "https://static.startribune.com/news/projects-staging/all/tc-essential-guide/",
       "cacheSeconds": 30
     },
     "production": {
