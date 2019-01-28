@@ -136,16 +136,16 @@
         {{/if}}
 
         <div class="social-buttons social-buttons-gray">
-          <a href="{{ facebookURL(data, content) }}" target="_blank" class="facebook-button">
+          <a href="{{ facebookURL(data, content) }}" target="_blank" rel="noopener" class="facebook-button">
             <span class="sr-only">Share on Facebook</span>
           </a>
-          <a href="{{ twitterURL(data, content) }}" target="_blank" class="twitter-button">
+          <a href="{{ twitterURL(data, content) }}" target="_blank" rel="noopener" class="twitter-button">
             <span class="sr-only">Share on Twitter</span>
           </a>
-          <a href="{{ emailURL(data, content) }}" target="_blank" class="email-button">
+          <a href="{{ emailURL(data, content) }}" target="_blank" rel="noopener" class="email-button">
             <span class="sr-only">Share via email</span>
           </a>
-          <a href="{{ smsURL(data, content) }}" class="sms-button">
+          <a href="{{ smsURL(data, content) }}" class="sms-button" rel="noopener">
             <span class="sr-only">Share via SMS</span>
           </a>
         </div>
@@ -170,71 +170,71 @@
 </div>
 
 <script>
-import helpers from './common/helpers.js';
-import methods from './common/methods.js';
-import Ad from './ad.html';
+  import helpers from "./common/helpers.js";
+  import methods from "./common/methods.js";
+  import Ad from "./ad.html";
 
-export default {
-  components: {
-    Ad
-  },
+  export default {
+    components: {
+      Ad
+    },
 
-  oncreate: function() {
-    // Watch store for location
-    if (this.store) {
-      this.store.observe('location', n => {
-        if (n && n.lat && n.lng) {
-          let data = this.get('data');
-          if (data.latitude && data.longitude) {
-            data.distance = this.distance(
-              data.latitude,
-              data.longitude,
-              n.lat,
-              n.lng
-            );
-            this.set({ data: data });
+    oncreate: function() {
+      // Watch store for location
+      if (this.store) {
+        this.store.observe("location", n => {
+          if (n && n.lat && n.lng) {
+            let data = this.get("data");
+            if (data.latitude && data.longitude) {
+              data.distance = this.distance(
+                data.latitude,
+                data.longitude,
+                n.lat,
+                n.lng
+              );
+              this.set({ data: data });
+            }
           }
-        }
-      });
-    }
-  },
+        });
+      }
+    },
 
-  methods: {
-    distance: methods.distance
-  },
+    methods: {
+      distance: methods.distance
+    },
 
-  helpers: {
-    fullByline: helpers.fullByline,
-    directionsURL: helpers.directionsURL,
-    facebookURL: helpers.facebookURL,
-    twitterURL: helpers.twitterURL,
-    emailURL: helpers.emailURL,
-    phoneURL: helpers.phoneURL,
-    smsURL: helpers.smsURL,
-    urlLink: helpers.urlLink,
-    urlText: helpers.urlText,
-    escapeHTML: helpers.escapeHTML,
-    srcset: helpers.srcset,
-    parseDate: helpers.parseDate,
-    formatDate: helpers.formatDate,
-    datePast: helpers.datePast
-  },
+    helpers: {
+      fullByline: helpers.fullByline,
+      directionsURL: helpers.directionsURL,
+      facebookURL: helpers.facebookURL,
+      twitterURL: helpers.twitterURL,
+      emailURL: helpers.emailURL,
+      phoneURL: helpers.phoneURL,
+      smsURL: helpers.smsURL,
+      urlLink: helpers.urlLink,
+      urlText: helpers.urlText,
+      escapeHTML: helpers.escapeHTML,
+      srcset: helpers.srcset,
+      parseDate: helpers.parseDate,
+      formatDate: helpers.formatDate,
+      datePast: helpers.datePast
+    },
 
-  computed: {
-    sectionGroup: function(data) {
-      return data.groups
-        ? data.groups[0]
-        : data.lists && data.lists[0] && data.lists[0].groups
+    computed: {
+      sectionGroup: function(data) {
+        return data.groups
+          ? data.groups[0]
+          : data.lists && data.lists[0] && data.lists[0].groups
           ? data.lists[0].groups[0]
           : undefined;
-    }
-  },
+      }
+    },
 
-  data() {
-    return {
-      display: 'full',
-      isBrowser: typeof window !== undefined
-    };
-  }
-};
+    data() {
+      return {
+        display: "full",
+        isBrowser: typeof window !== undefined
+      };
+    }
+  };
 </script>
