@@ -128,7 +128,7 @@
               "@type": "<%- jsString(i.schemaType || 'Article')  %>",
               "url": "<%= i.filename ? config.publish.production.url + i.filename : config.publish.production.url %>",
               "name": "<%- jsString(i.title || i.name, true) %>",
-              "image": "<%= config.publish.production.url + i.mainVisual.replace('.jpg', '-900px.jpg') %>"
+              "image": "<%= i.mainVisual ? config.publish.production.url + i.mainVisual.replace('.jpg', '-900px.jpg') : '' %>"
             }
           }<%= ii < data.items.length - 1 ? ',' : '' %>
         <% }) %>
