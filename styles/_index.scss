@@ -88,6 +88,7 @@
     .index-section-image-background {
       opacity: 0;
       animation-name: fadeIn;
+      // For some reason this is happening very fast.
       animation-duration: 4s;
       animation-delay: 1.5s;
       animation-iteration-count: 1;
@@ -129,12 +130,6 @@
     // Layer on top if video played and ended
     &.intro-video-ended .index-section-image-background {
       z-index: -10;
-      opacity: 0;
-      animation-name: fadeIn;
-      animation-duration: 1s;
-      animation-delay: 0;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards;
     }
 
     .index-section-background {
@@ -158,16 +153,22 @@
       opacity: 0;
       animation-name: fadeIn;
       animation-duration: 3.5s;
-      animation-delay: 2s;
+      animation-delay: 4.5s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
+    }
+
+    // When no video
+    &.cannot-autoplay .title-logo {
+      animation-duration: 3.5s;
+      animation-delay: 1.5s;
     }
 
     h1 {
       opacity: 0;
       animation-name: fadeIn;
       animation-duration: 3.5s;
-      animation-delay: 3s;
+      animation-delay: 1.5s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
       color: $color-white;
@@ -213,7 +214,7 @@
       opacity: 0;
       animation-name: fadeIn;
       animation-duration: 3.5s;
-      animation-delay: 4s;
+      animation-delay: 6s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
       display: inline-block;
@@ -236,6 +237,12 @@
       @include full-view {
         margin-bottom: 3vh;
       }
+    }
+
+    // When no video
+    &.cannot-autoplay .get-started {
+      animation-duration: 3.5s;
+      animation-delay: 2.5s;
     }
   }
 
