@@ -20,7 +20,7 @@ class AppStore extends Store {
 
     // Once utils are add
     this.observe('utils', () => {
-      this.trackVisits();
+      //this.trackVisits();
     });
 
     // Referrer

@@ -54,6 +54,16 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    background-color: transparent;
+  }
+
+  .index-section-video-background {
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      overflow: hidden;
+    }
   }
 
   .title-logo {
@@ -72,13 +82,40 @@
 
   // Splash screen section
   .splash {
-    opacity: 0;
-    animation-name: fadeIn;
-    animation-duration: 4s;
-    animation-delay: 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
     z-index: 10;
+
+    // Default happens either way (if video plays)
+    .index-section-image-background {
+      opacity: 0;
+      animation-name: fadeIn;
+      animation-duration: 2s;
+      animation-delay: 1.5s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+
+    // Video
+    .index-section-video-background {
+      z-index: -50;
+      // Fade helps with any initial poster image
+      opacity: 0;
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-delay: 0;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+
+    // Layer on top if video played and ended
+    &.intro-video-ended .index-section-image-background {
+      z-index: -10;
+      opacity: 0;
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-delay: 0;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
 
     .index-section-background {
       @include responsive-image(
