@@ -88,7 +88,7 @@
     .index-section-image-background {
       opacity: 0;
       animation-name: fadeIn;
-      animation-duration: 2s;
+      animation-duration: 4s;
       animation-delay: 1.5s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
@@ -105,6 +105,14 @@
       animation-delay: 0.6s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
+
+      video {
+        opacity: 0;
+
+        &.playing {
+          opacity: 1;
+        }
+      }
     }
 
     // Cannot auto-play
@@ -115,12 +123,6 @@
 
       .index-section-image-background {
         z-index: -10;
-        opacity: 0;
-        animation-name: fadeIn;
-        animation-duration: 2.5s;
-        animation-delay: 0;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
       }
     }
 
@@ -138,13 +140,13 @@
     .index-section-background {
       @include responsive-image(
         "./assets/images/responsive/final-four-portrait",
-        $extension: "png"
+        $extension: "jpg"
       );
 
       @include full-view {
         @include responsive-image(
           "./assets/images/responsive/final-four-landscape",
-          $extension: "png",
+          $extension: "jpg",
           $default-high: 2000
         );
 
@@ -249,7 +251,7 @@
     .index-section-background {
       @include responsive-image(
         "./assets/images/responsive/final-four-blur-portrait",
-        $extension: "png"
+        $extension: "jpg"
       );
     }
 
@@ -281,13 +283,13 @@
     .index-section-background {
       @include responsive-image(
         "./assets/images/responsive/final-four-blur-portrait",
-        $extension: "png"
+        $extension: "jpg"
       );
 
       @include full-view {
         @include responsive-image(
           "./assets/images/responsive/final-four-blur-landscape",
-          $extension: "png",
+          $extension: "jpg",
           $default-high: 2000
         );
 

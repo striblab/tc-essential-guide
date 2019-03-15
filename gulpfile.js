@@ -245,10 +245,12 @@ gulp.task('assets:responsive:videos', () => {
         webm('2000'),
         webm('1200'),
         webm('900'),
+        webm('600'),
         webm('300'),
         mp4('2000'),
         mp4('1200'),
         mp4('900'),
+        mp4('600'),
         mp4('300')
       ])
     )

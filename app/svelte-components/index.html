@@ -2,7 +2,7 @@
   <section class="splash index-section {{ canAutoplay ? 'can-autoplay' : '' }} {{ canAutoplay === false ? 'cannot-autoplay' : '' }} {{ introVideoEnded ? 'intro-video-ended' : '' }}">
     <div class="index-section-inner">
       <div class="index-section-background index-section-video-background">
-        <video muted id="index-section-video-background" ref:introVideo on:ended="videoEnded('introVideoEnded', event)">
+        <video muted id="index-section-video-background" ref:introVideo on:ended="videoEnded('introVideoEnded', event)" class="{{ introVideoEnded ? 'ended' : introVideoPlaying ? 'playing' : '' }}">
           <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.webm" type="video/webm">
           <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.mp4" type="video/mp4">
         </video>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="vertical-center">
-        <h1>
+        <h1 class="sr-only">
           <span class="super-bowl">Final Four 2019</span>
           <span class="guide">Essential Twin Cities Guide</span>
         </h1>
@@ -98,19 +98,58 @@
 
   export default {
     oncreate() {
+      // Set size of video
+      this.responsiveVideo();
+
       // Checking for autoplay is silly, just try to play
       setTimeout(() => {
         try {
-          this.refs.introVideo.play();
-          this.set({ canAutoplay: true, introVideoPlaying: true });
+          this.refs.introVideo
+            .play()
+            .then(() => {
+              this.set({ canAutoplay: true, introVideoPlaying: true });
+            })
+            .catch(e => {
+              //console.error(e);
+              this.set({ canAutoplay: false, introVideoPlaying: false });
+            });
         } catch (e) {
           console.error(e);
-          this.set({ canAutoplay: false });
+          this.set({ canAutoplay: false, introVideoPlaying: false });
         }
       }, 400);
     },
 
     methods: {
+      // Determine oreientation and width for video
+      responsiveVideo() {
+        // Determine width
+        let windowWidth = window.innerWidth;
+        let widths = ["300", "600", "900", "1200", "2000"];
+        let width = widths[0];
+        for (let i = 0; i < widths.length - 1; i++) {
+          if (
+            windowWidth > parseInt(widths[i], 10) &&
+            windowWidth <= parseInt(widths[i + 1], 10)
+          ) {
+            width = widths[i + 1];
+            break;
+          }
+        }
+
+        // Ideally we would get the orientation based on the aspect
+        // ratio, but the CSS in _mixins that defines full_view
+        // just uses the lg breakpoint
+        let orientation = window.matchMedia("(min-width: 992px)").matches
+          ? "landscape"
+          : "portrait";
+
+        this.set({
+          videoBackgroundSize: width,
+          videoBackgroundOrientation: orientation
+        });
+      },
+
       // Video ended
       videoEnded: function(prop, e) {
         let p = {};
