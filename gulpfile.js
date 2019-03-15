@@ -381,7 +381,9 @@ gulp.task('sw:precache', done => {
       // Default offline image
       location + '/assets/images/airtable/**/*-600*jpg',
       // All homepage images
-      location + '/assets/images/responsive/**/*-*px.jpg'
+      location + '/assets/images/responsive/**/*-*px.jpg',
+      // Just 600 video
+      location + '/assets/images/videos/**/*-600*.{mp4,webm}'
     ],
     stripPrefix: location + '/'
     //verbose: true
