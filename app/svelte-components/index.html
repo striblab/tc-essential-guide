@@ -1,14 +1,12 @@
 <div class="component component-index {{ started ? 'is-started' : '' }} {{ $sameReferrer && $visits && $visits.repeat ? 'repeat-visitor' : '' }}">
   <section class="splash index-section {{ canAutoplay ? 'can-autoplay' : '' }} {{ canAutoplay === false ? 'cannot-autoplay' : '' }} {{ introVideoEnded ? 'intro-video-ended' : '' }}">
     <div class="index-section-inner">
-      {{#if canAutoplay}}
-        <div class="index-section-background index-section-video-background">
-          <video muted id="index-section-video-background" ref:introVideo on:ended="videoEnded('introVideoEnded', event)">
-            <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.webm" type="video/webm">
-            <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.mp4" type="video/mp4">
-          </video>
-        </div>
-      {{/if}}
+      <div class="index-section-background index-section-video-background">
+        <video muted id="index-section-video-background" ref:introVideo on:ended="videoEnded('introVideoEnded', event)">
+          <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.webm" type="video/webm">
+          <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.mp4" type="video/mp4">
+        </video>
+      </div>
 
       <div class="index-section-background index-section-image-background"></div>
 
@@ -100,32 +98,16 @@
 
   export default {
     oncreate() {
-      // Checking for autoplay is silly
-      // Well, this is very unreliable
-      let utils = this.get("utils");
-      if (utils) {
-        utils.checkAutoplay();
-        setTimeout(() => {
-          this.set({ canAutoplay: utils.canAutoplay });
-        }, 1000);
-      }
-    },
-
-    onupdate({ changed, current, previous }) {
-      // Look to see if can autoplay and video is in dom
-      if (
-        changed.canAutoplay &&
-        current.canAutoplay &&
-        this.refs.introVideo &&
-        this.refs.introVideo.play
-      ) {
+      // Checking for autoplay is silly, just try to play
+      setTimeout(() => {
         try {
           this.refs.introVideo.play();
-          this.set({ introVideoPlaying: true });
+          this.set({ canAutoplay: true, introVideoPlaying: true });
         } catch (e) {
+          console.error(e);
           this.set({ canAutoplay: false });
         }
-      }
+      }, 400);
     },
 
     methods: {

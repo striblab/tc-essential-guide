@@ -101,9 +101,27 @@
       opacity: 0;
       animation-name: fadeIn;
       animation-duration: 1s;
-      animation-delay: 0;
+      // We take 0.5s to check if we can auto-play
+      animation-delay: 0.6s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
+    }
+
+    // Cannot auto-play
+    &.cannot-autoplay {
+      .index-section-video-background {
+        opacity: 0;
+      }
+
+      .index-section-image-background {
+        z-index: -10;
+        opacity: 0;
+        animation-name: fadeIn;
+        animation-duration: 2.5s;
+        animation-delay: 0;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
     }
 
     // Layer on top if video played and ended
@@ -130,7 +148,7 @@
           $default-high: 2000
         );
 
-        background-position: 50% 30%;
+        background-position: 50% 50%;
       }
     }
 
