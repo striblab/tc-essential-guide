@@ -239,7 +239,7 @@ gulp.task('assets:responsive:videos', () => {
     );
 
   return gulp
-    .src(['assets/video/**/*.mp4'])
+    .src(['assets/videos/**/*.mp4'])
     .pipe(
       ffmpeg([
         webm('2000'),
