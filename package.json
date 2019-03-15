@@ -72,6 +72,8 @@
     "svelte": "^1.52.0",
     "svelte-loader": "^2.3.3",
     "sw-precache": "^5.2.0",
+    "through2": "^3.0.1",
+    "tmp": "0.0.33",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "underscore": "^1.8.3",
     "webpack": "^3.1.0",

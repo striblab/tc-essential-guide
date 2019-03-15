@@ -36,6 +36,7 @@ const del = require('del');
 const swprecache = require('sw-precache');
 const gulpContent = require('./lib/gulp-content.js');
 const gulpPublish = require('./lib/gulp-publish.js');
+const ffmpeg = require('./lib/gulp-ffmpeg.js');
 const jest = require('./lib/gulp-jest.js');
 const layouts = require('./lib/gulp-layouts.js');
 const airtable = require('./lib/gulp-airtable.js');
@@ -202,7 +203,7 @@ gulp.task('assets:imagemin', () => {
     .pipe(gulp.dest('build/assets/images/'));
 });
 
-// Responsive images.  This is an expensive task.
+// Responsive images and video.  These are expensive tasks.
 gulp.task('assets:responsive:airtable', () => {
   return gulp
     .src(['assets/images/airtable/**/*.{jpg,png}'])
@@ -225,9 +226,38 @@ gulp.task('assets:responsive:images', () => {
     )
     .pipe(gulp.dest('build/assets/images/responsive'));
 });
+
+// Image sizes: '300', '600', '900', '1200', '2000'
+gulp.task('assets:responsive:videos', () => {
+  const webm = width =>
+    `-c:v libvpx -qmin 0 -qmax 25 -crf 4 -b:v 1M -an -vf scale=${width}:-2 -f webm`.split(
+      ' '
+    );
+  const mp4 = width =>
+    `-c:v libx264 -pix_fmt yuv420p -profile:v baseline -level 3.0 -crf 22 -vf scale=${width}:-2 -an -movflags +faststart -threads 0 -f mp4`.split(
+      ' '
+    );
+
+  return gulp
+    .src(['assets/video/**/*.mp4'])
+    .pipe(
+      ffmpeg([
+        webm('2000'),
+        webm('1200'),
+        webm('900'),
+        webm('300'),
+        mp4('2000'),
+        mp4('1200'),
+        mp4('900'),
+        mp4('300')
+      ])
+    )
+    .pipe(gulp.dest('build/assets/videos/'));
+});
 gulp.task('assets:responsive', [
   'assets:responsive:images',
-  'assets:responsive:airtable'
+  'assets:responsive:airtable',
+  'assets:responsive:videos'
 ]);
 
 // Clean build
@@ -374,8 +404,8 @@ gulp.task('html:list', () => {
         count % 50 === 0
           ? '\n'
           : '' +
-            config.publish.production.url +
-            file.path.replace(file.base, '')
+              config.publish.production.url +
+              file.path.replace(file.base, '')
       );
 
       count++;

@@ -22,6 +22,15 @@ The following are global prerequisites and may already be installed.
 1. Install [Gulp](http://gulpjs.com/): `npm install gulp -g`
 1. Set the following environment variables:
    - `AIRTABLE_API_KEY`: The [Airtable](https://airtable.com/api) API key used to get data from the spreadsheets.
+1. Install `ffmpeg`
+   - With Homebrew:
+     ```sh
+       brew tap varenc/ffmpeg && \
+       brew tap-pin varenc/ffmpeg && \
+       brew install ffmpeg --with-libvpx --with-libvorbis --with-fdk-aac --with-opus;
+       # This will install all extensions (probably not needed)
+       brew install ffmpeg $(brew options ffmpeg | grep -v -e '\s' | grep -e '--with-\|--HEAD' | tr '\n' ' ');
+     ```
 
 The following should be performed for initial and each code update:
 
