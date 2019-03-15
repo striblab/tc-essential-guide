@@ -20,7 +20,7 @@
     padding-top: 0;
   }
 
-  header[role='banner'] {
+  header[role="banner"] {
     display: none;
   }
 
@@ -81,10 +81,17 @@
     z-index: 10;
 
     .index-section-background {
-      @include responsive-image('./assets/images/responsive/stadium-portrait');
+      @include responsive-image(
+        "./assets/images/responsive/final-four-portrait",
+        $extension: "png"
+      );
 
       @include full-view {
-        @include responsive-image('./assets/images/responsive/stadium-landscape', $default-high: 2000);
+        @include responsive-image(
+          "./assets/images/responsive/final-four-landscape",
+          $extension: "png",
+          $default-high: 2000
+        );
 
         background-position: 50% 30%;
       }
@@ -108,7 +115,7 @@
       animation-fill-mode: forwards;
       color: $color-white;
       margin: 0 auto;
-      font-family: map-get($font-sets, 'benton-sans');
+      font-family: map-get($font-sets, "benton-sans");
       font-size: 2.3em;
       text-transform: uppercase;
       font-weight: bold;
@@ -185,7 +192,10 @@
     }
 
     .index-section-background {
-      @include responsive-image('./assets/images/responsive/stadium-blur-portrait');
+      @include responsive-image(
+        "./assets/images/responsive/final-four-blur-portrait",
+        $extension: "png"
+      );
     }
 
     .in-the-way-content-i-mean-ad {
@@ -214,10 +224,17 @@
     color: $color-white;
 
     .index-section-background {
-      @include responsive-image('./assets/images/responsive/stadium-blur-portrait');
+      @include responsive-image(
+        "./assets/images/responsive/final-four-blur-portrait",
+        $extension: "png"
+      );
 
       @include full-view {
-        @include responsive-image('./assets/images/responsive/stadium-blur-landscape', $default-high: 2000);
+        @include responsive-image(
+          "./assets/images/responsive/final-four-blur-landscape",
+          $extension: "png",
+          $default-high: 2000
+        );
 
         background-position: 50% 30%;
       }
