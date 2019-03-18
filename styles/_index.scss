@@ -218,15 +218,15 @@
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
       display: inline-block;
-      background-color: $highlight-yellow;
-      color: $color-default-black;
+      background-color: $color-default-black;
+      color: $color-white;
       padding: 1em;
       text-decoration: none;
       text-transform: uppercase;
-      font-weight: normal;
-
+      font-weight: bold;
+      border-radius: 10px;
       // Offset vertical
-      margin-bottom: 17vh;
+      margin-bottom: 5vh;
 
       &:hover {
         color: $highlight-yellow;
