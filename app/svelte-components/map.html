@@ -1,361 +1,365 @@
 <div class="map-container" ref:map></div>
 
 <script>
-import mapStyles from '../map-styles.js';
+  import mapStyles from "../map-styles.js";
 
-export default {
-  oncreate() {
-    // Ref
-    if (this.get('isBrowser')) {
-      this.drawMap();
-    }
+  export default {
+    oncreate() {
+      // Ref
+      if (this.get("isBrowser")) {
+        this.drawMap();
+      }
 
-    // When locations are available add markers
-    this.observe(
-      'locations',
-      (n, o) => {
-        // For some reason this is getting called too often, so
-        // we do a bit of hackery to check if the number of items has
-        // changed.
-        if (
-          this.get('isBrowser') &&
-          n &&
-          ((n && o && n.length !== o.length) || !o)
-        ) {
-          this.addMarkers();
+      // When locations are available add markers
+      this.observe(
+        "locations",
+        (n, o) => {
+          // For some reason this is getting called too often, so
+          // we do a bit of hackery to check if the number of items has
+          // changed.
+          if (
+            this.get("isBrowser") &&
+            n &&
+            ((n && o && n.length !== o.length) || !o)
+          ) {
+            this.addMarkers();
+          }
+        },
+        { defer: true }
+      );
+
+      // Watch store for user location
+      if (this.store) {
+        this.store.observe("location", n => {
+          if (n && n.lat && n.lng && this.store.get("isBrowser")) {
+            this.updateUserPosition();
+          }
+        });
+      }
+
+      // Watch for locations in view (which should be an array of IDs)
+      this.observe("inView", n => {
+        if (n && this.get("isBrowser")) {
+          this.focusLocations(n);
+        }
+      });
+    },
+
+    ondestroy() {
+      this.undrawMap();
+    },
+
+    methods: {
+      // Draw map
+      drawMap: function() {
+        let map = this.get("map");
+
+        // Only draw map if needed
+        if (!map) {
+          map = new window.google.maps.Map(this.refs.map, {
+            zoom: this.get("zoom"),
+            center: this.get("center"),
+            minZoom: 9,
+            maxZoom: 17,
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            rotateControl: false,
+            fullscreenControl: false,
+            styles: mapStyles
+          });
+
+          // Add map to component
+          this.set({ map: map });
+        } else {
+          // If the map is already there for some reason, just
+          // trigger a resize
+          window.google.maps.event.trigger(map, "resize");
         }
       },
-      { defer: true }
-    );
 
-    // Watch store for user location
-    if (this.store) {
-      this.store.observe('location', n => {
-        if (n && n.lat && n.lng && this.store.get('isBrowser')) {
-          this.updateUserPosition();
+      // Undraw map
+      undrawMap: function() {
+        let map = this.get("map");
+        let markers = this.get("markers");
+        if (!map) {
+          return;
         }
-      });
-    }
 
-    // Watch for locations in view (which should be an array of IDs)
-    this.observe('inView', n => {
-      if (n && this.get('isBrowser')) {
-        this.focusLocations(n);
-      }
-    });
-  },
-
-  ondestroy() {
-    this.undrawMap();
-  },
-
-  methods: {
-    // Draw map
-    drawMap: function() {
-      let map = this.get('map');
-
-      // Only draw map if needed
-      if (!map) {
-        map = new window.google.maps.Map(this.refs.map, {
-          zoom: this.get('zoom'),
-          center: this.get('center'),
-          minZoom: 9,
-          maxZoom: 17,
-          zoomControl: true,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false,
-          styles: mapStyles
-        });
-
-        // Add map to component
-        this.set({ map: map });
-      } else {
-        // If the map is already there for some reason, just
-        // trigger a resize
-        window.google.maps.event.trigger(map, 'resize');
-      }
-    },
-
-    // Undraw map
-    undrawMap: function() {
-      let map = this.get('map');
-      let markers = this.get('markers');
-      if (!map) {
-        return;
-      }
-
-      // Remove markers
-      if (markers && _.size(markers)) {
-        _.each(markers, m => {
-          m.setMap(null);
-        });
-      }
-
-      // Remove events from map
-      if (map) {
-        google.maps.event.clearInstanceListeners(map);
-        google.maps.event.clearListeners(map);
-      }
-    },
-
-    // Add markers
-    addMarkers: function() {
-      let markers = this.get('markers');
-      let locations = this.get('locations');
-      let map = this.get('map');
-
-      // Go through locations
-      locations.forEach(l => {
-        if (!markers[l.id]) {
-          this.addMarker(l);
-        }
-      });
-
-      // Update map view
-      map.fitBounds(this.get('bounds'), this.boundsPadding());
-    },
-
-    // Add a marker
-    addMarker: function(location) {
-      let markers = this.get('markers');
-      let bounds = this.get('bounds');
-
-      // Don't add without a position
-      if (!location.lat || !location.lng) {
-        return;
-      }
-
-      let p = {
-        lat: parseFloat(location.lat),
-        lng: parseFloat(location.lng)
-      };
-
-      let infowindow = new window.google.maps.InfoWindow({
-        content: location.content
-        // maxWidth: 200
-      });
-
-      // Make marker
-      let marker = new window.google.maps.Marker({
-        position: p,
-        title: location.content,
-        icon: this.mapIcon(),
-        zIndex: this.getAndAddZIndex()
-      });
-
-      // Click event
-      marker.addListener('click', () => {
-        if (this.root && this.root.goTo) {
-          this.root.goTo(location.id, this.get('itemContainer'), {
-            over: { top: parseFloat(this.get('goToOffset')) || -0.2 }
+        // Remove markers
+        if (markers && _.size(markers)) {
+          _.each(markers, m => {
+            m.setMap(null);
           });
-        } else {
-          infowindow.open(this.get('map'), marker);
         }
-      });
 
-      // Add to map
-      marker.setMap(this.get('map'));
+        // Remove events from map
+        if (map) {
+          google.maps.event.clearInstanceListeners(map);
+          google.maps.event.clearListeners(map);
+        }
+      },
 
-      // Update bounds
-      if (!bounds) {
-        bounds = new google.maps.LatLngBounds();
-      }
-      bounds.extend(p);
+      // Add markers
+      addMarkers: function() {
+        let markers = this.get("markers");
+        let locations = this.get("locations");
+        let map = this.get("map");
 
-      // Add to collection
-      markers = markers || {};
-      markers[location.id] = marker;
-      this.set({ markers, bounds });
-    },
+        // Go through locations
+        locations.forEach(l => {
+          if (!markers[l.id]) {
+            this.addMarker(l);
+          }
+        });
 
-    // Make map icon
-    mapIcon: function(state = 'inactive') {
-      let activeColor = '#2E3574';
-      let inActiveColor = '#B3B3B3';
-      let mobileSize = 0.65;
-      let desktopSize = 0.9;
-      let activeScale = 1;
-      let inActiveScale = 0.75;
-      let mobileish = this.isMobileIsh();
+        // Update map view
+        map.fitBounds(this.get("bounds"), this.boundsPadding());
+      },
 
-      return {
-        path:
-          'M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z',
-        scale:
-          (mobileish ? mobileSize : desktopSize) *
-          (state === 'active'
-            ? activeScale
-            : state === 'inactive' ? inActiveScale : inActiveScale),
-        anchor: new google.maps.Point(45.8 / 2, 66.7),
-        fillColor:
-          state === 'active'
-            ? activeColor
-            : state === 'inactive' ? inActiveColor : inActiveColor,
-        fillOpacity: 0.95,
-        strokeWeight: 0
-      };
-    },
+      // Add a marker
+      addMarker: function(location) {
+        let markers = this.get("markers");
+        let bounds = this.get("bounds");
 
-    // Person icon for user location
-    userLocationIcon: function(color = '#222222') {
-      let mobileish = this.isMobileIsh();
-      let mobileSize = 0.55;
-      let desktopSize = 0.4;
+        // Don't add without a position
+        if (!location.lat || !location.lng) {
+          return;
+        }
 
-      return {
-        path:
-          'M24.7,17.4L24.7,17.4h-5.3c3-1.5,5.1-4.6,5.1-8.2c0-5.1-4.1-9.2-9.2-9.2S6.1,4.1,6.1,9.2c0,3.6,2.1,6.7,5.1,8.2H5.9 c-3.3,0-5.9,2.7-5.9,5.9v21.4c0,3.3,2.7,5.9,5.9,5.9h1.3v31.2c0,2.5,2,4.6,4.6,4.6h6.9c2.5,0,4.6-2,4.6-4.6V50.6h1.4 c3.3,0,5.9-2.7,5.9-5.9V23.3C30.6,20,27.9,17.4,24.7,17.4z',
-        scale: mobileish ? mobileSize : desktopSize,
-        anchor: new google.maps.Point(30.6 / 2, 86.4),
-        fillColor: color,
-        fillOpacity: 0.95,
-        strokeWeight: 0
-      };
-    },
+        let p = {
+          lat: parseFloat(location.lat),
+          lng: parseFloat(location.lng)
+        };
 
-    // Handle user position
-    updateUserPosition: function() {
-      let location = this.store ? this.store.get('location') : undefined;
-      let positionMarker = this.get('positionMarker');
-      if (!location || !location.lat || !location.lng) {
-        return;
-      }
+        let infowindow = new window.google.maps.InfoWindow({
+          content: location.content
+          // maxWidth: 200
+        });
 
-      // Make marker if needed
-      if (!positionMarker) {
         // Make marker
-        positionMarker = new window.google.maps.Marker({
-          position: location,
-          title: 'Your location',
-          icon: this.userLocationIcon(),
+        let marker = new window.google.maps.Marker({
+          position: p,
+          title: location.content,
+          icon: this.mapIcon(),
           zIndex: this.getAndAddZIndex()
         });
 
+        // Click event
+        marker.addListener("click", () => {
+          if (this.root && this.root.goTo) {
+            this.root.goTo(location.id, this.get("itemContainer"), {
+              over: { top: parseFloat(this.get("goToOffset")) || -0.2 }
+            });
+          } else {
+            infowindow.open(this.get("map"), marker);
+          }
+        });
+
         // Add to map
-        positionMarker.setMap(this.get('map'));
+        marker.setMap(this.get("map"));
+
+        // Update bounds
+        if (!bounds) {
+          bounds = new google.maps.LatLngBounds();
+        }
+        bounds.extend(p);
 
         // Add to collection
-        this.set({ positionMarker: positionMarker });
-      } else {
-        positionMarker.setPosition(location);
-      }
-    },
-
-    // Center on locations
-    focusLocations: function(focus) {
-      focus = _.isString(focus) ? [focus] : _.isArray(focus) ? focus : [];
-      let userPosition =
-        this.store &&
-        this.store.get('location') &&
-        this.store.get('location').lat
-          ? this.store.get('location')
-          : undefined;
-      let map = this.get('map');
-      let locations = this.get('locations');
-      let markers = this.get('markers');
-      let includeUser = this.get('focusUserPosition');
-
-      // Translate to locations
-      focus = _.filter(
-        _.map(focus, f => {
-          let l = _.find(locations, { id: f });
-          if (l && markers[l.id]) {
-            l.marker = markers[l.id];
-          }
-
-          return l.lat && l.lng ? l : undefined;
-        })
-      );
-
-      // Go through all markers
-      let bounds = new google.maps.LatLngBounds();
-      _.each(locations, l => {
-        if (_.find(focus, { id: l.id })) {
-          markers[l.id].setIcon(this.mapIcon('active'));
-          markers[l.id].setZIndex(this.getAndAddZIndex());
-          bounds.extend({ lat: l.lat, lng: l.lng });
-        } else if (markers[l.id]) {
-          markers[l.id].setIcon(this.mapIcon());
-        }
-      });
-
-      // If non focused, then focus to original bounds
-      if ((!focus || !focus.length) && this.get('bounds')) {
-        map.fitBounds(this.get('bounds'), this.boundsPadding());
-
-        // Issue where markers disspear
-        map.panTo(map.getCenter());
-        return;
-      }
-
-      // Look for user location
-      if (userPosition && includeUser) {
-        bounds.extend(userPosition, 10);
-      }
-
-      // If just one
-      if (
-        focus.length === 1 &&
-        (!includeUser || (includeUser && !userPosition))
-      ) {
-        map.setCenter({ lat: focus[0].lat, lng: focus[0].lng });
-        map.setZoom(this.get('focusZoom'));
-        // Issue where markers disspear
-        map.panTo(map.getCenter());
-      } else {
-        // Set bounds
-        map.fitBounds(bounds, this.boundsPadding());
-        // Issue where markers disspear
-        map.panTo(map.getCenter());
-      }
-    },
-
-    // A simple, hackish way to determine view.  Assumes mobile.
-    isMobileIsh: function() {
-      let widthTest = 600;
-      let map = this.get('map');
-      return map &&
-        _.isFunction(map.getDiv) &&
-        _.isObject(map.getDiv()) &&
-        map.getDiv().offsetWidth &&
-        map.getDiv().offsetWidth > widthTest
-        ? false
-        : true;
-    },
-
-    // Get padding for get bounds
-    boundsPadding: function() {
-      return this.isMobileIsh() ? 10 : 100;
-    },
-
-    // Get and set zindex
-    getAndAddZIndex() {
-      let z = this.get('zindex') + 1;
-      this.set({ zindex: z });
-      return z;
-    }
-  },
-
-  data() {
-    return {
-      isBrowser: typeof window !== undefined,
-      locations: [],
-      markers: {},
-      bounds: undefined,
-      map: undefined,
-      center: {
-        lat: 44.9629232,
-        lng: -93.159196
+        markers = markers || {};
+        markers[location.id] = marker;
+        this.set({ markers, bounds });
       },
-      zoom: 11,
-      focusZoom: 15,
-      focusUserPosition: true,
-      zindex: 10
-    };
-  }
-};
+
+      // Make map icon
+      mapIcon: function(state = "inactive") {
+        let activeColor = "#FF9900";
+        let inActiveColor = "#B3B3B3";
+        let mobileSize = 0.65;
+        let desktopSize = 0.9;
+        let activeScale = 1;
+        let inActiveScale = 0.75;
+        let mobileish = this.isMobileIsh();
+
+        return {
+          path:
+            "M22.9,0C10.2,0,0,10.2,0,22.9c0,12.7,22.9,43.8,22.9,43.8s22.9-31,22.9-43.8C45.8,10.2,35.6,0,22.9,0z M22.9,33.3c-5.8,0-10.4-4.6-10.4-10.4c0-5.8,4.6-10.4,10.4-10.4c5.8,0,10.4,4.6,10.4,10.4C33.3,28.7,28.8,33.3,22.9,33.3z",
+          scale:
+            (mobileish ? mobileSize : desktopSize) *
+            (state === "active"
+              ? activeScale
+              : state === "inactive"
+              ? inActiveScale
+              : inActiveScale),
+          anchor: new google.maps.Point(45.8 / 2, 66.7),
+          fillColor:
+            state === "active"
+              ? activeColor
+              : state === "inactive"
+              ? inActiveColor
+              : inActiveColor,
+          fillOpacity: 0.95,
+          strokeWeight: 0
+        };
+      },
+
+      // Person icon for user location
+      userLocationIcon: function(color = "#222222") {
+        let mobileish = this.isMobileIsh();
+        let mobileSize = 0.55;
+        let desktopSize = 0.4;
+
+        return {
+          path:
+            "M24.7,17.4L24.7,17.4h-5.3c3-1.5,5.1-4.6,5.1-8.2c0-5.1-4.1-9.2-9.2-9.2S6.1,4.1,6.1,9.2c0,3.6,2.1,6.7,5.1,8.2H5.9 c-3.3,0-5.9,2.7-5.9,5.9v21.4c0,3.3,2.7,5.9,5.9,5.9h1.3v31.2c0,2.5,2,4.6,4.6,4.6h6.9c2.5,0,4.6-2,4.6-4.6V50.6h1.4 c3.3,0,5.9-2.7,5.9-5.9V23.3C30.6,20,27.9,17.4,24.7,17.4z",
+          scale: mobileish ? mobileSize : desktopSize,
+          anchor: new google.maps.Point(30.6 / 2, 86.4),
+          fillColor: color,
+          fillOpacity: 0.95,
+          strokeWeight: 0
+        };
+      },
+
+      // Handle user position
+      updateUserPosition: function() {
+        let location = this.store ? this.store.get("location") : undefined;
+        let positionMarker = this.get("positionMarker");
+        if (!location || !location.lat || !location.lng) {
+          return;
+        }
+
+        // Make marker if needed
+        if (!positionMarker) {
+          // Make marker
+          positionMarker = new window.google.maps.Marker({
+            position: location,
+            title: "Your location",
+            icon: this.userLocationIcon(),
+            zIndex: this.getAndAddZIndex()
+          });
+
+          // Add to map
+          positionMarker.setMap(this.get("map"));
+
+          // Add to collection
+          this.set({ positionMarker: positionMarker });
+        } else {
+          positionMarker.setPosition(location);
+        }
+      },
+
+      // Center on locations
+      focusLocations: function(focus) {
+        focus = _.isString(focus) ? [focus] : _.isArray(focus) ? focus : [];
+        let userPosition =
+          this.store &&
+          this.store.get("location") &&
+          this.store.get("location").lat
+            ? this.store.get("location")
+            : undefined;
+        let map = this.get("map");
+        let locations = this.get("locations");
+        let markers = this.get("markers");
+        let includeUser = this.get("focusUserPosition");
+
+        // Translate to locations
+        focus = _.filter(
+          _.map(focus, f => {
+            let l = _.find(locations, { id: f });
+            if (l && markers[l.id]) {
+              l.marker = markers[l.id];
+            }
+
+            return l.lat && l.lng ? l : undefined;
+          })
+        );
+
+        // Go through all markers
+        let bounds = new google.maps.LatLngBounds();
+        _.each(locations, l => {
+          if (_.find(focus, { id: l.id })) {
+            markers[l.id].setIcon(this.mapIcon("active"));
+            markers[l.id].setZIndex(this.getAndAddZIndex());
+            bounds.extend({ lat: l.lat, lng: l.lng });
+          } else if (markers[l.id]) {
+            markers[l.id].setIcon(this.mapIcon());
+          }
+        });
+
+        // If non focused, then focus to original bounds
+        if ((!focus || !focus.length) && this.get("bounds")) {
+          map.fitBounds(this.get("bounds"), this.boundsPadding());
+
+          // Issue where markers disspear
+          map.panTo(map.getCenter());
+          return;
+        }
+
+        // Look for user location
+        if (userPosition && includeUser) {
+          bounds.extend(userPosition, 10);
+        }
+
+        // If just one
+        if (
+          focus.length === 1 &&
+          (!includeUser || (includeUser && !userPosition))
+        ) {
+          map.setCenter({ lat: focus[0].lat, lng: focus[0].lng });
+          map.setZoom(this.get("focusZoom"));
+          // Issue where markers disspear
+          map.panTo(map.getCenter());
+        } else {
+          // Set bounds
+          map.fitBounds(bounds, this.boundsPadding());
+          // Issue where markers disspear
+          map.panTo(map.getCenter());
+        }
+      },
+
+      // A simple, hackish way to determine view.  Assumes mobile.
+      isMobileIsh: function() {
+        let widthTest = 600;
+        let map = this.get("map");
+        return map &&
+          _.isFunction(map.getDiv) &&
+          _.isObject(map.getDiv()) &&
+          map.getDiv().offsetWidth &&
+          map.getDiv().offsetWidth > widthTest
+          ? false
+          : true;
+      },
+
+      // Get padding for get bounds
+      boundsPadding: function() {
+        return this.isMobileIsh() ? 10 : 100;
+      },
+
+      // Get and set zindex
+      getAndAddZIndex() {
+        let z = this.get("zindex") + 1;
+        this.set({ zindex: z });
+        return z;
+      }
+    },
+
+    data() {
+      return {
+        isBrowser: typeof window !== undefined,
+        locations: [],
+        markers: {},
+        bounds: undefined,
+        map: undefined,
+        center: {
+          lat: 44.9629232,
+          lng: -93.159196
+        },
+        zoom: 11,
+        focusZoom: 15,
+        focusUserPosition: true,
+        zindex: 10
+      };
+    }
+  };
 </script>
