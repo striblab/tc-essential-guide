@@ -2,7 +2,7 @@
   <section class="splash index-section {{ canAutoplay ? 'can-autoplay' : '' }} {{ canAutoplay === false ? 'cannot-autoplay' : '' }} {{ introVideoEnded ? 'intro-video-ended' : '' }}">
     <div class="index-section-inner">
       <div class="index-section-background index-section-video-background">
-        <video muted id="index-section-video-background" ref:introVideo on:ended="videoEnded('introVideoEnded', event)" class="{{ introVideoEnded ? 'ended' : introVideoPlaying ? 'playing' : '' }}">
+        <video muted playsinline autoplay id="index-section-video-background" ref:introVideo on:ended="videoEnded('introVideoEnded', event)" class="{{ introVideoEnded ? 'ended' : introVideoPlaying ? 'playing' : '' }}">
           <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.webm" type="video/webm">
           <source src="./assets/videos/final-four-{{ videoBackgroundOrientation }}-{{ videoBackgroundSize }}.mp4" type="video/mp4">
         </video>

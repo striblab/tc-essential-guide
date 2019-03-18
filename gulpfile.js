@@ -237,6 +237,14 @@ gulp.task('assets:responsive:videos', () => {
     `-c:v libx264 -pix_fmt yuv420p -profile:v baseline -level 3.0 -crf 22 -vf scale=${width}:-2 -an -movflags +faststart -threads 0 -f mp4`.split(
       ' '
     );
+  const gif = width => {
+    return [
+      '-lavfi',
+      `fps=15,scale=${width}:-1:flags=lanczos [x]; [x][1:v] paletteuse`,
+      '-f',
+      'gif'
+    ];
+  };
 
   return gulp
     .src(['assets/videos/**/*.mp4'])
@@ -251,7 +259,11 @@ gulp.task('assets:responsive:videos', () => {
         mp4('1200'),
         mp4('900'),
         mp4('600'),
-        mp4('300')
+        mp4('300'),
+        gif('1200'),
+        gif('900'),
+        gif('600'),
+        gif('300')
       ])
     )
     .pipe(gulp.dest('build/assets/videos/'));
