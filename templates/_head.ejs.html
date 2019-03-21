@@ -7,7 +7,7 @@
 
   var metaImage600 = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-600px.jpg').replace('.png', '-600px.png') : config.publish.production.url + config.social.image;
   var metaImage900 = data.mainVisual ? config.publish.production.url + data.mainVisual.replace('.jpg', '-900px.jpg').replace('.png', '-900px.png') : config.publish.production.url + config.social.image;
-  var metaImageRatio = 4 / 3;
+  var metaImageRatio = 16 / 9;
 
   var twitterShare = data.twitterShare || (content.twitterShareDefault ? content.twitterShareDefault.replace('[[NAME]]', data.title || data.name) : '');
 
@@ -90,16 +90,16 @@
 <meta property="og:description" content="<%- htmlAttribute(ogDescription) %>">
 <meta property="og:site_name" content="<%- htmlAttribute(content.title) %>">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="<%= data.facebookImage ? config.publish.production.url + data.facebookImage : metaImage900 %>">
+<meta property="og:image" content="<%= data.facebookImage ? config.publish.production.url + data.facebookImage : metaImage900 %>?_c=<%= timestamp %>">
 <meta property="og:image:width" content="<%= data.facebookImageWidth ? data.facebookImageWidth : '900' %>">
-<meta property="og:image:height" content="<%= data.facebookImageHeight ? data.facebookImageHeight : Math.round(900 * (1 / metaImageRatio)) %>">
+<meta property="og:image:height" content="<%= data.facebookImageHeight ? data.facebookImageHeight : Math.round((data.facebookImageWidth || 900) * (1 / metaImageRatio)) %>">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="<% content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:creator" content="<% data.twitterAccount || content.twitterAccount || '@StarTribune' %>">
 <meta name="twitter:title" content="<%- htmlAttribute(twitterTitle) %>">
 <meta name="twitter:description" content="<%- htmlAttribute(twitterDescription) %>">
-<meta name="twitter:image" content="<%=  data.twitterImage ? config.publish.production.url + data.twitterImage : metaImage900 %>">
+<meta name="twitter:image" content="<%=  data.twitterImage ? config.publish.production.url + data.twitterImage : metaImage900 %>?_c=<%= timestamp %>">
 
 <% if (data && data.dataset !== 'index') { %>
   <meta property="article:published_time" content="2018-01-22T12:00:00.000Z">
@@ -128,7 +128,7 @@
               "@type": "<%- jsString(i.schemaType || 'Article')  %>",
               "url": "<%= i.filename ? config.publish.production.url + i.filename : config.publish.production.url %>",
               "name": "<%- jsString(i.title || i.name, true) %>",
-              "image": "<%= i.mainVisual ? config.publish.production.url + i.mainVisual.replace('.jpg', '-900px.jpg') : '' %>"
+              "image": "<%= i.mainVisual ? config.publish.production.url + i.mainVisual.replace('.jpg', '-900px.jpg') : '' %>?_c=<%= timestamp %>"
             }
           }<%= ii < data.items.length - 1 ? ',' : '' %>
         <% }) %>
@@ -149,7 +149,7 @@
               "@type": "<%- i.dataset === 'lists' ? 'ItemList' : jsString(i.schemaType || 'Article')  %>",
               "url": "<%= i.filename ? config.publish.production.url + i.filename : config.publish.production.url %>",
               "name": "<%- jsString(i.title || i.name, true) %>",
-              "image": "<%= config.publish.production.url + i.mainVisual.replace('.jpg', '-900px.jpg') %>"
+              "image": "<%= config.publish.production.url + i.mainVisual.replace('.jpg', '-900px.jpg') %>?_c=<%= timestamp %>"
             }
           }<%= ii < allItemsInGroup.length - 1 ? ',' : '' %>
         <% }) %>
@@ -170,7 +170,7 @@
     "dateModified": "<%= (new Date()).toISOString() %>",
     "image": {
       "@type": "ImageObject",
-      "url": "<%= metaImage900 %>",
+      "url": "<%= metaImage900 %>?_c=<%= timestamp %>",
       "width": "900",
       "height": "<%= Math.round(900 * (1 / metaImageRatio)) %>"
     },
