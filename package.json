@@ -34,6 +34,7 @@
     "chrome-remote-interface": "^0.23.2",
     "del": "^2.2.2",
     "dotenv": "^4.0.0",
+    "es6-promise-pool": "^2.5.0",
     "escape-html": "^1.0.3",
     "google-auth-library": "^0.10.0",
     "googleapis": "^19.0.0",
