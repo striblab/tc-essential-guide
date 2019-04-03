@@ -7,6 +7,7 @@ config.custom.json
 
 
 # Common
+.vscode
 .drake
 *yarn.lock
 .tmp
