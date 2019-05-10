@@ -2,6 +2,20 @@
 
 All the best places to go to when you are in the Twin Cities (for the Super Bowl).
 
+## Quickstart
+
+The default `gulp develop` will not get new data from Airtable, nor will it create the responsive images. So, to make these things happen specifically, use the following:
+
+1. New data: `gulp source:data`
+1. Create responsive images: `gulp assets:responsive:images`, `gulp assets:responsive:airtable`
+1. Create responsive video images: `gulp assets:responsive:videos`
+
+You should only have to run these when you have updated content.
+
+In order to publish and build everything from scratch, run the following (note that it will take some time to run all this, specifically the publishing will take some time unless you have done it before on your computer):
+
+1. `gulp deploy --production`
+
 ## Development
 
 ### Meta tag and "SEO" testing
